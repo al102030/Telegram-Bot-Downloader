@@ -2,6 +2,15 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.gitignore
+Pipfile
+Pipfile.lock
+.vscode/
+config/
+.DS_Store
+*.mp4
+token.py
+secret.py
 
 # C extensions
 *.so

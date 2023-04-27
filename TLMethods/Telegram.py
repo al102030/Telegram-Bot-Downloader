@@ -2,8 +2,8 @@ import requests
 
 
 class Telegram:
-    def __init__(self, tltoken):
-        self.token = tltoken
+    def __init__(self, token):
+        self.token = token
 
     def get_me(self):
         url = f"https://api.telegram.org/bot{self.token}/getMe"

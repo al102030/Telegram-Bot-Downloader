@@ -11,7 +11,6 @@ def index():
         txt = msg['message']['text']
         user = User.query.filter_by(telegram_id=chat_id).first()
         if txt == "/start":
-            bot_methods.send_message(user, chat_id)
             if user:
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)

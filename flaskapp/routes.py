@@ -23,10 +23,11 @@ def index():
         else:
             if txt == "/c1":
                 status(chat_id=chat_id)
-                # return redirect(url_for('status', chat_id=chat_id))
-                # bot_methods.send_message(txt, chat_id)
-            # elif txt == "/c2":
-            #     bot_methods.send_message("Login: ", chat_id)
+            elif txt == "/c2":
+                bot_methods.send_message("""Hi there! 
+                                        I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
+                                        Thank you for your trustiness.
+                                        Let's go on...""", chat_id)
             # elif txt == "/c3":
             #     bot_methods.send_message("About: ", chat_id)
             # elif txt == "/c4":

@@ -17,10 +17,10 @@ def index():
             if user:
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                # ans = bot_methods.get_chat_member(
-                #     channel_id, chat_id)
+                ans = bot_methods.get_chat_member(channel_id, chat_id)
+                json_data = json.loads(ans)
                 # json_data = json.loads(ans)
-                # bot_methods.send_message(json_data, chat_id)
+                bot_methods.send_message(json_data, chat_id)
                 # if ans == "member":
                 bot_methods.forward_message(4, chat_id, private_channel_id)
             else:

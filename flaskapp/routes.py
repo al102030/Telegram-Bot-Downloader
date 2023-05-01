@@ -22,7 +22,8 @@ def index():
                 db.session.commit()
         else:
             if txt == "/c1":
-                return redirect(url_for('status', chat_id=chat_id))
+                status(chat_id=chat_id)
+                # return redirect(url_for('status', chat_id=chat_id))
                 # bot_methods.send_message(txt, chat_id)
             # elif txt == "/c2":
             #     bot_methods.send_message("Login: ", chat_id)
@@ -42,5 +43,5 @@ def index():
 def status(chat_id):
     if request.method == 'POST':
         user = User.query.filter_by(telegram_id=chat_id).first()
-        bot_methods.send_message(f"Your credit is: {user.credit}", chat_id)
+        bot_methods.send_message(f"Your credit is: {user.credit} Mb", chat_id)
     return redirect(url_for('index'))

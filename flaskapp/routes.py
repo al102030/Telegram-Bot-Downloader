@@ -9,7 +9,7 @@ def index():
         msg = request.get_json()
         chat_id = msg['message']['chat']['id']
         txt = msg['message']['text']
-        user = User.query.filter_by(telegram_id=chat_id).first()
+        # user = User.query.filter_by(telegram_id=chat_id).first()
         if txt == "/start":
             if user:
                 bot_methods.send_message(
@@ -21,8 +21,8 @@ def index():
                 db.session.add(user)
                 db.session.commit()
         else:
-            if txt == "/c1":
-                bot_methods.send_message(txt, chat_id)
+            # if txt == "/c1":
+            bot_methods.send_message(txt, chat_id)
             # elif txt == "/c2":
             #     bot_methods.send_message("Login: ", chat_id)
             # elif txt == "/c3":

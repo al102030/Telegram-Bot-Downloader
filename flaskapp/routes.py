@@ -14,9 +14,9 @@ def index():
             if user:
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                bot_methods.forward_message(chat_id, "-1001976338494", "4")
+                bot_methods.forward_message(chat_id, "-1001976338494", 4)
             else:
-                bot_methods.forward_message(chat_id, "-1001976338494", "4")
+                bot_methods.forward_message(chat_id, "-1001976338494", 4)
                 bot_methods.send_message(
                     f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
                 user = User(telegram_id=chat_id, credit=0)

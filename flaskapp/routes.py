@@ -23,7 +23,13 @@ def index():
                 db.session.commit()
         else:
             if txt == "/c1":
-                status(chat_id=chat_id)
+                if user:
+                    status(chat_id=chat_id)
+                else:
+                    user = User(telegram_id=chat_id, credit=0)
+                    db.session.add(user)
+                    db.session.commit()
+                    status(chat_id=chat_id)
             elif txt == "/c2":
                 bot_methods.send_message("""Hi there! 
                                         I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.

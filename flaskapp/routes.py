@@ -1,5 +1,5 @@
 from flask import request, Response
-# from flaskapp.models import User, Download
+from flaskapp.models import User, Download
 from flaskapp import app, bot_methods, db, bcrypt
 
 registration = 0
@@ -11,6 +11,10 @@ def index():
         msg = request.get_json()
         chat_id = msg['message']['chat']['id']
         txt = msg['message']['text']
+        user = User.query.filter_by(telegram_id=chat_id)
+        if user:
+            bot_methods.send_message(
+                "You already registered in my user's list, Welcome back!", chat_id)
         if txt == "/c1":
             bot_methods.send_message("Your Status: ", chat_id)
         elif txt == "/c2":

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from TLMethods.Telegram import Telegram
 from flask_bcrypt import Bcrypt
+from TLMethods.Telegram import Telegram
 from config.secret import token
 
 

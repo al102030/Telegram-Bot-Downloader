@@ -1,6 +1,7 @@
 from flask import request, Response, url_for, redirect
 from flaskapp.models import User
 from flaskapp import app, bot_methods, db
+import json
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -17,8 +18,9 @@ def index():
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
                 ans = bot_methods.get_chat_member(
-                    channel_id, chat_id).get_json()
-                bot_methods.send_message(ans["status"], chat_id)
+                    channel_id, chat_id)
+                json_data = json.loads(ans)
+                bot_methods.send_message(json_data["status"], chat_id)
                 if ans == "member":
                     bot_methods.forward_message(4, chat_id, private_channel_id)
             else:

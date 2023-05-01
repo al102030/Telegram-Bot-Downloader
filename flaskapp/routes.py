@@ -1,6 +1,6 @@
 from flask import request, Response, url_for, redirect
 from flaskapp.models import User
-from flaskapp import app, bot_methods, db
+from flaskapp import app, bot_methods  # , db
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -15,11 +15,12 @@ def index():
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
             else:
-                bot_methods.send_message(
-                    f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
-                user = User(telegram_id=chat_id, credit=0)
-                db.session.add(user)
-                db.session.commit()
+                bot_methods.forward_message(chat_id, "-1001976338494", 4)
+                # bot_methods.send_message(
+                #     f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
+                # user = User(telegram_id=chat_id, credit=0)
+                # db.session.add(user)
+                # db.session.commit()
         else:
             if txt == "/c1":
                 status(chat_id=chat_id)
@@ -28,8 +29,9 @@ def index():
                                         I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
                                         Thank you for your trustiness.
                                         Let's go on...""", chat_id)
-            # elif txt == "/c3":
-            #     bot_methods.send_message("About: ", chat_id)
+            elif txt == "/c3":
+                bot_methods.send_message(
+                    "Before Start your download please join our channel: ", chat_id)
             # elif txt == "/c4":
             #     bot_methods.send_message("Logout: ", chat_id)
             # elif txt == "/c5":
@@ -48,7 +50,7 @@ def status(chat_id):
             bot_methods.send_message(
                 f"Your credit is: {user.credit} Mb", chat_id)
             bot_methods.send_message(
-                f"Please charge your account to start your download.", chat_id)
+                "Please charge your account to start your download.", chat_id)
         else:
             bot_methods.send_message(
                 f"Your credit is: {user.credit} Mb", chat_id)

@@ -34,6 +34,8 @@ def index():
             #     bot_methods.send_message("Please Choose a Username: ", chat_id)
 
         return Response('ok', status=200)
+    else:
+        return '<h1>Not OK</h1>'
 
 
 @app.route("/status", methods=["GET", "POST"])

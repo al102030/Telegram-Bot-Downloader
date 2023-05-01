@@ -9,7 +9,7 @@ def index():
         msg = request.get_json()
         chat_id = msg['message']['chat']['id']
         txt = msg['message']['text']
-        user = User.query.filter_by(telegram_id=int(chat_id)).first()
+        user = User.query.filter_by(telegram_id=chat_id).first()
         if txt == "/start":
             if user:
                 bot_methods.send_message(
@@ -17,7 +17,7 @@ def index():
             else:
                 bot_methods.send_message(
                     f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
-                user = User(telegram_id=int(chat_id), credit=0)
+                user = User(telegram_id=chat_id, credit=0)
                 db.session.add(user)
                 db.session.commit()
         else:

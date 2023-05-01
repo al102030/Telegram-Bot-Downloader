@@ -4,7 +4,7 @@ from flaskapp import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    telegram_id = db.Column(db.Integer, unique=True, nullable=False)
+    telegram_id = db.Column(db.String(20), unique=True, nullable=False)
     mobile = db.Column(db.String(20), unique=True)
     email = db.Column(db.String(120), unique=True)
     credit = db.Column(db.Integer, default=0)

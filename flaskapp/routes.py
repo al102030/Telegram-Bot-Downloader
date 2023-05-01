@@ -43,4 +43,4 @@ def status(chat_id):
     if request.method == 'POST':
         user = User.query.filter_by(telegram_id=chat_id).first()
         bot_methods.send_message(f"Your credit is: {user.credit}", chat_id)
-        return redirect(url_for('index'))
+    return redirect(url_for('index'))

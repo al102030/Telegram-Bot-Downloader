@@ -1,4 +1,4 @@
-from flask import request, Response
+from flask import request, Response, url_for
 from flaskapp.models import User
 from flaskapp import app, bot_methods, db
 
@@ -22,6 +22,7 @@ def index():
                 db.session.commit()
         else:
             if txt == "/c1":
+                return url_for('status', chat_id)
                 bot_methods.send_message(txt, chat_id)
             # elif txt == "/c2":
             #     bot_methods.send_message("Login: ", chat_id)
@@ -35,3 +36,10 @@ def index():
         return Response('ok', status=200)
     else:
         return '<h1>Not OK</h1>'
+
+
+@app.route("/status", methods=["GET", "POST"])
+def status(chat_id):
+    if request.method == 'POST':
+        user = User.query.filter_by(telegram_id=chat_id).first()
+        bot_methods.send_message(f"Your credit is: {user.credit}", chat_id)

@@ -9,7 +9,7 @@ def index():
         msg = request.get_json()
         chat_id = msg['message']['chat']['id']
         txt = msg['message']['text']
-        user = User.query.filter_by(telegram_id=chat_id)
+        user = User.query.filter_by(telegram_id=chat_id).first()
         if txt == "/start":
             bot_methods.send_message(user, chat_id)
             if user:

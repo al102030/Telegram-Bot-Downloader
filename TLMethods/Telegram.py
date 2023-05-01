@@ -320,4 +320,4 @@ class Telegram:
         response = requests.post(
             url, json=payload, headers=headers, timeout=20)
 
-        return response.text
+        return response

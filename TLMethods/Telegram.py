@@ -302,3 +302,22 @@ class Telegram:
             url, headers=headers, timeout=20)
 
         return response.text
+
+    def get_chat_member(self, channel_id, chat_id):
+
+        url = f"https://api.telegram.org/bot{self.token}/getChatMember"
+
+        payload = {
+            "chat_id": channel_id,
+            "user_id": chat_id,
+            "disable_notification": False
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+
+        response = requests.post(
+            url, json=payload, headers=headers, timeout=20)
+
+        return True if response.text["status"] != 'left' else False

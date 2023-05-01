@@ -6,6 +6,8 @@ from flaskapp import app, bot_methods, db
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
+        channel_id = "-1001904767094"
+        private_channel_id = "-1001976338494"
         msg = request.get_json()
         chat_id = msg['message']['chat']['id']
         txt = msg['message']['text']
@@ -14,11 +16,13 @@ def index():
             if user:
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                bot_methods.forward_message(4, chat_id, "-1001976338494")
+                if bot_methods.get_chat_member(channel_id, chat_id):
+                    bot_methods.forward_message(4, chat_id, private_channel_id)
             else:
-                bot_methods.forward_message(4, chat_id, "-1001976338494")
                 bot_methods.send_message(
                     f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
+                if bot_methods.get_chat_member(channel_id, chat_id):
+                    bot_methods.forward_message(4, chat_id, private_channel_id)
                 user = User(telegram_id=chat_id, credit=0)
                 db.session.add(user)
                 db.session.commit()

@@ -11,7 +11,7 @@ class User(db.Model):
     download = db.relationship('Download', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.telegram_id}', '{self.mobile}')"
+        return f"User('{self.telegram_id}', '{self.mobile}', '{self.credit}')"
 
 
 class Download(db.Model):

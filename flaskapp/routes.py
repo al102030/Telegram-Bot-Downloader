@@ -14,14 +14,14 @@ def index():
             if user:
                 bot_methods.send_message(
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-            else:
-                bot_methods.send_message(
-                    f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
-                user = User(telegram_id=chat_id, credit=0)
-                db.session.add(user)
-                db.session.commit()
-        else:
-            pass
+            # else:
+            #     bot_methods.send_message(
+            #         f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
+            #     user = User(telegram_id=chat_id, credit=0)
+            #     db.session.add(user)
+            #     db.session.commit()
+        # else:
+        #     pass
         # if txt == "/c1":
         bot_methods.send_message("Your Status: ", chat_id)
         # elif txt == "/c2":

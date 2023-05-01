@@ -1,6 +1,6 @@
 from flask import request, Response, url_for, redirect
 from flaskapp.models import User
-from flaskapp import app, bot_methods  # , db
+from flaskapp import app, bot_methods, db
 
 
 @app.route("/", methods=["GET", "POST"])

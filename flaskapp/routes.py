@@ -23,7 +23,7 @@ def index():
         else:
             pass
         # if txt == "/c1":
-        #     bot_methods.send_message("Your Status: ", chat_id)
+        bot_methods.send_message("Your Status: ", chat_id)
         # elif txt == "/c2":
         #     bot_methods.send_message("Login: ", chat_id)
         # elif txt == "/c3":

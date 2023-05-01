@@ -8,7 +8,7 @@ def index():
     if request.method == 'POST':
         msg = request.get_json()
         chat_id = msg['message']['chat']['id']
-        txt = msg['message']['text']
+        txt = msg['message']['text1']
         # user = User.query.filter_by(telegram_id=chat_id).first()
         if txt == "/start":
             if True:

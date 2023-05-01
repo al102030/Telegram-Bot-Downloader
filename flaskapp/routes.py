@@ -44,5 +44,12 @@ def index():
 def status(chat_id):
     if request.method == 'POST':
         user = User.query.filter_by(telegram_id=chat_id).first()
-        bot_methods.send_message(f"Your credit is: {user.credit} Mb", chat_id)
+        if user.credit == 0:
+            bot_methods.send_message(
+                f"Your credit is: {user.credit} Mb", chat_id)
+            bot_methods.send_message(
+                f"Please charge your account to start your download.", chat_id)
+        else:
+            bot_methods.send_message(
+                f"Your credit is: {user.credit} Mb", chat_id)
     return redirect(url_for('index'))

@@ -20,7 +20,7 @@ def index():
                 ans = bot_methods.get_chat_member(channel_id, chat_id)
                 json_data = json.loads(ans)
                 stat = json_data['result']['status']
-                if stat == 'member':
+                if stat == 'creator':
                     bot_methods.send_message("hooooraaa", chat_id)
                 # if ans == "member":
                 bot_methods.forward_message(4, chat_id, private_channel_id)

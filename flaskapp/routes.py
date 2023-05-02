@@ -59,16 +59,16 @@ def index():
         return '<h1>Not OK</h1>'
 
 
-@app.route("/status", methods=["GET", "POST"])
+# @app.route("/status", methods=["GET", "POST"])
 def status(chat_id):
-    if request.method == 'POST':
-        user = User.query.filter_by(telegram_id=chat_id).first()
-        if user.credit == 0:
-            bot_methods.send_message(
-                f"Your credit is: {user.credit} Mb", chat_id)
-            bot_methods.send_message(
-                "Please charge your account to start your download.", chat_id)
-        else:
-            bot_methods.send_message(
-                f"Your credit is: {user.credit} Mb", chat_id)
-    return redirect(url_for('index'))
+    # if request.method == 'POST':
+    user = User.query.filter_by(telegram_id=chat_id).first()
+    if user.credit == 0:
+        bot_methods.send_message(
+            f"Your credit is: {user.credit} Mb", chat_id)
+        bot_methods.send_message(
+            "Please charge your account to start your download.", chat_id)
+    else:
+        bot_methods.send_message(
+            f"Your credit is: {user.credit} Mb", chat_id)
+    # return redirect(url_for('index'))

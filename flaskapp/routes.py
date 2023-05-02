@@ -19,7 +19,7 @@ def index():
                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
                 ans = bot_methods.get_chat_member(channel_id, chat_id)
                 json_data = json.loads(ans)
-                stat = json_data['status']
+                stat = json_data['result']['status']
                 if stat == 'member':
                     bot_methods.send_message("hooooraaa", chat_id)
                 # if ans == "member":

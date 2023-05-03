@@ -77,9 +77,9 @@ def index():
     #             # elif txt == "/c5":
     #             #     bot_methods.send_message("Please Choose a Username: ", chat_id)
 
-    #         return Response('ok', status=200)
-    # else:
-    #     return '<h1>Not OK</h1>'
+        return Response('ok', status=200)
+    else:
+        return '<h1>Not OK</h1>'
 
 
 def status(chat_id):

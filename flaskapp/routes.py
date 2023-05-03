@@ -11,9 +11,9 @@ def index():
         msg = request.get_json()
 
         if "callback_query" in msg:
-            from_id = msg['callback_query']['from']['id']
+            callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
-            bot_methods.send_message(callback_data, from_id)
+            bot_methods.send_message(callback_data, callback_from_id)
         else:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
@@ -25,7 +25,7 @@ def index():
                 if user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                    if stat == 'creator':
+                    if stat == 'left':
                         inline_keyboard = [[
                             {
                                 "text": "A",
@@ -33,7 +33,7 @@ def index():
                             },
                             {
                                 "text": "B",
-                                "url": "https://www.google.com/"
+                                "url": "https://t.me/al102030_D"
                             }],
                             [{
                                 "text": "C",
@@ -46,7 +46,22 @@ def index():
                     bot_methods.send_message(
                         f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
-                        pass
+                        inline_keyboard = [[
+                            {
+                                "text": "A",
+                                "callback_data": "A1"
+                            },
+                            {
+                                "text": "B",
+                                "url": "https://t.me/al102030_D"
+                            }],
+                            [{
+                                "text": "C",
+                                "url": "https://www.google.com/"
+                            }]
+                        ]
+                        bot_methods.send_message_with_keyboard(
+                            "with keyboard", chat_id, inline_keyboard)
                     user = User(telegram_id=chat_id, credit=0)
                     db.session.add(user)
                     db.session.commit()
@@ -64,13 +79,28 @@ def index():
                                             I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
 
                                             Thank you for your trustiness.
-                                            
+
                                             Let's go on...""", chat_id)
                 elif txt == "/c3":
                     bot_methods.send_message(
                         "Before Start your download please join our channel: ", chat_id)
                     if stat == 'left':
-                        pass
+                        inline_keyboard = [[
+                            {
+                                "text": "A",
+                                "callback_data": "A1"
+                            },
+                            {
+                                "text": "B",
+                                "url": "https://t.me/al102030_D"
+                            }],
+                            [{
+                                "text": "C",
+                                "url": "https://www.google.com/"
+                            }]
+                        ]
+                        bot_methods.send_message_with_keyboard(
+                            "with keyboard", chat_id, inline_keyboard)
                 elif txt == "/c4":
                     bot_methods.send_message("Charge: ", chat_id)
 

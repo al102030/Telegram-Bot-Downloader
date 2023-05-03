@@ -12,74 +12,74 @@ def index():
 
         # if msg['callback_query_id_'] is not None:
         #     bot_methods.send_message("Callback founded", "112042461")
-        if False:
-            pass
-        else:
-            chat_id = msg['message']['chat']['id']
-            txt = msg['message']['text']
+    #     if False:
+    #         pass
+    #     else:
+    #         chat_id = msg['message']['chat']['id']
+    #         txt = msg['message']['text']
 
-            if txt == "/start":
-                user = User.query.filter_by(telegram_id=chat_id).first()
-                ans = bot_methods.get_chat_member(channel_id, chat_id)
-                json_data = json.loads(ans)
-                stat = json_data['result']['status']
-                if user:
-                    bot_methods.send_message(
-                        f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                    if stat == 'left':
-                        inline_keyboard = [[
-                            {
-                                "text": "A",
-                                "callback_data": "A1"
-                            },
-                            {
-                                "text": "B",
-                                "url": "https://www.google.com/"
-                            }],
-                            [{
-                                "text": "C",
-                                "url": "https://www.google.com/"
-                            }]
-                        ]
-                        bot_methods.send_message_with_keyboard(
-                            "with keyboard", chat_id, inline_keyboard)
-                else:
-                    bot_methods.send_message(
-                        f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
-                    if stat == 'left':
-                        pass
-                    user = User(telegram_id=chat_id, credit=0)
-                    db.session.add(user)
-                    db.session.commit()
-            else:
-                if txt == "/c1":
-                    if user:
-                        status(chat_id=chat_id)
-                    else:
-                        user = User(telegram_id=chat_id, credit=0)
-                        db.session.add(user)
-                        db.session.commit()
-                        status(chat_id=chat_id)
-                elif txt == "/c2":
-                    bot_methods.send_message("""Hi there!
-                                            I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
+    #         if txt == "/start":
+    #             user = User.query.filter_by(telegram_id=chat_id).first()
+    #             ans = bot_methods.get_chat_member(channel_id, chat_id)
+    #             json_data = json.loads(ans)
+    #             stat = json_data['result']['status']
+    #             if user:
+    #                 bot_methods.send_message(
+    #                     f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
+    #                 if stat == 'left':
+    #                     inline_keyboard = [[
+    #                         {
+    #                             "text": "A",
+    #                             "callback_data": "A1"
+    #                         },
+    #                         {
+    #                             "text": "B",
+    #                             "url": "https://www.google.com/"
+    #                         }],
+    #                         [{
+    #                             "text": "C",
+    #                             "url": "https://www.google.com/"
+    #                         }]
+    #                     ]
+    #                     bot_methods.send_message_with_keyboard(
+    #                         "with keyboard", chat_id, inline_keyboard)
+    #             else:
+    #                 bot_methods.send_message(
+    #                     f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
+    #                 if stat == 'left':
+    #                     pass
+    #                 user = User(telegram_id=chat_id, credit=0)
+    #                 db.session.add(user)
+    #                 db.session.commit()
+    #         else:
+    #             if txt == "/c1":
+    #                 if user:
+    #                     status(chat_id=chat_id)
+    #                 else:
+    #                     user = User(telegram_id=chat_id, credit=0)
+    #                     db.session.add(user)
+    #                     db.session.commit()
+    #                     status(chat_id=chat_id)
+    #             elif txt == "/c2":
+    #                 bot_methods.send_message("""Hi there!
+    #                                         I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
 
-                                            Thank you for your trustiness.
-                                            
-                                            Let's go on...""", chat_id)
-                elif txt == "/c3":
-                    bot_methods.send_message(
-                        "Before Start your download please join our channel: ", chat_id)
-                    if stat == 'left':
-                        pass
-                # elif txt == "/c4":
-                #     bot_methods.send_message("Logout: ", chat_id)
-                # elif txt == "/c5":
-                #     bot_methods.send_message("Please Choose a Username: ", chat_id)
+    #                                         Thank you for your trustiness.
 
-            return Response('ok', status=200)
-    else:
-        return '<h1>Not OK</h1>'
+    #                                         Let's go on...""", chat_id)
+    #             elif txt == "/c3":
+    #                 bot_methods.send_message(
+    #                     "Before Start your download please join our channel: ", chat_id)
+    #                 if stat == 'left':
+    #                     pass
+    #             # elif txt == "/c4":
+    #             #     bot_methods.send_message("Logout: ", chat_id)
+    #             # elif txt == "/c5":
+    #             #     bot_methods.send_message("Please Choose a Username: ", chat_id)
+
+    #         return Response('ok', status=200)
+    # else:
+    #     return '<h1>Not OK</h1>'
 
 
 def status(chat_id):

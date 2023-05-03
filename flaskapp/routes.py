@@ -10,27 +10,12 @@ def index():
         channel_id = "-1001904767094"
         private_channel_id = "-1001976338494"
         msg = request.get_json()
-        chat_id = msg['message']['chat']['id']
-        txt = msg['message']['text']
-        inline_keyboard = [[
-            {
-                "text": "A",
-                "callback_data": "A1"
-            },
-            {
-                "text": "B",
-                "url": "https://www.google.com/"
-            }],
-            [{
-                "text": "C",
-                "url": "https://www.google.com/"
-            }]
-        ]
-        bot_methods.send_message_with_keyboard(
-            "with keyboard", chat_id, inline_keyboard)
+
         if msg['callback_query'] is not None:
-            bot_methods.send_message("Callback founded", chat_id)
+            bot_methods.send_message("Callback founded", "112042461")
         else:
+            chat_id = msg['message']['chat']['id']
+            txt = msg['message']['text']
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
@@ -41,6 +26,22 @@ def index():
                 if user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
+                    inline_keyboard = [[
+                        {
+                            "text": "A",
+                                    "callback_data": "A1"
+                        },
+                        {
+                            "text": "B",
+                                    "url": "https://www.google.com/"
+                        }],
+                        [{
+                            "text": "C",
+                                    "url": "https://www.google.com/"
+                        }]
+                    ]
+                    bot_methods.send_message_with_keyboard(
+                        "with keyboard", chat_id, inline_keyboard)
                     if stat == 'left':
                         bot_methods.forward_message(
                             4, chat_id, private_channel_id)

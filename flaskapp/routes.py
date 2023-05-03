@@ -82,8 +82,6 @@ def index():
 
                                             Let's go on...""", chat_id)
                 elif txt == "/c3":
-                    bot_methods.send_message(
-                        "Before Start your download please join our channel: ", chat_id)
                     if stat == 'left':
                         inline_keyboard = [[
                             {
@@ -101,6 +99,8 @@ def index():
                         ]
                         bot_methods.send_message_with_keyboard(
                             "with keyboard", chat_id, inline_keyboard)
+                    bot_methods.send_message(
+                        "Enter your YouTube Link to start your download: ", chat_id)
                 elif txt == "/c4":
                     my_menu = [[
                         {
@@ -112,6 +112,8 @@ def index():
                     ]
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, my_menu)
+                elif "youtube" in txt:
+                    pass
 
         return Response('ok', status=200)
     else:
@@ -128,3 +130,7 @@ def status(chat_id):
     else:
         bot_methods.send_message(
             f"Your credit is: {user.credit} Mb", chat_id)
+
+
+def youtube_download():
+    pass

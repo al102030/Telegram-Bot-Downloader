@@ -9,6 +9,7 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
+        bot_methods.send_message(str(msg), "112042461")
 
         # if msg['callback_query_id_'] is not None:
         #     bot_methods.send_message("Callback founded", "112042461")

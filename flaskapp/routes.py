@@ -18,10 +18,10 @@ def index():
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user = User.query.filter_by(telegram_id=chat_id).first()
+            ans = bot_methods.get_chat_member(channel_id, chat_id)
+            json_data = json.loads(ans)
+            stat = json_data['result']['status']
             if txt == "/start":
-                ans = bot_methods.get_chat_member(channel_id, chat_id)
-                json_data = json.loads(ans)
-                stat = json_data['result']['status']
                 if user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
@@ -71,10 +71,8 @@ def index():
                         "Before Start your download please join our channel: ", chat_id)
                     if stat == 'left':
                         pass
-                # elif txt == "/c4":
-                #     bot_methods.send_message("Logout: ", chat_id)
-                # elif txt == "/c5":
-                #     bot_methods.send_message("Please Choose a Username: ", chat_id)
+                elif txt == "/c4":
+                    bot_methods.send_message("Charge: ", chat_id)
 
         return Response('ok', status=200)
     else:

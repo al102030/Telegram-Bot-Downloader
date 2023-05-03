@@ -64,6 +64,28 @@ class Telegram:
                                  headers=headers, timeout=20)
         return response
 
+    def send_message_with_menu(self, text, chat_id, menu):
+        req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+        payload = {
+            "text": text,
+            "chat_id": chat_id,
+            "disable_web_page_preview": False,
+            "disable_notification": False,
+            "parse_mode": 'html',
+            "reply_markup": {
+                "keyboard": menu,
+                "resize_keyboard": True,
+                "one_time_keyboard": True
+            }  # reply_markup
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+        response = requests.post(req_url, json=payload,
+                                 headers=headers, timeout=20)
+        return response
+
     def forward_message(self, message_id, chat_id, from_chat_id):
 
         url = f"https://api.telegram.org/bot{self.token}/forwardMessage"

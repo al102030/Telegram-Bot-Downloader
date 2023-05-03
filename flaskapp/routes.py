@@ -102,7 +102,16 @@ def index():
                         bot_methods.send_message_with_keyboard(
                             "with keyboard", chat_id, inline_keyboard)
                 elif txt == "/c4":
-                    bot_methods.send_message("Charge: ", chat_id)
+                    my_menu = [[
+                        {
+                            "text": "Yes",
+                        },
+                        {
+                            "text": "No",
+                        }]
+                    ]
+                    bot_methods.send_message_with_menu(
+                        "Are you Sure?", chat_id, my_menu)
 
         return Response('ok', status=200)
     else:

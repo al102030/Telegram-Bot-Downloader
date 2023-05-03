@@ -25,7 +25,7 @@ def index():
                 if user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                    if stat == 'left':
+                    if stat == 'creator':
                         inline_keyboard = [[
                             {
                                 "text": "A",

@@ -8,13 +8,14 @@ from flaskapp.models import User
 def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
-        msg = request.get_json()
-        bot_methods.send_message(json.dumps(msg), "112042461")
+        data = request.get_json()
+        msg = json.dumps(msg)
 
         # if msg['callback_query_id_'] is not None:
         #     bot_methods.send_message("Callback founded", "112042461")
-        if False:
-            pass
+        if "callback_query" in msg:
+            callback_data = msg['callback_query']['data']
+            bot_methods.send_message(callback_data, "112042461")
         else:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']

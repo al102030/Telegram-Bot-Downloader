@@ -8,8 +8,8 @@ from flaskapp.models import User
 def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
-        data = request.get_json()
-        msg = json.dumps(data)
+        msg = request.get_json()
+        # msg = json.dumps(data)
 
         # if msg['callback_query_id_'] is not None:
         #     bot_methods.send_message("Callback founded", "112042461")

@@ -8,49 +8,46 @@ from flaskapp.models import User
 def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
-        private_channel_id = "-1001976338494"
         msg = request.get_json()
 
-        if msg['callback_query_id_'] is not None:
-            bot_methods.send_message("Callback founded", "112042461")
+        # if msg['callback_query_id_'] is not None:
+        #     bot_methods.send_message("Callback founded", "112042461")
+        if False:
+            pass
         else:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
-            ans = bot_methods.get_chat_member(channel_id, chat_id)
-            json_data = json.loads(ans)
-            stat = json_data['result']['status']
-
-            user = User.query.filter_by(telegram_id=chat_id).first()
 
             if txt == "/start":
+                user = User.query.filter_by(telegram_id=chat_id).first()
+                ans = bot_methods.get_chat_member(channel_id, chat_id)
+                json_data = json.loads(ans)
+                stat = json_data['result']['status']
                 if user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
-                    inline_keyboard = [[
-                        {
-                            "text": "A",
-                                    "callback_data": "A1"
-                        },
-                        {
-                            "text": "B",
-                                    "url": "https://www.google.com/"
-                        }],
-                        [{
-                            "text": "C",
-                                    "url": "https://www.google.com/"
-                        }]
-                    ]
-                    bot_methods.send_message_with_keyboard(
-                        "with keyboard", chat_id, inline_keyboard)
                     if stat == 'left':
-                        bot_methods.forward_message(
-                            4, chat_id, private_channel_id)
+                        inline_keyboard = [[
+                            {
+                                "text": "A",
+                                "callback_data": "A1"
+                            },
+                            {
+                                "text": "B",
+                                "url": "https://www.google.com/"
+                            }],
+                            [{
+                                "text": "C",
+                                "url": "https://www.google.com/"
+                            }]
+                        ]
+                        bot_methods.send_message_with_keyboard(
+                            "with keyboard", chat_id, inline_keyboard)
                 else:
                     bot_methods.send_message(
                         f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
-                        bot_methods.forward_message(
-                            4, chat_id, private_channel_id)
+                        pass
                     user = User(telegram_id=chat_id, credit=0)
                     db.session.add(user)
                     db.session.commit()
@@ -74,8 +71,7 @@ def index():
                     bot_methods.send_message(
                         "Before Start your download please join our channel: ", chat_id)
                     if stat == 'left':
-                        bot_methods.forward_message(
-                            4, chat_id, private_channel_id)
+                        pass
                 # elif txt == "/c4":
                 #     bot_methods.send_message("Logout: ", chat_id)
                 # elif txt == "/c5":

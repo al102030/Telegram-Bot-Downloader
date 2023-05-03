@@ -17,9 +17,8 @@ def index():
         else:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
-
+            user = User.query.filter_by(telegram_id=chat_id).first()
             if txt == "/start":
-                user = User.query.filter_by(telegram_id=chat_id).first()
                 ans = bot_methods.get_chat_member(channel_id, chat_id)
                 json_data = json.loads(ans)
                 stat = json_data['result']['status']

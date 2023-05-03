@@ -1,4 +1,4 @@
-from flaskapp import app, bot_methods
+from flaskapp import bot_methods, app
 from config.secret import url
 
 

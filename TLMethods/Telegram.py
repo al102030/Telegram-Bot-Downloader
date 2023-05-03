@@ -35,7 +35,26 @@ class Telegram:
             "chat_id": chat_id,
             "disable_web_page_preview": False,
             "disable_notification": False,
-            "reply_to_message_id": None
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+        response = requests.post(req_url, json=payload,
+                                 headers=headers, timeout=20)
+        return response
+
+    def send_message_with_keyboard(self, text, chat_id, keyboard):
+        req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+        payload = {
+            "text": text,
+            "chat_id": chat_id,
+            "disable_web_page_preview": False,
+            "disable_notification": False,
+            "parse_mode": 'html',
+            "reply_markup": {
+                "inline_keyboard": keyboard
+            }  # reply_markup
         }
         headers = {
             "accept": "application/json",

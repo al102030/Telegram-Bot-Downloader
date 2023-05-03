@@ -11,7 +11,7 @@ def index():
         private_channel_id = "-1001976338494"
         msg = request.get_json()
 
-        if msg['callback_query'] is not None:
+        if msg['callback_query_id_'] is not None:
             bot_methods.send_message("Callback founded", "112042461")
         else:
             chat_id = msg['message']['chat']['id']

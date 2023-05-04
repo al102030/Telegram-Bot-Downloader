@@ -3,6 +3,7 @@ from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from flaskapp.models import User
+from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -27,42 +28,16 @@ def index():
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
-                        inline_keyboard = [[
-                            {
-                                "text": "A",
-                                "callback_data": "A1"
-                            },
-                            {
-                                "text": "B",
-                                "url": "https://t.me/al102030_D"
-                            }],
-                            [{
-                                "text": "C",
-                                "url": "https://www.google.com/"
-                            }]
-                        ]
+                        inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "with keyboard", chat_id, inline_keyboard)
+                            "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                 else:
                     bot_methods.send_message(
                         f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
-                        inline_keyboard = [[
-                            {
-                                "text": "A",
-                                "callback_data": "A1"
-                            },
-                            {
-                                "text": "B",
-                                "url": "https://t.me/al102030_D"
-                            }],
-                            [{
-                                "text": "C",
-                                "url": "https://www.google.com/"
-                            }]
-                        ]
+                        inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "with keyboard", chat_id, inline_keyboard)
+                            "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                     user = User(telegram_id=chat_id, credit=0)
                     db.session.add(user)
                     db.session.commit()
@@ -84,53 +59,20 @@ def index():
                                             Let's go on...""", chat_id)
                 elif txt == "/c3":
                     if stat == 'left':
-                        inline_keyboard = [[
-                            {
-                                "text": "I already joined!",
-                                "callback_data": "A1"
-                            },
-                            {
-                                "text": "Join to channel",
-                                "url": "https://t.me/al102030_D"
-                            }]
-                        ]
+                        inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
                             "with keyboard", chat_id, inline_keyboard)
                     elif user.credit == 0:
-                        inline_keyboard = [
-                            [{
-                                "text": "5-Gig",
-                                "callback_data": "5g"
-                            },
-                                {
-                                "text": "10-Gig",
-                                "callback_data": "105"
-                            }],
-                            [{
-                                "text": "20-Gig",
-                                "callback_data": "20g"
-                            },
-                                {
-                                "text": "30-Gig",
-                                "callback_data": "30g"
-                            }]
-                        ]
+                        inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
                             "with keyboard", chat_id, inline_keyboard)
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
                 elif txt == "/c4":
-                    my_menu = [[
-                        {
-                            "text": "Yes",
-                        },
-                        {
-                            "text": "No",
-                        }]
-                    ]
+                    options = simple_options
                     bot_methods.send_message_with_menu(
-                        "Are you Sure?", chat_id, my_menu)
+                        "Are you Sure?", chat_id, options)
                 elif "youtube" in txt:
                     pass
 
@@ -154,8 +96,10 @@ def status(chat_id):
 def youtube_download(link, chat_id):
     try:
         youtube = YouTube(link)
-        youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
-            'resolution').desc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
+        print(youtube.streams.get_highest_resolution().filesize)
+
+        # youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
+        #     'resolution').asc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
     except exceptions.AgeRestrictedError as error:
         print(error)
     except exceptions.VideoUnavailable as error:

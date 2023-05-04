@@ -86,22 +86,40 @@ def index():
                     if stat == 'left':
                         inline_keyboard = [[
                             {
-                                "text": "A",
+                                "text": "I already joined!",
                                 "callback_data": "A1"
                             },
                             {
-                                "text": "B",
+                                "text": "Join to channel",
                                 "url": "https://t.me/al102030_D"
-                            }],
-                            [{
-                                "text": "C",
-                                "url": "https://www.google.com/"
                             }]
                         ]
                         bot_methods.send_message_with_keyboard(
                             "with keyboard", chat_id, inline_keyboard)
-                    bot_methods.send_message(
-                        "Enter your YouTube Link to start your download: ", chat_id)
+                    elif user.credit is 0:
+                        inline_keyboard = [
+                            [{
+                                "text": "5-Gig",
+                                "callback_data": "5g"
+                            },
+                                {
+                                "text": "10-Gig",
+                                "callback_data": "105"
+                            }],
+                            [{
+                                "text": "20-Gig",
+                                "callback_data": "20g"
+                            },
+                                {
+                                "text": "30-Gig",
+                                "callback_data": "30g"
+                            }]
+                        ]
+                        bot_methods.send_message_with_keyboard(
+                            "with keyboard", chat_id, inline_keyboard)
+                    else:
+                        bot_methods.send_message(
+                            "Enter your YouTube Link to start your download: ", chat_id)
                 elif txt == "/c4":
                     my_menu = [[
                         {
@@ -133,11 +151,18 @@ def status(chat_id):
             f"Your credit is: {user.credit} Mb", chat_id)
 
 
-def youtube_download(link):
-    YouTube(link).streams.first().download()
+def youtube_download(link, chat_id):
     try:
         youtube = YouTube(link)
         youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
-            'resolution').desc().first().download(output_path='DL')
+            'resolution').desc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
     except exceptions.AgeRestrictedError as error:
         print(error)
+    except exceptions.VideoUnavailable as error:
+        print(error)
+    except exceptions.ExtractError as error:
+        print(error)
+    except exceptions.PytubeError as error:
+        print(error)
+    else:
+        print("No exceptions were thrown.")

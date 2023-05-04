@@ -96,7 +96,7 @@ def index():
                         ]
                         bot_methods.send_message_with_keyboard(
                             "with keyboard", chat_id, inline_keyboard)
-                    elif user.credit is 0:
+                    elif user.credit == 0:
                         inline_keyboard = [
                             [{
                                 "text": "5-Gig",

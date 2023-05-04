@@ -98,8 +98,8 @@ def youtube_download(link, chat_id):
         youtube = YouTube(link)
         print(youtube.streams.get_highest_resolution().filesize)
 
-        # youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
-        #     'resolution').asc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
+        youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
+            'resolution').asc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
     except exceptions.AgeRestrictedError as error:
         print(error)
     except exceptions.VideoUnavailable as error:

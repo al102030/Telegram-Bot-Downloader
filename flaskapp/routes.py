@@ -1,4 +1,5 @@
 import json
+from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from flaskapp.models import User
@@ -132,5 +133,11 @@ def status(chat_id):
             f"Your credit is: {user.credit} Mb", chat_id)
 
 
-def youtube_download():
-    pass
+def youtube_download(link):
+    YouTube(link).streams.first().download()
+    try:
+        youtube = YouTube(link)
+        youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
+            'resolution').desc().first().download(output_path='DL')
+    except exceptions.AgeRestrictedError as error:
+        print(error)

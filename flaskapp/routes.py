@@ -12,18 +12,24 @@ def index():
         msg = request.get_json()
 
         if "callback_query" in msg:
+            stat = json_data['result']['status']
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
+            ans = bot_methods.get_chat_member(channel_id, callback_from_id)
+            json_data = json.loads(ans)
             if callback_data == "01d0cfb8b904ad49":
-                bot_methods.send_message(
-                    "🍀Thank you for joining us.🍀\nNow you can use our services.",
-                    callback_from_id)
-                bot_methods.send_message(msg, callback_from_id)
+                if stat != "left":
+                    bot_methods.send_message(
+                        "🍀Thank you for joining us.🍀\nNow you can use our services.",
+                        callback_from_id)
+                else:
+                    bot_methods.answer_callback_query(
+                        "Sorry! You're still not in our channel list.\nPlease join us:\nChannel: https://t.me/al102030_D",
+                        callback_id, True)
             elif callback_data == "e01fdd230aeaa411":
                 bot_methods.send_message(
-                    msg, callback_from_id)
-                bot_methods.answer_callback_query("It's OK", callback_id, True)
+                    "5 Gigabyte add to your account.\ncongratulations!", callback_from_id)
             elif callback_data == "1a710b5dc955e113":
                 bot_methods.send_message(
                     "10 Gigabyte add to your account.\ncongratulations!", callback_from_id)

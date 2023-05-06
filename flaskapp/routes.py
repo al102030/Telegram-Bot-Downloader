@@ -1,5 +1,5 @@
 import json
-from flask import request, Response
+from flask import request, Response, redirect, url_for
 from flaskapp import app, bot_methods, db
 from flaskapp.models import User
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options
@@ -112,6 +112,7 @@ def index():
                         # x = app.send_static_file("DL/weeknd.mp4")
                         # "Your download has already started."
                         bot_methods.send_message("ah", chat_id)
+                        return redirect(url_for('static_file', filename='DL/weeknd.mp4'))
 
         return Response('ok', status=200)
     else:
@@ -120,7 +121,7 @@ def index():
 
 @app.route('/<path:path>')
 def static_file(path):
-    return app.send_static_file(path)
+    print(app.send_static_file(path))
 
 
 def status(chat_id):

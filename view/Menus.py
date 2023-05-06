@@ -39,15 +39,3 @@ simple_options = [[
         "callback_data": "077ed846dd04bb80"
     }]
 ]
-
-
-confirm_download = [[
-    {
-        "text": "Download",
-        "callback_data": "fde79a792907f31d"
-    },
-    {
-        "text": "Cancel",
-        "callback_data": "fd19a46d9dd60ade"
-    }]
-]

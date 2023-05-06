@@ -1,34 +1,32 @@
-# from pytube import YouTube, exceptions
+import requests
+from pytube import YouTube, exceptions
 
 
-# class Youtube:
-#     def __init__(self, link) -> None:
-#         self.ln = link
+class Youtube:
+    def __init__(self, link) -> None:
+        self.link = link
 
-#     def check_url(self):
-#         pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
-#         request = requests.get(tubeurl, timeout=20)
-#         return False if pattern in request.text else True
+    def check_url(self):
+        pattern = '"playabilityStatus":{"status":"ERROR","reason":"Video unavailable"'
+        request = requests.get(self.link, timeout=20)
+        return False if pattern in request.text else True
 
-#     def youtube_file_size(self):
+    def youtube_file_size(self):
+        youtube = YouTube(self.link)
+        return youtube.streams.get_highest_resolution().filesize
 
-#         return youtube.streams.get_highest_resolution().filesize
-
-#     def youtube_download(self, chat_id):
-#         try:
-#             youtube = YouTube(self.link)
-
-#             youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
-#                 'resolution').asc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
-#         except exceptions.AgeRestrictedError as error:
-#             print(error)
-#         except exceptions.VideoUnavailable as error:
-#             print(error)
-#         except exceptions.ExtractError as error:
-#             print(error)
-#         except exceptions.PytubeError as error:
-#             print(error)
-#         except exceptions.LiveStreamError as error:
-#             print(error)
-#         else:
-#             print("No exceptions were thrown.")
+    def youtube_download(self, chat_id):
+        try:
+            youtube = YouTube(self.link)
+            youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
+                'resolution').asc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
+        except exceptions.AgeRestrictedError as error:
+            return error
+        except exceptions.VideoUnavailable as error:
+            return error
+        except exceptions.ExtractError as error:
+            return error
+        except exceptions.PytubeError as error:
+            return error
+        else:
+            return "No exceptions were thrown."

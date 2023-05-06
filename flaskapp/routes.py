@@ -1,8 +1,10 @@
 import json
+import math
 from flask import request, Response
 from flaskapp import app, bot_methods, db
+from pytube import YouTube
 from flaskapp.models import User
-from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options
+from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, confirm_download
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -95,12 +97,22 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
+                        options = confirm_download
+                        bot_methods.send_message_with_menu(
+                            "Are you Sure?", chat_id, options)
                 elif txt == "/c4":
                     options = simple_options
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
-                elif "youtube" in txt:
-                    pass
+                elif "youtube.com/" in txt:
+                    youtube = YouTube(txt)
+                    file_size = math.ceil(
+                        (youtube.streams.get_highest_resolution().filesize)/1000000)
+                    user = User.query.filter_by(
+                        telegram_id=chat_id).first()
+                    if (user.credit - file_size) >= 0:
+                        bot_methods.send_message(
+                            "Your download has already started.", chat_id)
 
         return Response('ok', status=200)
     else:

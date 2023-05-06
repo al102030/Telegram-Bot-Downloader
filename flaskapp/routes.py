@@ -105,16 +105,16 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
-                    bot_methods.send_message(
-                        txt, chat_id)
+                    # bot_methods.send_message(
+                    #     txt, chat_id)
                     youtube = YouTube(txt)
                     file_size = math.ceil(
                         (youtube.streams.get_highest_resolution().filesize)/1000000)
-                    user = User.query.filter_by(
-                        telegram_id=chat_id).first()
-                    if (user.credit - file_size) >= 0:
-                        bot_methods.send_message(
-                            "Your download has already started.", chat_id)
+                    # user = User.query.filter_by(
+                    #     telegram_id=chat_id).first()
+                    # if (user.credit - file_size) >= 0:
+                    bot_methods.send_message(
+                        file_size, chat_id)  # "Your download has already started."
 
         return Response('ok', status=200)
     else:

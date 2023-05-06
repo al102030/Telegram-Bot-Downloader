@@ -102,7 +102,7 @@ def index():
                     options = simple_options
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
-                elif "youtube=2" in txt:
+                elif "ll" in txt:
                     # youtube = YouTube(txt)
                     # file_size = math.ceil(
                     #     (youtube.streams.get_highest_resolution().filesize)/1000000)
@@ -110,11 +110,16 @@ def index():
                         telegram_id=chat_id).first()
                     if (user.credit - 2) >= 0:
                         bot_methods.send_message(
-                            "Your download has already started.", chat_id)  # "Your download has already started."
+                            app.send_static_file("DL/weeknd.mp4"), chat_id)  # "Your download has already started."
 
         return Response('ok', status=200)
     else:
         return '<h1>Not OK</h1>'
+
+
+@app.route('/<path:path>')
+def static_file(path):
+    return app.send_static_file(path)
 
 
 def status(chat_id):

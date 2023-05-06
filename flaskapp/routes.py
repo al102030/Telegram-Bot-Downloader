@@ -23,6 +23,7 @@ def index():
             elif callback_data == "e01fdd230aeaa411":
                 bot_methods.send_message(
                     msg, callback_from_id)
+                bot_methods.answer_callback_query("It's OK", callback_id, True)
             elif callback_data == "1a710b5dc955e113":
                 bot_methods.send_message(
                     "10 Gigabyte add to your account.\ncongratulations!", callback_from_id)
@@ -83,7 +84,7 @@ def index():
                     elif user.credit == 0:
                         inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "Your account credit is not enough to start download.\n Please choose one of the below options and charge your account.\nThank you",
+                            "You do not have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                             chat_id, inline_keyboard)
                     else:
                         bot_methods.send_message(

@@ -12,12 +12,12 @@ def index():
         msg = request.get_json()
 
         if "callback_query" in msg:
-            stat = json_data['result']['status']
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
             ans = bot_methods.get_chat_member(channel_id, callback_from_id)
             json_data = json.loads(ans)
+            stat = json_data['result']['status']
             if callback_data == "01d0cfb8b904ad49":
                 if stat != "left":
                     bot_methods.send_message(

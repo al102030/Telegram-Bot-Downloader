@@ -86,15 +86,14 @@ class Telegram:
                                  headers=headers, timeout=20)
         return response
 
-    def send_message_alert(self, text, chat_id):
-        req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+    def answer_callback_query(self, text, query_id, show_alert):
+        req_url = f"https://api.telegram.org/bot{self.token}/answerCallbackQuery"
         payload = {
             "text": text,
-            "chat_id": chat_id,
+            "callback_query_id": query_id,
             "disable_web_page_preview": False,
             "disable_notification": False,
-            "parse_mode": 'html',
-            "show_alert": True
+            "show_alert": show_alert
         }
         headers = {
             "accept": "application/json",

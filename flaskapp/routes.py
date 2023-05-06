@@ -19,8 +19,7 @@ def index():
                 bot_methods.send_message(
                     "🍀Thank you for joining us.🍀\nNow you can use our services.", callback_from_id)
             elif callback_data == "e01fdd230aeaa411":
-                bot_methods.send_message(
-                    callback_id, callback_from_id)
+                bot_methods.answer_callback_query("hi", callback_id, True)
             elif callback_data == "1a710b5dc955e113":
                 bot_methods.send_message(
                     "10 Gigabyte add to your account.\ncongratulations!", callback_from_id)
@@ -76,11 +75,13 @@ def index():
                     if stat == 'left':
                         inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "with keyboard", chat_id, inline_keyboard)
+                            "Please Join our channel to use our services.\nThank you.",
+                            chat_id, inline_keyboard)
                     elif user.credit == 0:
                         inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "with keyboard", chat_id, inline_keyboard)
+                            "Your account credit is not enough to start download.\n Please choose one of the below options and charge your account.\nThank you",
+                            chat_id, inline_keyboard)
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)

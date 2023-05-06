@@ -102,7 +102,7 @@ def index():
                     options = simple_options
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
-                elif "ll" in txt:
+                elif "Ll" in txt:
                     # youtube = YouTube(txt)
                     # file_size = math.ceil(
                     #     (youtube.streams.get_highest_resolution().filesize)/1000000)

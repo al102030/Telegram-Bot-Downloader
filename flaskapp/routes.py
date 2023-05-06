@@ -12,12 +12,15 @@ def index():
         msg = request.get_json()
 
         if "callback_query" in msg:
-            # callback_id = msg['callback_query']['id']
+            callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
             if callback_data == "01d0cfb8b904ad49":
                 bot_methods.send_message(
-                    "🍀Thank you for joining us.🍀\nNow you can use our services.", callback_from_id)
+                    "🍀Thank you for joining us.🍀\nNow you can use our services.",
+                    callback_from_id)
+                bot_methods.send_message(
+                    msg, callback_from_id)
             elif callback_data == "e01fdd230aeaa411":
                 bot_methods.send_message(
                     msg, callback_from_id)

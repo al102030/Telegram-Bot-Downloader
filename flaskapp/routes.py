@@ -1,5 +1,4 @@
 import json
-from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from flaskapp.models import User
@@ -15,7 +14,22 @@ def index():
         if "callback_query" in msg:
             callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
-            bot_methods.send_message(callback_data, callback_from_id)
+            if callback_data == "01d0cfb8b904ad4":
+                bot_methods.send_message(
+                    "🍀Thank you for joining us.🍀\nNow you can use our services.", callback_from_id)
+            elif callback_data == "e01fdd230aeaa411":
+                bot_methods.send_message(
+                    "5 Gigabyte add to your account.\ncongratulations!", callback_from_id)
+            elif callback_data == "1a710b5dc955e113":
+                bot_methods.send_message(
+                    "10 Gigabyte add to your account.\ncongratulations!", callback_from_id)
+            elif callback_data == "5e14766d46f51eb7":
+                bot_methods.send_message(
+                    "20 Gigabyte add to your account.\ncongratulations!", callback_from_id)
+            elif callback_data == "ad0eec6b4cf3c8ef":
+                bot_methods.send_message(
+                    "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
+
         else:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
@@ -91,22 +105,3 @@ def status(chat_id):
     else:
         bot_methods.send_message(
             f"Your credit is: {user.credit} Mb", chat_id)
-
-
-def youtube_download(link, chat_id):
-    try:
-        youtube = YouTube(link)
-        print(youtube.streams.get_highest_resolution().filesize)
-
-        youtube.streams.filter(progressive=True, file_extension='mp4').order_by(
-            'resolution').asc().first().download(output_path='DL', filename=chat_id+'-youtube.mp4')
-    except exceptions.AgeRestrictedError as error:
-        print(error)
-    except exceptions.VideoUnavailable as error:
-        print(error)
-    except exceptions.ExtractError as error:
-        print(error)
-    except exceptions.PytubeError as error:
-        print(error)
-    else:
-        print("No exceptions were thrown.")

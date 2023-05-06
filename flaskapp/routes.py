@@ -109,9 +109,9 @@ def index():
                     user = User.query.filter_by(
                         telegram_id=chat_id).first()
                     if (user.credit - 2) >= 0:
-                        x = app.send_static_file("DL/weeknd.mp4")
+                        # x = app.send_static_file("DL/weeknd.mp4")
                         # "Your download has already started."
-                        bot_methods.send_message(x, chat_id)
+                        bot_methods.send_message("ah", chat_id)
 
         return Response('ok', status=200)
     else:

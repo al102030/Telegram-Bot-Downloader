@@ -19,7 +19,8 @@ def index():
                 bot_methods.send_message(
                     "🍀Thank you for joining us.🍀\nNow you can use our services.", callback_from_id)
             elif callback_data == "e01fdd230aeaa411":
-                bot_methods.answer_callback_query("hi", callback_id, True)
+                bot_methods.send_message(
+                    callback_id, callback_from_id)
             elif callback_data == "1a710b5dc955e113":
                 bot_methods.send_message(
                     "10 Gigabyte add to your account.\ncongratulations!", callback_from_id)

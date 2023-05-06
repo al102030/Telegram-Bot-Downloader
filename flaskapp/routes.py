@@ -19,8 +19,7 @@ def index():
                 bot_methods.send_message(
                     "🍀Thank you for joining us.🍀\nNow you can use our services.",
                     callback_from_id)
-                bot_methods.send_message(
-                    msg, callback_from_id)
+                bot_methods.send_message(msg, callback_from_id)
             elif callback_data == "e01fdd230aeaa411":
                 bot_methods.send_message(
                     msg, callback_from_id)

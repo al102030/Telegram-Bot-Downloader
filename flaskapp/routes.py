@@ -84,7 +84,7 @@ def index():
 
                                             Let's go on...""", chat_id)
                 elif txt == "/c3":
-                    if stat == 'left':
+                    if stat == "left":
                         inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
                             "Please Join our channel to use our services.\nThank you.",
@@ -92,14 +92,14 @@ def index():
                     elif user.credit == 0:
                         inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "You do not have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
+                            "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                             chat_id, inline_keyboard)
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
-                        options = confirm_download
-                        bot_methods.send_message_with_menu(
-                            "Are you Sure?", chat_id, options)
+                        # options = confirm_download
+                        # bot_methods.send_message_with_menu(
+                        #     "Are you Sure?", chat_id, options)
                 elif txt == "/c4":
                     options = simple_options
                     bot_methods.send_message_with_menu(

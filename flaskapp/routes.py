@@ -95,24 +95,15 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
-                        # options = confirm_download
-                        # bot_methods.send_message_with_menu(
-                        #     "Are you Sure?", chat_id, options)
                 elif txt == "/c4":
                     options = simple_options
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "Ll" in txt:
-                    # youtube = YouTube(txt)
-                    # file_size = math.ceil(
-                    #     (youtube.streams.get_highest_resolution().filesize)/1000000)
                     user = User.query.filter_by(
                         telegram_id=chat_id).first()
                     if (user.credit - 2) >= 0:
-                        # x = app.send_static_file("DL/weeknd.mp4")
-                        # "Your download has already started."
                         bot_methods.send_message("ah", chat_id)
-                        return redirect(url_for('static_file', filename='DL/weeknd.mp4'))
 
         return Response('ok', status=200)
     else:

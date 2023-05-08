@@ -93,6 +93,13 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
+                        # check url
+                        # get file information
+                        # create record in DB
+                        # download
+                        # decrease user credit
+                        # create link for downloaded file
+                        # send link to user.
                         bot_methods.send_message(
                             "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
                 elif txt == "/c4":

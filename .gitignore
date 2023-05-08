@@ -9,6 +9,7 @@ Pipfile.lock
 .DS_Store
 *.mp4
 token.py
+instance/
 
 
 # C extensions

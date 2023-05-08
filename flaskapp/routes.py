@@ -1,7 +1,7 @@
 import json
-from flask import request, Response, redirect, url_for
+from flask import request, Response
 from flaskapp import app, bot_methods, db
-from flaskapp.models import User
+from flaskapp.models import User, Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options
 
 
@@ -44,6 +44,8 @@ def index():
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user = User.query.filter_by(telegram_id=chat_id).first()
+            download = Download.query.filter_by(
+                user_id=User.id, status=2).first()
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
@@ -95,6 +97,8 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
+                        bot_methods.send_message(
+                            "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
                 elif txt == "/c4":
                     options = simple_options
                     bot_methods.send_message_with_menu(

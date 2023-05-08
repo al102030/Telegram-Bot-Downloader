@@ -1,4 +1,4 @@
-from flaskapp import bot_methods, app
+from flaskapp import bot_methods, app, db
 from config.secret import lnk
 
 if __name__ == "__main__":

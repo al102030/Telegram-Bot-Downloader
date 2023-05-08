@@ -17,6 +17,7 @@ class User(db.Model):
 class Download(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.Text, nullable=False)
+    file_name = db.Column(db.String(30), nullable=False)
     file_wight = db.Column(db.Integer)
     file_type = db.Column(db.String(20))
     date_downloaded = db.Column(

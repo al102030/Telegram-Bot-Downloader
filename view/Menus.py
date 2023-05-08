@@ -39,3 +39,10 @@ simple_options = [[
         "callback_data": "077ed846dd04bb80"
     }]
 ]
+
+start_again = [[
+    {
+        "text": "/start",
+        "callback_data": "41c8a5db39e15f1d"
+    }
+]]

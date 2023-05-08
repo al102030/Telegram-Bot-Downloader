@@ -2,7 +2,7 @@ import json
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from flaskapp.models import User, Download
-from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options
+from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -15,9 +15,14 @@ def index():
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
+            user, new_user = add_new_user(callback_from_id)
             ans = bot_methods.get_chat_member(channel_id, callback_from_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
+            if new_user:
+                options = start_again
+                bot_methods.send_message_with_menu(
+                    "Please start again.", callback_from_id, options)
             if callback_data == "01d0cfb8b904ad49":
                 if stat != "left":
                     bot_methods.send_message(
@@ -43,14 +48,14 @@ def index():
         else:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
-            user = User.query.filter_by(telegram_id=chat_id).first()
+            user, new_user = add_new_user(chat_id)
             download = Download.query.filter_by(
                 user_id=User.id, status=2).first()
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
             if txt == "/start":
-                if user:
+                if new_user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
@@ -64,18 +69,9 @@ def index():
                         inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
                             "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
-                    user = User(telegram_id=chat_id, credit=0)
-                    db.session.add(user)
-                    db.session.commit()
             else:
                 if txt == "/c1":
-                    if user:
-                        status(chat_id=chat_id)
-                    else:
-                        user = User(telegram_id=chat_id, credit=0)
-                        db.session.add(user)
-                        db.session.commit()
-                        status(chat_id=chat_id)
+                    status(chat_id=chat_id)
                 elif txt == "/c2":
                     bot_methods.send_message("""Hi there!
                                             I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
@@ -104,19 +100,22 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "Ll" in txt:
-                    user = User.query.filter_by(
-                        telegram_id=chat_id).first()
-                    if (user.credit - 2) >= 0:
-                        bot_methods.send_message("ah", chat_id)
+                    pass
 
         return Response('ok', status=200)
     else:
         return '<h1>Not OK</h1>'
 
 
-@app.route('/<path:path>')
-def static_file(path):
-    print(app.send_static_file(path))
+def add_new_user(user_id):
+    user = User.query.filter_by(telegram_id=user_id).first()
+    if not user:
+        user = User(telegram_id=user_id, credit=0)
+        db.session.add(user)
+        db.session.commit()
+        return user, True
+    else:
+        return user, False
 
 
 def status(chat_id):

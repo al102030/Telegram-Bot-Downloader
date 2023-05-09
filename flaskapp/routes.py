@@ -10,7 +10,7 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
-        bot_methods.get_chat_member(msg, "112042461")
+        bot_methods.send_message(msg, "112042461")
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']

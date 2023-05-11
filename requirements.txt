@@ -1,0 +1,20 @@
+-i https://pypi.org/simple
+bcrypt==4.0.1 ; python_version >= '3.6'
+blinker==1.6.2 ; python_version >= '3.7'
+certifi==2022.12.7 ; python_version >= '3.6'
+charset-normalizer==3.1.0 ; python_full_version >= '3.7.0'
+click==8.1.3 ; python_version >= '3.7'
+flask==2.3.2
+flask-bcrypt==1.0.1
+flask-sqlalchemy==3.0.3
+greenlet==2.0.2 ; platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))
+idna==3.4 ; python_version >= '3.5'
+itsdangerous==2.1.2 ; python_version >= '3.7'
+jinja2==3.1.2 ; python_version >= '3.7'
+markupsafe==2.1.2 ; python_version >= '3.7'
+git+https://github.com/pytube/pytube@da3141f3d937459cd7cfd9180970b9ec1d14bb5e#egg=pytube
+requests==2.29.0
+sqlalchemy==2.0.12 ; python_version >= '3.7'
+typing-extensions==4.5.0 ; python_version >= '3.7'
+urllib3==1.26.15 ; python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5'
+werkzeug==2.3.3 ; python_version >= '3.8'

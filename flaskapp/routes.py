@@ -103,9 +103,10 @@ def index():
                     if stat != "left" and user.credit != 0:
                         response = requests.get(txt, timeout=20)
                         if response.status_code == 200 and "Video unavailable" not in response.text:
-                            my_video = YouTube(txt)
-                            for stream in my_video.streams:
-                                bot_methods.send_message(stream, chat_id)
+                            pass
+                            # my_video = YouTube(txt)
+                            # for stream in my_video.streams:
+                            #     bot_methods.send_message(stream, chat_id)
                             # create record in DB
                             # download
                             # decrease user credit

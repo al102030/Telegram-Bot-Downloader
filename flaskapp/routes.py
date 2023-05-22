@@ -101,8 +101,10 @@ def index():
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
+                        bot_methods.send_message("OK", chat_id)
                         yt = Youtube(txt)
                         if yt.check_url():
+                            bot_methods.send_message("ok", chat_id)
                             # my_video = YouTube(txt)
                             size = yt.file_size()
                             bot_methods.send_message(size, chat_id)

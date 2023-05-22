@@ -1,4 +1,5 @@
 import json
+import requests
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from flaskapp.models import User, Download
@@ -100,7 +101,7 @@ def index():
                 elif "youtube.com/" in txt:
                     bot_methods.send_message("ok", chat_id)
                     if stat != "left" and user.credit != 0:
-                        response = request.get(txt)
+                        response = requests.get(txt)
                         if response.status_code == 200 and "Video unavailable" not in response.text:
                             # get file information
                             # create record in DB

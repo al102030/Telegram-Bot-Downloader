@@ -102,9 +102,9 @@ def index():
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
                         yt = Youtube(txt)
-                        if yt.check_url(txt):
+                        if yt.check_url():
                             # my_video = YouTube(txt)
-                            size = yt.file_size(txt)
+                            size = yt.file_size()
                             bot_methods.send_message(size, chat_id)
                             # for stream in my_video.streams:
                             #     bot_methods.send_message(stream, chat_id)

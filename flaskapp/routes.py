@@ -51,8 +51,8 @@ def index():
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user, new_user = add_new_user(chat_id)
-            download = Download.query.filter_by(
-                user_id=User.id, status=2).first()
+            # download = Download.query.filter_by(
+            #     user_id=User.id, status=2).first()
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
@@ -103,7 +103,7 @@ def index():
                     if stat != "left" and user.credit != 0:
                         yt = Youtube(txt)
                         if yt.check_url():
-                            size = "00"  # yt.file_size()
+                            size = yt.file_size()
                             bot_methods.send_message(size, chat_id)
                             # for stream in my_video.streams:
                             #     bot_methods.send_message(stream, chat_id)

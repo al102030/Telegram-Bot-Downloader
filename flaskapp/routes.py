@@ -98,7 +98,7 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
-                    if stat != "left" & user.credit != 0:
+                    if stat != "left" and user.credit != 0:
                         response = request.get(txt)
                         if response.status_code == 200 and "Video unavailable" not in response.text:
                             # get file information

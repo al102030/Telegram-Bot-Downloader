@@ -12,7 +12,7 @@ class Youtube:
         return False if pattern in request.text else True
 
     def file_size(self):
-        youtube = YouTube(self.link)
+        youtube = YouTube(self.link, allow_oauth_cache=False)
         return youtube.streams.get_highest_resolution().filesize
 
     def youtube_download(self, chat_id):

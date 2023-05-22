@@ -2,6 +2,7 @@ import json
 import requests
 from flask import request, Response
 from flaskapp import app, bot_methods, db
+from pytube import YouTube
 from flaskapp.models import User, Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
@@ -99,18 +100,19 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
-                    bot_methods.send_message("ok", chat_id)
                     if stat != "left" and user.credit != 0:
-                        response = requests.get(txt)
+                        response = requests.get(txt, timeout=20)
                         if response.status_code == 200 and "Video unavailable" not in response.text:
-                            # get file information
+                            my_video = YouTube(txt)
+                            for stream in my_video.streams:
+                                bot_methods.send_message(stream, chat_id)
                             # create record in DB
                             # download
                             # decrease user credit
                             # create link for downloaded file
                             # send link to user.
-                            bot_methods.send_message(
-                                "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
+                            # bot_methods.send_message(
+                            #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
 
         return Response('ok', status=200)
     else:

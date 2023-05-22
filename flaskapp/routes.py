@@ -1,8 +1,8 @@
 import json
-import requests
+# import requests
 from flask import request, Response
 from flaskapp import app, bot_methods, db
-from pytube import YouTube
+from YouTubMethods.Youtube import Youtube
 from flaskapp.models import User, Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
@@ -101,10 +101,10 @@ def index():
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
-                        response = requests.get(txt, timeout=20)
-                        if response.status_code == 200 and "Video unavailable" not in response.text:
-                            pass
+                        if Youtube.check_url(txt):
                             # my_video = YouTube(txt)
+                            size = Youtube.file_size(txt)
+                            bot_methods.send_message(size, chat_id)
                             # for stream in my_video.streams:
                             #     bot_methods.send_message(stream, chat_id)
                             # create record in DB

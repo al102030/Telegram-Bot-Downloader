@@ -11,7 +11,7 @@ class Youtube:
         request = requests.get(self.link, timeout=20)
         return False if pattern in request.text else True
 
-    def youtube_file_size(self):
+    def file_size(self):
         youtube = YouTube(self.link)
         return youtube.streams.get_highest_resolution().filesize
 

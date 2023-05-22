@@ -93,21 +93,22 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
-                        # check url
-                        # get file information
-                        # create record in DB
-                        # download
-                        # decrease user credit
-                        # create link for downloaded file
-                        # send link to user.
-                        bot_methods.send_message(
-                            "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
                 elif txt == "/c4":
                     options = simple_options
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
-                elif "Ll" in txt:
-                    pass
+                elif "youtube.com/" in txt:
+                    if stat != "left" & user.credit != 0:
+                        response = request.get(txt)
+                        if response.status_code == 200 and "Video unavailable" not in response.text:
+                            # get file information
+                            # create record in DB
+                            # download
+                            # decrease user credit
+                            # create link for downloaded file
+                            # send link to user.
+                            bot_methods.send_message(
+                                "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
 
         return Response('ok', status=200)
     else:

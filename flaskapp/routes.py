@@ -1,7 +1,7 @@
 import json
 import requests
 import pickle
-from pytube import YouTube, exceptions
+from pytube import exceptions  # , YouTube
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from config.secret import GOOGLE_USER, GOOGLE_PASSWORD

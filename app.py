@@ -1,7 +1,5 @@
 from flaskapp import bot_methods, app
 from config.secret import LINK
-# import pickle
-# from pytube import YouTube
 
 if __name__ == "__main__":
     bot_methods.remove_webhook()

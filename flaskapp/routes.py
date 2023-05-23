@@ -113,12 +113,12 @@ def index():
                         yt.cookies = cookies
                         stream = yt.streams.first()
                         stream.download(output_path='static/DL',
-                                        filename=yt.title+'-youtube.mp4')
+                                        filename=chat_id+'.mp4')
                         bot_methods.send_message("hi", chat_id)
                         time.sleep(5)
                         bot_methods.send_chat_action('upload_video', chat_id)
                         bot_methods.send_message(
-                            "https://telapi.digi-arya.ir/static/DL/"+yt.title+".mp4", chat_id)
+                            "https://telapi.digi-arya.ir/static/DL/"+chat_id+".mp4", chat_id)
 
                         # yt = Youtube(txt)
                         # if yt.check_url():

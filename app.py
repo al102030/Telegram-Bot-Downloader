@@ -31,7 +31,7 @@ if __name__ == "__main__":
         cookies = pickle.load(f)
 
     # Use the cookies to download a video
-    yt = YouTube('https://www.youtube.com/watch?v=aBqnyEblhDg')
+    yt = YouTube('https://www.youtube.com/shorts/TW1J-B2roMA')
     yt.cookies = cookies
     stream = yt.streams.first()
     stream.download(output_path='static/DL', filename=yt.title+'-youtube.mp4')

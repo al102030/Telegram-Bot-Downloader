@@ -24,8 +24,8 @@ if __name__ == "__main__":
     yt = pytube.YouTube('https://www.youtube.com/shorts/9t0LEg12qFY')
     username = 'alitestyou14@gmail.com'
     password = 'Mammad123456@'
-    yt.register_on_complete_callback(login_to_youtube(username, password))
     try:
+        yt.register_on_complete_callback(login_to_youtube(username, password))
         stream = yt.streams.filter(progressive=True).first()
         stream.download(output_path='static/DL',
                         filename=yt.title+'-youtube.mp4')

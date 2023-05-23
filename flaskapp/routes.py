@@ -3,7 +3,7 @@ import json
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from YouTubMethods.Youtube import Youtube
-from flaskapp.models import User, Download
+from flaskapp.models import User  # , Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
 

@@ -22,8 +22,8 @@ def login_to_youtube(username, password):
 
 if __name__ == "__main__":
     yt = pytube.YouTube('https://www.youtube.com/shorts/9t0LEg12qFY')
-    username = 'ali.darvishi.kooshali@gmail.com'
-    password = 'A12785152322s'
+    username = 'alitestyou14@gmail.com'
+    password = 'Mammad123456@'
     yt.register_on_complete_callback(login_to_youtube(username, password))
     try:
         stream = yt.streams.filter(progressive=True).first()

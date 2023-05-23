@@ -48,6 +48,7 @@ if __name__ == "__main__":
     # Use the cookies to download a video
     yt = YouTube('https://www.youtube.com/shorts/9t0LEg12qFY')
     yt.cookies = cookies
+    print("OK and ...")
     stream = yt.streams.first()
     stream.download(output_path='static/DL', filename=yt.title+'-youtube.mp4')
 

@@ -30,9 +30,7 @@ if __name__ == "__main__":
         stream.download()
     except pytube.exceptions.AgeRestrictedError as e:
         print("Age-restricted video detected, attempting to bypass.")
-        # Log in to YouTube here
         yt.register_on_complete_callback(login_to_youtube(username, password))
-        # Try again to download the video
         stream = yt.streams.filter(progressive=True).first()
         stream.download(output_path='static/DL',
                         filename=yt.title+'-youtube.mp4')

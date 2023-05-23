@@ -3,7 +3,6 @@ from config.secret import LINK
 # import pickle
 # from pytube import YouTube
 
-
 if __name__ == "__main__":
     bot_methods.remove_webhook()
     bot_methods.set_webhook(LINK)

@@ -104,6 +104,7 @@ def index():
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
                         login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                        bot_methods.send_message("hi", chat_id)
                         # yt = Youtube(txt)
                         # if yt.check_url():
                         #     size = yt.file_size()

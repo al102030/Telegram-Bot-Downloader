@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from TLMethods.Telegram import Telegram
-from config.secret import token
+from config.secret import TOKEN
 
 
 app = Flask(__name__)
@@ -13,6 +13,6 @@ db = SQLAlchemy(app)
 from flaskapp import models  # noqa: E402
 
 bcrypt = Bcrypt(app)
-bot_methods = Telegram(token)
+bot_methods = Telegram(TOKEN)
 
 from flaskapp import routes  # noqa: E402

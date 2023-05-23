@@ -1,8 +1,10 @@
 import json
-# import requests
+import requests
+import pickle
+from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
-from YouTubMethods.Youtube import Youtube
+from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
 from flaskapp.models import User  # , Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
@@ -101,19 +103,20 @@ def index():
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
-                        yt = Youtube(txt)
-                        if yt.check_url():
-                            size = yt.file_size()
-                            bot_methods.send_message(size, chat_id)
-                            # for stream in my_video.streams:
-                            #     bot_methods.send_message(stream, chat_id)
-                            # create record in DB
-                            # download
-                            # decrease user credit
-                            # create link for downloaded file
-                            # send link to user.
-                            # bot_methods.send_message(
-                            #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
+                        login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                        # yt = Youtube(txt)
+                        # if yt.check_url():
+                        #     size = yt.file_size()
+                        #     bot_methods.send_message(size, chat_id)
+                        # for stream in my_video.streams:
+                        #     bot_methods.send_message(stream, chat_id)
+                        # create record in DB
+                        # download
+                        # decrease user credit
+                        # create link for downloaded file
+                        # send link to user.
+                        # bot_methods.send_message(
+                        #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
 
         return Response('ok', status=200)
     else:
@@ -141,3 +144,20 @@ def status(chat_id):
     else:
         bot_methods.send_message(
             f"Your credit is: {user.credit} Mb", chat_id)
+
+
+def login_to_youtube(username, password):
+    session = requests.Session()
+    login_data = {
+        'username': username,
+        'password': password
+    }
+    response = session.post('https://accounts.google.com/signin/v2/identifier?service=youtube&uilel=3&hl=en&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26feature%3Dsign_in_button%26hl%3Den%26next%3D%252F&flowName=GlifWebSignIn&flowEntry=ServiceLogin', data=login_data)
+
+    if response.status_code == 200:
+        print("Logged in to YouTube successfully.")
+        with open('cookies.pkl', 'wb') as f:
+            pickle.dump(session.cookies, f)
+    else:
+        raise exceptions.AgeRestrictedError(
+            "Failed to log in to YouTube.")

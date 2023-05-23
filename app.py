@@ -5,6 +5,9 @@ from config.secret import LINK
 
 
 if __name__ == "__main__":
+    bot_methods.remove_webhook()
+    bot_methods.set_webhook(LINK)
+    app.run(debug=True)
 
     # with open('cookies.pkl', 'rb') as f:
     #     cookies = pickle.load(f)
@@ -26,6 +29,3 @@ if __name__ == "__main__":
     #     stream = yt.streams.filter(progressive=True).first()
     #     stream.download(output_path='static/DL',
     #                     filename=yt.title+'-youtube.mp4')
-    bot_methods.remove_webhook()
-    bot_methods.set_webhook(LINK)
-    app.run(debug=True)

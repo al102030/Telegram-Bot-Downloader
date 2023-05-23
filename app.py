@@ -2,6 +2,7 @@
 # from config.secret import lnk
 import requests
 import pickle
+import time
 from pytube import YouTube
 
 
@@ -28,10 +29,17 @@ if __name__ == "__main__":
         'password': 'Mammad123456@'
     }
     response = session.post(
-        'https://accounts.google.com/ServiceLoginAuth', data=login_data)
+        'https://accounts.google.com/signin/v2/identifier?service=youtube&uilel=3&hl=en&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26feature%3Dsign_in_button%26hl%3Den%26next%3D%252F&flowName=GlifWebSignIn&flowEntry=ServiceLogin"', data=login_data)
     # Save the cookies to a file
-    with open('cookies.pkl', 'wb') as f:
-        pickle.dump(session.cookies, f)
+
+    if response.status_code == 200:
+        print("Logged in to YouTube successfully.")
+        with open('cookies.pkl', 'wb') as f:
+            pickle.dump(session.cookies, f)
+        time.sleep(20)
+    else:
+        raise YouTube.exceptions.AgeRestrictedError(
+            "Failed to log in to YouTube.")
 
     # Load the saved cookies from the file
     with open('cookies.pkl', 'rb') as f:

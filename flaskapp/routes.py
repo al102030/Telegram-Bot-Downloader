@@ -118,7 +118,7 @@ def index():
                         bot_methods.send_chat_action('upload_video', chat_id)
                         time.sleep(5)
                         bot_methods.send_message(
-                            "https://telapi.digi-arya.ir/static/DL/"+str(chat_id)+".mp4", chat_id)
+                            "https://telapi.digi-arya.ir/static/"+str(chat_id)+".mp4", chat_id)
 
                         # yt = Youtube(txt)
                         # if yt.check_url():

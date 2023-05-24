@@ -110,14 +110,14 @@ def index():
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
-                        # stream = yt.streams.first()
-                        # stream.download(output_path='static',
-                        #                 filename=str(chat_id)+'.mp4')
-                        # bot_methods.send_message("hi", chat_id)
-                        # bot_methods.send_chat_action('upload_video', chat_id)
-                        # time.sleep(5)
-                        # bot_methods.send_message(
-                        #     "https://telapi.digi-arya.ir/static/"+str(chat_id)+".mp4", chat_id)
+                        stream = yt.streams.first()
+                        stream.download(output_path='static',
+                                        filename=str(chat_id)+'.mp4')
+                        bot_methods.send_message("hi", chat_id)
+                        bot_methods.send_chat_action('upload_video', chat_id)
+                        time.sleep(5)
+                        bot_methods.send_message(
+                            "https://telapi.digi-arya.ir/static/"+str(chat_id)+".mp4", chat_id)
 
                         # yt = Youtube(txt)
                         # if yt.check_url():

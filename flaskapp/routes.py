@@ -5,7 +5,7 @@ import time
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
-from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
+# from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
 from flaskapp.models import User  # , Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
@@ -104,20 +104,20 @@ def index():
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
-                        login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                        # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                         # Use the cookies to download a video
                         with open('cookies.pkl', 'rb') as f:
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
                         stream = yt.streams.first()
-                        stream.download(output_path='static',
+                        stream.download(output_path='static/DL',
                                         filename=str(chat_id)+'.mp4')
                         bot_methods.send_message("hi", chat_id)
                         bot_methods.send_chat_action('upload_video', chat_id)
                         time.sleep(5)
                         bot_methods.send_message(
-                            "https://telapi.digi-arya.ir/static/"+str(chat_id)+".mp4", chat_id)
+                            "https://telapi.digi-arya.ir/static/DL/"+str(chat_id)+".mp4", chat_id)
 
                         # yt = Youtube(txt)
                         # if yt.check_url():

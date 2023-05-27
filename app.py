@@ -7,7 +7,7 @@ if __name__ == "__main__":
         "BAACAgQAAxkBAAIHyWRyJjnMClrwfkUTDIaT58r-IJhQAALtDQAC--eJU8APKqhFDi7ILwQ")
     x = json.loads(video)
     bot_methods.send_message(x, "112042461")
-    path = x['file_path']
+    path = x["file_path"]
     bot_methods.download_file(
         path, "okok"+'-telegram')
     # bot_methods.remove_webhook()

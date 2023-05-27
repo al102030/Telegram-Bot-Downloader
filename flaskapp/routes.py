@@ -159,7 +159,7 @@ def index():
                 if video_path is not None:
                     bot_methods.send_message("Part 5", chat_id)
                     bot_methods.download_file(
-                        video_path, str(chat_id)+'-telegram')
+                        video_path, chat_id+'-telegram')
                     bot_methods.send_message("Part 6", chat_id)
             except Exception as error:
                 print('Caught this error: ' + repr(error))

@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime as dt
 from flaskapp import db
 
 
@@ -15,13 +15,16 @@ class User(db.Model):
 
 
 class Download(db.Model):
+    current_time = dt.datetime.now()
+    time_stamp = current_time.timestamp()
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.Text, nullable=False)
     file_name = db.Column(db.String(30), nullable=False)
     file_wight = db.Column(db.Integer)
     file_type = db.Column(db.String(20))
-    date_downloaded = db.Column(
-        db.DateTime, nullable=False, default=datetime.utcnow)
+    date_downloaded = db.Column(db.Integer, nullable=False, default=time_stamp)
+    date_delete = db.Column(db.Integer, nullable=False,
+                            default=time_stamp+2592000)
     status = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 

@@ -2,11 +2,12 @@ import json
 import requests
 import pickle
 import time
+import secrets
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
-from flaskapp.models import User  # , Download
+from flaskapp.models import User, Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
 
@@ -27,8 +28,6 @@ def index():
         except KeyError as error:
             print("Video is not find", error)
 
-        # if 'text' in msg:
-        #     bot_methods.send_message(msg, "112042461")
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
@@ -73,7 +72,7 @@ def index():
             json_data = json.loads(ans)
             stat = json_data['result']['status']
             if txt == "/start":
-                if new_user:
+                if not new_user:
                     bot_methods.send_message(
                         f"You already registered in my user's list, Welcome back! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
@@ -132,21 +131,11 @@ def index():
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
-
-                    # yt = Youtube(txt)
-                    # if yt.check_url():
-                    #     size = yt.file_size()
-                    #     bot_methods.send_message(size, chat_id)
-                    # for stream in my_video.streams:
-                    #     bot_methods.send_message(stream, chat_id)
                     # create record in DB
                     # download
                     # decrease user credit
-                    # create link for downloaded file
-                    # send link to user.
-                    # bot_methods.send_message(
-                    #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
         elif is_video:
+            file_name = secrets.token_hex(8)
             chat_id = msg['message']['chat']['id']
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']
@@ -155,14 +144,18 @@ def index():
                 if video is not None:
                     video_json = json.loads(video)
                     path = video_json["result"]["file_path"]
+                    """
+                    az inja
+                    
+                    """
                     bot_methods.download_file(
-                        path, str(chat_id)+'-telegram.mp4')
-            except Exception as error:
+                        path, file_name+'.mp4')
+            except ValueError as error:
                 print('Caught this error: ' + repr(error))
             bot_methods.send_chat_action('upload_video', chat_id)
             time.sleep(5)
             bot_methods.send_message(
-                "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+"-telegram.mp4", chat_id)
+                "https://telapi.digi-arya.ir/downloads/"+file_name+".mp4", chat_id)
         else:
             bot_methods.send_message(msg, "112042461")
 
@@ -175,6 +168,17 @@ def add_new_user(user_id):
     user = User.query.filter_by(telegram_id=user_id).first()
     if not user:
         user = User(telegram_id=user_id, credit=0)
+        db.session.add(user)
+        db.session.commit()
+        return user, True
+    else:
+        return user, False
+
+
+def add_new_download(file_name):
+    download = Download.query.filter_by(file_name=file_name).first()
+    if not download:
+        download = Download(telegram_id=user_id, credit=0)
         db.session.add(user)
         db.session.commit()
         return user, True

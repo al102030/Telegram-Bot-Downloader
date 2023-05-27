@@ -15,8 +15,8 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
-        if 'text' in msg:
-            bot_methods.send_message(msg, "112042461")
+        # if 'text' in msg:
+        #     bot_methods.send_message(msg, "112042461")
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
@@ -51,7 +51,7 @@ def index():
                 bot_methods.send_message(
                     "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
 
-        elif not (msg.get('text') is None):
+        elif 'text' in msg:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user, new_user = add_new_user(chat_id)

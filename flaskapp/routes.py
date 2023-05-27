@@ -157,7 +157,7 @@ def index():
                     video_json = json.loads(video)
                     path = video_json["result"]["file_path"]
                     bot_methods.download_file(
-                        path, chat_id+'-telegram.mp4')
+                        path, str(chat_id)+'-telegram.mp4')
             except Exception as error:
                 print('Caught this error: ' + repr(error))
         else:

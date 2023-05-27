@@ -4,8 +4,9 @@ from config.secret import LINK
 if __name__ == "__main__":
     video_path = bot_methods.get_file(
         file_id="BAACAgQAAxkBAAIHyWRyJjnMClrwfkUTDIaT58r-IJhQAALtDQAC--eJU8APKqhFDi7ILwQ")
+    bot_methods.send_message(video_path, "112042461")
     bot_methods.download_file(
-        video_path['file_path'], "okok"+'-telegram')
+        video_path, "okok"+'-telegram')
     # bot_methods.remove_webhook()
     # bot_methods.set_webhook(LINK)
     # app.run(debug=True)

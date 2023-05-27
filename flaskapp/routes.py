@@ -125,7 +125,6 @@ def index():
                         stream = yt.streams.first()
                         stream.download(output_path='/var/www/html/download',
                                         filename=str(chat_id)+'.mp4')
-                        bot_methods.send_message("hi", chat_id)
                         bot_methods.send_chat_action('upload_video', chat_id)
                         time.sleep(5)
                         bot_methods.send_message(
@@ -160,6 +159,10 @@ def index():
                         path, str(chat_id)+'-telegram.mp4')
             except Exception as error:
                 print('Caught this error: ' + repr(error))
+            bot_methods.send_chat_action('upload_video', chat_id)
+            time.sleep(5)
+            bot_methods.send_message(
+                "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+"-telegram.mp4", chat_id)
         else:
             bot_methods.send_message(msg, "112042461")
 

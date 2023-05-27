@@ -51,7 +51,7 @@ def index():
                 bot_methods.send_message(
                     "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
 
-        elif 'text' in msg:
+        elif "text" in msg:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user, new_user = add_new_user(chat_id)

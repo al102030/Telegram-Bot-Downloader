@@ -15,6 +15,18 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
+        is_text = None
+        is_video = None
+        try:
+            is_text = msg['message']['text']
+        except KeyError as error:
+            print("Text is not find")
+
+        try:
+            video = msg['message']['video']
+        except KeyError as error:
+            print("Video is not find")
+
         # if 'text' in msg:
         #     bot_methods.send_message(msg, "112042461")
         if "callback_query" in msg:
@@ -51,7 +63,7 @@ def index():
                 bot_methods.send_message(
                     "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
 
-        elif "text" in msg:
+        elif is_text:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user, new_user = add_new_user(chat_id)
@@ -135,7 +147,7 @@ def index():
                     # send link to user.
                     # bot_methods.send_message(
                     #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
-        elif not (msg.get('video') is None):
+        elif is_video:
             bot_methods.send_message("Part 1", chat_id)
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']

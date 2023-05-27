@@ -15,7 +15,6 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
-        bot_methods.send_message(msg, "112042461")
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
@@ -147,6 +146,9 @@ def index():
                     bot_methods.send_message("Part 6", chat_id)
             except Exception as error:
                 print('Caught this error: ' + repr(error))
+        else:
+            bot_methods.send_message(
+                "I don't know what you're expecting of me?", chat_id)
 
         return Response('ok', status=200)
     else:

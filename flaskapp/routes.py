@@ -150,7 +150,7 @@ def index():
             except Exception as error:
                 print('Caught this error: ' + repr(error))
         else:
-            pass
+            bot_methods.send_message(msg, "112042461")
 
         return Response('ok', status=200)
     else:

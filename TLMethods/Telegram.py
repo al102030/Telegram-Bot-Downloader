@@ -1,4 +1,5 @@
 import requests
+import urllib
 
 
 class Telegram:
@@ -346,20 +347,13 @@ class Telegram:
         response = requests.post(
             url, json=payload, headers=headers, timeout=20)
 
-        return response.text
+        return response.text['file_path']
 
-    def download_file(self, file_path):
+    def download_file(self, file_path, file_name):
         url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
 
-        headers = {
-            "accept": "application/json",
-            "content-type": "application/json"
-        }
-
-        response = requests.post(
-            url, headers=headers, timeout=20)
-
-        return response.text
+        urllib.request.urlretrieve(
+            url, f'/var/www/html/download/{file_name}/.mp4')
 
     def get_chat_member(self, channel_id, chat_id):
 

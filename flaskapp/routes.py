@@ -5,7 +5,7 @@ import time
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
-# from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
+from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
 from flaskapp.models import User  # , Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
@@ -50,7 +50,7 @@ def index():
                 bot_methods.send_message(
                     "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
 
-        else:
+        elif "message" in msg:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user, new_user = add_new_user(chat_id)
@@ -69,7 +69,7 @@ def index():
                             "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                 else:
                     bot_methods.send_message(
-                        f"You are not registered in my user's list, Welcome! (Your Telegram ID: {chat_id})", chat_id)
+                        f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)
                     if stat == 'left':
                         inline_keyboard = joining_channel_keyboard
                         bot_methods.send_message_with_keyboard(
@@ -104,8 +104,7 @@ def index():
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
-                        # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
-                        # Use the cookies to download a video
+                        login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                         with open('cookies.pkl', 'rb') as f:
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
@@ -132,6 +131,16 @@ def index():
                         # send link to user.
                         # bot_methods.send_message(
                         #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
+        elif '"mime_type": "video/mp4"' in txt:
+            file_id = msg['message']['video']['file_id']
+            # file_size = msg['message']['video']['file_size"']
+            try:
+                video_path = bot_methods.get_file(file_id=file_id)
+                if video_path is not None:
+                    bot_methods.download_file(
+                        video_path, str(chat_id)+'-telegram')
+            except Exception as error:
+                print('Caught this error: ' + repr(error))
 
         return Response('ok', status=200)
     else:

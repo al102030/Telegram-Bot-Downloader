@@ -49,7 +49,7 @@ def index():
                 bot_methods.send_message(
                     "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
 
-        elif "text" in msg:
+        elif not (msg.get('text') is None):
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
             user, new_user = add_new_user(chat_id)
@@ -130,7 +130,7 @@ def index():
                         # send link to user.
                         # bot_methods.send_message(
                         #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
-        elif "video" in msg:
+        elif not (msg.get('video') is None):
             bot_methods.send_message("Part 1", chat_id)
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']

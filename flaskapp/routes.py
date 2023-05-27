@@ -131,14 +131,20 @@ def index():
                         # send link to user.
                         # bot_methods.send_message(
                         #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
-        elif 'video' in msg:
+        elif "video" in msg:
+            bot_methods.send_message("Part 1", chat_id)
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']
+            bot_methods.send_message("Part 2", chat_id)
             try:
+                bot_methods.send_message("Part 3", chat_id)
                 video_path = bot_methods.get_file(file_id=file_id)
+                bot_methods.send_message("Part 4", chat_id)
                 if video_path is not None:
+                    bot_methods.send_message("Part 5", chat_id)
                     bot_methods.download_file(
                         video_path, str(chat_id)+'-telegram')
+                    bot_methods.send_message("Part 6", chat_id)
             except Exception as error:
                 print('Caught this error: ' + repr(error))
 

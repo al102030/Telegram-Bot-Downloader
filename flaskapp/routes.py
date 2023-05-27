@@ -15,7 +15,8 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
-        if not (msg.get('text') is None):
+        x = json.loads(msg)
+        if not (x.get('text') is None):
             bot_methods.send_message("it's worked: ", "112042461")
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']

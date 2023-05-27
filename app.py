@@ -3,16 +3,9 @@ from config.secret import LINK
 import json
 
 if __name__ == "__main__":
-    video = bot_methods.get_file(
-        "BAACAgQAAxkBAAIHyWRyJjnMClrwfkUTDIaT58r-IJhQAALtDQAC--eJU8APKqhFDi7ILwQ")
-    x = json.loads(video)
-    # bot_methods.send_message(x, "112042461")
-    path = x["result"]["file_path"]
-    bot_methods.download_file(
-        path, "okok"+'-telegram')
-    # bot_methods.remove_webhook()
-    # bot_methods.set_webhook(LINK)
-    # app.run(debug=True)
+    bot_methods.remove_webhook()
+    bot_methods.set_webhook(LINK)
+    app.run(debug=True)
 
     # with open('cookies.pkl', 'rb') as f:
     #     cookies = pickle.load(f)

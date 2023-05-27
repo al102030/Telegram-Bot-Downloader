@@ -152,13 +152,12 @@ def index():
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']
             try:
-                video_path = bot_methods.get_file(file_id=file_id)
-                bot_methods.send_message("Part 4", chat_id)
-                if video_path is not None:
-                    bot_methods.send_message("Part 5", chat_id)
+                video = bot_methods.get_file(file_id=file_id)
+                if video is not None:
+                    video_json = json.loads(video)
+                    path = video_json["result"]["file_path"]
                     bot_methods.download_file(
-                        video_path, chat_id+'-telegram')
-                    bot_methods.send_message("Part 6", chat_id)
+                        path, chat_id+'-telegram.mp4')
             except Exception as error:
                 print('Caught this error: ' + repr(error))
         else:

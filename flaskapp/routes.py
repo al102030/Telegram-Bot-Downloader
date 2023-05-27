@@ -149,6 +149,7 @@ def index():
                     #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
         elif is_video:
             bot_methods.send_message("Part 1", chat_id)
+            chat_id = msg['message']['chat']['id']
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']
             bot_methods.send_message("Part 2", chat_id)

@@ -116,20 +116,23 @@ def index():
                         time.sleep(5)
                         bot_methods.send_message(
                             "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
+                else:
+                    bot_methods.send_message(
+                        "I don't know what you're expecting of me?", chat_id)
 
-                        # yt = Youtube(txt)
-                        # if yt.check_url():
-                        #     size = yt.file_size()
-                        #     bot_methods.send_message(size, chat_id)
-                        # for stream in my_video.streams:
-                        #     bot_methods.send_message(stream, chat_id)
-                        # create record in DB
-                        # download
-                        # decrease user credit
-                        # create link for downloaded file
-                        # send link to user.
-                        # bot_methods.send_message(
-                        #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
+                    # yt = Youtube(txt)
+                    # if yt.check_url():
+                    #     size = yt.file_size()
+                    #     bot_methods.send_message(size, chat_id)
+                    # for stream in my_video.streams:
+                    #     bot_methods.send_message(stream, chat_id)
+                    # create record in DB
+                    # download
+                    # decrease user credit
+                    # create link for downloaded file
+                    # send link to user.
+                    # bot_methods.send_message(
+                    #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
         elif not (msg.get('video') is None):
             bot_methods.send_message("Part 1", chat_id)
             file_id = msg['message']['video']['file_id']
@@ -147,8 +150,7 @@ def index():
             except Exception as error:
                 print('Caught this error: ' + repr(error))
         else:
-            bot_methods.send_message(
-                "I don't know what you're expecting of me?", chat_id)
+            pass
 
         return Response('ok', status=200)
     else:

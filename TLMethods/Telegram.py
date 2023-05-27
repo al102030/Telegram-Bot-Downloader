@@ -346,8 +346,8 @@ class Telegram:
 
         response = requests.post(
             url, json=payload, headers=headers, timeout=20)
-
-        return response.text['file_path']
+        js = response.text
+        return js['file_path']
 
     def download_file(self, file_path, file_name):
         url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"

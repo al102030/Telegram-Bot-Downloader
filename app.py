@@ -1,10 +1,12 @@
 from flaskapp import bot_methods, app
 from config.secret import LINK
+import json
 
 if __name__ == "__main__":
     video = bot_methods.get_file(
         "BAACAgQAAxkBAAIHyWRyJjnMClrwfkUTDIaT58r-IJhQAALtDQAC--eJU8APKqhFDi7ILwQ")
-    path = video['file_path']
+    x = json.loads(video)
+    path = x['file_path']
     # bot_methods.send_message(video_path, "112042461")
     bot_methods.download_file(
         path, "okok"+'-telegram')

@@ -20,12 +20,12 @@ def index():
         try:
             is_text = msg['message']['text']
         except KeyError as error:
-            print("Text is not find")
+            print("Text is not find", error)
 
         try:
-            video = msg['message']['video']
+            is_video = msg['message']['video']
         except KeyError as error:
-            print("Video is not find")
+            print("Video is not find", error)
 
         # if 'text' in msg:
         #     bot_methods.send_message(msg, "112042461")

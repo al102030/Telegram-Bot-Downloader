@@ -131,7 +131,7 @@ def index():
                         # send link to user.
                         # bot_methods.send_message(
                         #     "https://al102030.pythonanywhere.com/static/DL/"+download.file_name+download.file_type, chat_id)
-        elif '"mime_type": "video/mp4"' in txt:
+        elif 'video' in msg:
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']
             try:

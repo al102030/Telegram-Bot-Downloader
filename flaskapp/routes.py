@@ -151,9 +151,7 @@ def index():
             chat_id = msg['message']['chat']['id']
             file_id = msg['message']['video']['file_id']
             # file_size = msg['message']['video']['file_size"']
-            bot_methods.send_message("Part 2", chat_id)
             try:
-                bot_methods.send_message("Part 3", chat_id)
                 video_path = bot_methods.get_file(file_id=file_id)
                 bot_methods.send_message("Part 4", chat_id)
                 if video_path is not None:

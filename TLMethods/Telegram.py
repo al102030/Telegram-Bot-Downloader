@@ -1,5 +1,5 @@
 import requests
-import urllib
+import os
 
 
 class Telegram:
@@ -350,10 +350,23 @@ class Telegram:
         return response.text
 
     def download_file(self, file_path, file_name):
+        Download_path = os.path.join("/var/www/html/download/", file_name)
         url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
+        response = requests.get(url, stream=True, timeout=30)
+        if response.ok:
+            print("saving to", os.path.abspath(Download_path))
+            with open(Download_path, 'wb') as file:
+                for chunk in response.iter_content(chunk_size=1024 * 8):
+                    if chunk:
+                        file.write(chunk)
+                        file.flush()
+                        os.fsync(file.fileno())
+        else:  # HTTP status code 4XX/5XX
+            print("Download failed: status code\n",
+                  response.status_code, response.text)
 
-        urllib.request.urlretrieve(
-            url, f'/var/www/html/download/{file_name}/.mp4')
+        # urllib.request.urlretrieve(
+        #     url, f'{file_name}/.mp4')
 
     def get_chat_member(self, channel_id, chat_id):
 

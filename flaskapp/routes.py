@@ -164,6 +164,8 @@ def index():
                     download = Download.query.filter_by(
                         status=0, user_id=chat_id).first()
                     if download:
+                        with open('cookies.pkl', 'rb') as file:
+                            cookies = pickle.load(file)
                         yt = YouTube(download.link)
                         yt.cookies = cookies
                         # get file size and check credit

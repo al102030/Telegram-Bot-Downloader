@@ -130,8 +130,8 @@ def index():
                             lst.append(dictionary)
                             resolution_select_keyboard.append(lst)
 
-                        bot_methods.send_message_with_keyboard("Please select the resolution that you want to download",
-                                                               chat_id, resolution_select_keyboard)
+                        bot_methods.send_message_with_menu("Please select the resolution that you want to download",
+                                                           chat_id, resolution_select_keyboard)
                         # filter(file_extension='mp4').
                         # res = yt.streams.order_by('resolution').desc()
                         # bot_methods.send_message(res, chat_id)

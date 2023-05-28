@@ -150,6 +150,8 @@ def index():
                         #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     bot_methods.send_message(txt, chat_id)
+                    bot_methods.send_message(
+                        resolution_select_keyboard[0], chat_id)
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)

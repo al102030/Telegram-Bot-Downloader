@@ -121,7 +121,8 @@ def index():
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
-                        yt.streams.filter(file_extension='mp4').desc()
+                        yt.streams.filter(file_extension='mp4').order_by(
+                            'resolution').desc
                         # Only look for video streams to avoid None values
                         for stream in yt.streams:
                             bot_methods.send_message(

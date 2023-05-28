@@ -122,7 +122,7 @@ def index():
                         yt = YouTube(txt)
                         yt.cookies = cookies
                         # filter(resolution="720p"):
-                        for stream in yt.streams.order_by('resolution').desc().filter(adaptive=True):
+                        for stream in yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4'):
                             print(stream)
                         # filter(file_extension='mp4').
                         # res = yt.streams.order_by('resolution').desc()

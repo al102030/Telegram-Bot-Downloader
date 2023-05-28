@@ -122,7 +122,7 @@ def index():
                         yt = YouTube(txt)
                         yt.cookies = cookies
                         resolution_select_keyboard = []
-                        for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4'))[:6]:
+                        for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
                             lst = []
                             dictionary = {}
                             dictionary['text'] = stream.resolution
@@ -148,6 +148,8 @@ def index():
                         # time.sleep(5)
                         # bot_methods.send_message(
                         #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
+                elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
+                    bot_methods.send_message(txt, chat_id)
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)

@@ -121,12 +121,13 @@ def index():
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
-                        streams = set()
+                        yt.streams.filter(file_extension='mp4')
                         # Only look for video streams to avoid None values
-                        for stream in yt.streams.filter(type="video"):
-                            streams.add(stream.resolution)
+                        for stream in yt.streams:
+                            bot_methods.send_chat_action(
+                                stream.resolution, chat_id)
+                            time.sleep(1)
 
-                        bot_methods.send_chat_action(streams, chat_id)
                         # stream = yt.streams.first()
                         # stream.download(output_path='/var/www/html/download',
                         #                 filename=str(chat_id)+'.mp4')

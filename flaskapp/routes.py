@@ -124,7 +124,7 @@ def index():
                         # filter(file_extension='mp4').
                         yt.streams.order_by('resolution').desc().first()
                         # Only look for video streams to avoid None values
-                        for stream in yt.streams:
+                        for stream in yt.streams.order_by('resolution').desc().first():
                             bot_methods.send_message(
                                 stream.resolution, chat_id)
                             # time.sleep(1)

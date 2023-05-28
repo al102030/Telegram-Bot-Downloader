@@ -171,14 +171,14 @@ def index():
                         yt = YouTube(download.link)
                         yt.cookies = cookies
                         stream = yt.streams.filter(res=txt).first()
+                        # Giiir injast
+                        bot_methods.send_message("Ta inja OK!", chat_id)
                         size_mb = stream.filesize / 1000000
                         if size_mb < 0:
                             size_mb = 1
                         else:
                             size_mb = round(size_mb)
                         update_download_size(download.file_name, size_mb)
-                        bot_methods.send_message(
-                            "Ta inja OK!", chat_id)
                         if user.credit >= size_mb:
                             try:
                                 stream.download(

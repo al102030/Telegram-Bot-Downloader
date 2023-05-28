@@ -173,6 +173,10 @@ def index():
                     time.sleep(5)
                     bot_methods.send_message(
                         "https://telapi.digi-arya.ir/downloads/"+file_name+".mp4", chat_id)
+                    bot_methods.send_message(
+                        "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                    update_download_status(file_name)
+
                 else:
                     inline_keyboard = credit_charge_keyboard
                     bot_methods.send_message_with_keyboard(
@@ -212,12 +216,23 @@ def add_new_download(user_id, file_name, file_size):
 
 def update_user_credit(user_id, usage):
     user = User.query.filter_by(telegram_id=user_id).first()
-    if not user:
+    if user:
         user.credit -= usage
         db.session.commit()
         return True
     else:
         print("User not found!")
+
+
+def update_download_status(file_name):
+
+    download = Download.query.filter_by(file_name=file_name).first()
+    if download:
+        download.status = 1
+        db.session.commit()
+        return True
+    else:
+        print("Something went wrong!")
 
 
 def status(chat_id):

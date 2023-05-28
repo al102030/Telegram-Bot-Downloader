@@ -121,10 +121,17 @@ def index():
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
-                        # filter(resolution="720p"):
+                        resolution_select_keyboard = []
                         for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4'))[:6]:
-                            bot_methods.send_message(
-                                stream.resolution, chat_id)
+                            lst = []
+                            dictionary = {}
+                            dictionary['text'] = stream.resolution
+                            dictionary['callback_data'] = stream.resolution
+                            lst.append(dictionary)
+                            resolution_select_keyboard.append(lst)
+
+                        bot_methods.send_message_with_keyboard("Please select the resolution that you want to download",
+                                                               chat_id, resolution_select_keyboard)
                         # filter(file_extension='mp4').
                         # res = yt.streams.order_by('resolution').desc()
                         # bot_methods.send_message(res, chat_id)

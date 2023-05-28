@@ -170,7 +170,11 @@ def index():
                         yt.cookies = cookies
                         # get file size and check credit
                         stream = yt.streams.filter(res=txt).first()
-                        siz_mb = stream.filesize
+                        siz_mb = stream.filesize / 1000000
+                        if size_mb < 0:
+                            size_mb = 1
+                        else:
+                            size_mb = round(size_mb)
                         bot_methods.send_message(siz_mb, chat_id)
 
                         # stream.download(

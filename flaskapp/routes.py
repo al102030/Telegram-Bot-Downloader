@@ -123,7 +123,8 @@ def index():
                         yt.cookies = cookies
                         # filter(resolution="720p"):
                         for stream in yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4'):
-                            print(stream)
+                            bot_methods.send_message(
+                                stream.resolution, chat_id)
                         # filter(file_extension='mp4').
                         # res = yt.streams.order_by('resolution').desc()
                         # bot_methods.send_message(res, chat_id)

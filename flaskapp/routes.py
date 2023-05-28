@@ -122,7 +122,7 @@ def index():
                         yt = YouTube(txt)
                         yt.cookies = cookies
                         # filter(file_extension='mp4').
-                        res = yt.streams.filter(adaptive=True)
+                        res = yt.streams.order_by('resolution').desc()
                         bot_methods.send_message(res, chat_id)
                         # .order_by('resolution').desc().first()
                         # Only look for video streams to avoid None values

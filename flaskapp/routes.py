@@ -169,6 +169,7 @@ def index():
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
                     bot_methods.send_chat_action('upload_video', chat_id)
+                    update_user_credit(chat_id, size_mb)
                     time.sleep(5)
                     bot_methods.send_message(
                         "https://telapi.digi-arya.ir/downloads/"+file_name+".mp4", chat_id)
@@ -207,6 +208,16 @@ def add_new_download(user_id, file_name, file_size):
         db.session.commit()
         print("A new download was added!")
         return True
+
+
+def update_user_credit(user_id, usage):
+    user = User.query.filter_by(telegram_id=user_id).first()
+    if not user:
+        user.credit -= usage
+        db.session.commit()
+        return True
+    else:
+        print("User not found!")
 
 
 def status(chat_id):

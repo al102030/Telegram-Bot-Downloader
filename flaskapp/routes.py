@@ -116,7 +116,7 @@ def index():
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
                     if stat != "left" and user.credit != 0:
-                        login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                        # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                         with open('cookies.pkl', 'rb') as f:
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
@@ -124,7 +124,7 @@ def index():
                         yt.streams.filter(file_extension='mp4')
                         # Only look for video streams to avoid None values
                         for stream in yt.streams:
-                            bot_methods.send_chat_action(
+                            bot_methods.send_message(
                                 stream.resolution, chat_id)
                             time.sleep(1)
 

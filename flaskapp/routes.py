@@ -121,13 +121,15 @@ def index():
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
-                        stream = yt.streams.first()
-                        stream.download(output_path='/var/www/html/download',
-                                        filename=str(chat_id)+'.mp4')
-                        bot_methods.send_chat_action('upload_video', chat_id)
-                        time.sleep(5)
-                        bot_methods.send_message(
-                            "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
+                        for stream in yt.streams:
+                            bot_methods.send_chat_action(stream, chat_id)
+                        # stream = yt.streams.first()
+                        # stream.download(output_path='/var/www/html/download',
+                        #                 filename=str(chat_id)+'.mp4')
+                        # bot_methods.send_chat_action('upload_video', chat_id)
+                        # time.sleep(5)
+                        # bot_methods.send_message(
+                        #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
@@ -135,7 +137,6 @@ def index():
                     # download
                     # decrease user credit
         elif is_video:
-
             file_name = secrets.token_hex(8)
             chat_id = msg['message']['chat']['id']
             file_id = msg['message']['video']['file_id']

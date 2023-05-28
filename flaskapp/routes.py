@@ -139,7 +139,7 @@ def index():
             file_name = secrets.token_hex(8)
             chat_id = msg['message']['chat']['id']
             file_id = msg['message']['video']['file_id']
-            file_size = msg['message']['video']['file_size"']
+            file_size = msg['message']['video']['file_size']
             size_mb = int(file_size)/1000000
             if size_mb < 0:
                 size_mb = 1

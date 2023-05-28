@@ -21,12 +21,12 @@ def index():
         try:
             is_text = msg['message']['text']
         except KeyError as error:
-            print("Text is not find", error)
+            print("Text not found", error)
 
         try:
             is_video = msg['message']['video']
         except KeyError as error:
-            print("Video is not find", error)
+            print("Video not found", error)
 
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']
@@ -177,6 +177,8 @@ def index():
                         else:
                             size_mb = round(size_mb)
                         update_download_size(download.file_name, size_mb)
+                        bot_methods.send_message(
+                            "Ta inja OK!", chat_id)
                         if user.credit >= size_mb:
                             try:
                                 stream.download(

@@ -115,12 +115,25 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
-                    if stat != "left" and user.credit != 0:
+                    user, new_user = add_new_user(chat_id)
+                    ans = bot_methods.get_chat_member(channel_id, chat_id)
+                    json_data = json.loads(ans)
+                    stat = json_data['result']['status']
+                    if new_user:
+                        bot_methods.send_message(
+                            f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)
+                        if stat == 'left':
+                            inline_keyboard = joining_channel_keyboard
+                            bot_methods.send_message_with_keyboard(
+                                "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
+                    else:
                         # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
-                        with open('cookies.pkl', 'rb') as f:
-                            cookies = pickle.load(f)
+                        with open('cookies.pkl', 'rb') as file:
+                            cookies = pickle.load(file)
                         yt = YouTube(txt)
                         yt.cookies = cookies
+                        file_name = secrets.token_hex(8)
+                        add_new_download(txt, chat_id, file_name, 0)
                         resolution_select_keyboard = []
                         for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
                             lst = []
@@ -129,7 +142,6 @@ def index():
                             dictionary['callback_data'] = stream.resolution
                             lst.append(dictionary)
                             resolution_select_keyboard.append(lst)
-
                         bot_methods.send_message_with_menu("Please select the resolution that you want to download",
                                                            chat_id, resolution_select_keyboard)
                         # filter(file_extension='mp4').
@@ -149,9 +161,11 @@ def index():
                         # bot_methods.send_message(
                         #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
-                    bot_methods.send_message(txt, chat_id)
-                    bot_methods.send_message(
-                        resolution_select_keyboard[0], chat_id)
+                    download = Download.query.filter_by(
+                        status=0, user_id=chat_id).first()
+                    if download:
+                        bot_methods.send_message("OK-OK", chat_id)
+
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
@@ -186,7 +200,8 @@ def index():
                         if video is not None:
                             video_json = json.loads(video)
                             path = video_json["result"]["file_path"]
-                            add_new_download(user.id, file_name, size_mb)
+                            add_new_download(
+                                'telegram', user.id, file_name, size_mb)
                             bot_methods.download_file(
                                 path, file_name+'.mp4')
                     except ValueError as error:
@@ -225,11 +240,11 @@ def add_new_user(user_id):
         return user, False
 
 
-def add_new_download(user_id, file_name, file_size):
+def add_new_download(url, user_id, file_name, file_size):
 
     download = Download.query.filter_by(file_name=file_name).first()
     if not download:
-        download = Download(link="telegram", file_name=file_name,
+        download = Download(link=url, file_name=file_name,
                             file_wight=file_size, file_type="mp4", status=0, user_id=user_id)
         db.session.add(download)
         db.session.commit()

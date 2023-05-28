@@ -127,7 +127,7 @@ def index():
                             bot_methods.send_message_with_keyboard(
                                 "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                     else:
-                        # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                        login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                         with open('cookies.pkl', 'rb') as file:
                             cookies = pickle.load(file)
                         yt = YouTube(txt)
@@ -164,7 +164,19 @@ def index():
                     download = Download.query.filter_by(
                         status=0, user_id=chat_id).first()
                     if download:
-                        bot_methods.send_message("OK-OK", chat_id)
+                        yt = YouTube(download.link)
+                        yt.cookies = cookies
+                        # get file size and check credit
+                        stream = yt.streams.filter(res=txt).first()
+                        siz_mb = stream.filesize
+                        bot_methods.send_message(siz_mb, chat_id)
+
+                        # stream.download(
+                        #     output_path='/var/www/html/download', filename=download.file_name+'.mp4')
+                        # bot_methods.send_chat_action('upload_video', chat_id)
+                        # time.sleep(5)
+                        # bot_methods.send_message(
+                        #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
 
                 else:
                     bot_methods.send_message(

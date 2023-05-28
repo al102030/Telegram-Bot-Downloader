@@ -121,7 +121,7 @@ def index():
                             cookies = pickle.load(f)
                         yt = YouTube(txt)
                         yt.cookies = cookies
-                        for stream in yt.streams.filter(resolution="720p"):
+                        for stream in yt.streams.order_by('resolution').desc()#filter(resolution="720p"):
                             print(stream)
                         # filter(file_extension='mp4').
                         # res = yt.streams.order_by('resolution').desc()

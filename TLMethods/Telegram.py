@@ -350,7 +350,8 @@ class Telegram:
         return response.text
 
     def download_file(self, file_path, file_name):
-        Download_path = os.path.join("static", file_name)
+        Download_path = os.path.join(
+            "/usr/share/nginx/html/static/", file_name)
         url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
         response = requests.get(url, stream=True, timeout=30)
         if response.ok:

@@ -167,7 +167,7 @@ def index():
                             if user.credit >= size_mb:
                                 try:
                                     stream.download(
-                                        output_path='static', filename=download.file_name+'.mp4')
+                                        output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
                                     bot_methods.send_chat_action(
                                         'upload_video', chat_id)
                                     update_user_credit(chat_id, size_mb)

@@ -144,22 +144,6 @@ def index():
                             resolution_select_keyboard.append(lst)
                         bot_methods.send_message_with_menu("Please select the resolution that you want to download",
                                                            chat_id, resolution_select_keyboard)
-                        # filter(file_extension='mp4').
-                        # res = yt.streams.order_by('resolution').desc()
-                        # bot_methods.send_message(res, chat_id)
-                        # .order_by('resolution').desc().first()
-                        # Only look for video streams to avoid None values
-                        # for stream in yt.streams:
-                        #     bot_methods.send_message(stream.resolution, chat_id)
-                        # time.sleep(1)
-
-                        # stream = yt.streams.first()
-                        # stream.download(output_path='/var/www/html/download',
-                        #                 filename=str(chat_id)+'.mp4')
-                        # bot_methods.send_chat_action('upload_video', chat_id)
-                        # time.sleep(5)
-                        # bot_methods.send_message(
-                        #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     download = Download.query.filter_by(
                         status=0, user_id=user.id).first()
@@ -168,7 +152,6 @@ def index():
                             telegram_id=chat_id).first()
                         with open('cookies.pkl', 'rb') as file:
                             cookies = pickle.load(file)
-                        bot_methods.send_message(download.link, chat_id)
                         yt = YouTube(download.link)
                         yt.cookies = cookies
                         stream = yt.streams.filter(res=txt).first()
@@ -195,9 +178,7 @@ def index():
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
-                    # create record in DB
-                    # download
-                    # decrease user credit
+
         elif is_video:
             file_name = secrets.token_hex(8)
             chat_id = msg['message']['chat']['id']

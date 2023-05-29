@@ -162,7 +162,7 @@ def index():
                         #     "https://telapi.digi-arya.ir/downloads/"+str(chat_id)+".mp4", chat_id)
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     download = Download.query.filter_by(
-                        status=0, user_id=chat_id).first()
+                        status=0, user_id=user.id).first()
                     if download:
                         user = User.query.filter_by(
                             telegram_id=chat_id).first()

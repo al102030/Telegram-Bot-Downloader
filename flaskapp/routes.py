@@ -14,7 +14,6 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    os.chmod('static/', 0o755)
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
@@ -173,6 +172,8 @@ def index():
                                         'upload_video', chat_id)
                                     update_user_credit(chat_id, size_mb)
                                     time.sleep(5)
+                                    os.chmod(
+                                        f'static/{download.file_name}', 0o755)
                                     bot_methods.send_message(
                                         "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                                     update_download_status(download.file_name)

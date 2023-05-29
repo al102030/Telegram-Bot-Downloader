@@ -1,8 +1,9 @@
 import json
-import requests
-import pickle
-import time
 import secrets
+import time
+import pickle
+import requests
+import os
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
@@ -13,6 +14,7 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    os.chmod('static', 0o755)
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()

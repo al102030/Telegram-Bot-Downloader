@@ -188,7 +188,7 @@ def index():
                                 time.sleep(5)
                                 bot_methods.send_message(
                                     "https://telapi.digi-arya.ir/downloads/"+download.file_name+".mp4", chat_id)
-                                update_download_status(file_name)
+                                update_download_status(download.file_name)
                             except ValueError as error:
                                 print('Caught this error: ' + repr(error))
 

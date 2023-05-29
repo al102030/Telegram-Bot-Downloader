@@ -173,7 +173,7 @@ def index():
                                     update_user_credit(chat_id, size_mb)
                                     time.sleep(5)
                                     os.chmod(
-                                        f'static/{download.file_name}', 0o755)
+                                        f'static/{download.file_name}.mp4', 0o755)
                                     bot_methods.send_message(
                                         "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                                     update_download_status(download.file_name)

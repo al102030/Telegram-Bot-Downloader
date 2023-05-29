@@ -166,13 +166,13 @@ def index():
                             if user.credit >= size_mb:
                                 try:
                                     stream.download(
-                                        output_path='/var/www/html/download', filename=download.file_name+'.mp4')
+                                        output_path='static', filename=download.file_name+'.mp4')
                                     bot_methods.send_chat_action(
                                         'upload_video', chat_id)
                                     update_user_credit(chat_id, size_mb)
                                     time.sleep(5)
                                     bot_methods.send_message(
-                                        "https://telapi.digi-arya.ir/downloads/"+download.file_name+".mp4", chat_id)
+                                        "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                                     update_download_status(download.file_name)
                                 except ValueError as error:
                                     print('Caught this error: ' + repr(error))
@@ -219,7 +219,7 @@ def index():
                     update_user_credit(chat_id, size_mb)
                     time.sleep(5)
                     bot_methods.send_message(
-                        "https://telapi.digi-arya.ir/downloads/"+file_name+".mp4", chat_id)
+                        "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
                     bot_methods.send_message(
                         "You can use this direct link for 1 month. Please save your Link.", chat_id)
                     update_download_status(file_name)

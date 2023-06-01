@@ -218,11 +218,10 @@ def index():
                                 path, file_name+'.mp4')
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
-                    bot_methods.send_message(
-                        "ok to here", "112042461")
-                    # bot_methods.send_chat_action('upload_video', chat_id)
+                    bot_methods.send_chat_action('upload_video', chat_id)
                     update_user_credit(chat_id, size_mb)
                     time.sleep(5)
+                    bot_methods.send_message("ok to here", "112042461")
                     os.chmod(
                         f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
                     bot_methods.send_message(
@@ -273,7 +272,7 @@ def update_user_credit(user_id, usage):
     if user:
         user.credit -= usage
         db.session.commit()
-        return True
+        print("User credit decreased!")
     else:
         print("User not found!")
 

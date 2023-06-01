@@ -207,29 +207,28 @@ def index():
                         "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
             else:
                 if user.credit >= size_mb:
-                    pass
-                    # try:
-                    #     video = bot_methods.get_file(file_id=file_id)
-                    #     if video is not None:
-                    #         video_json = json.loads(video)
-                    #         path = video_json["result"]["file_path"]
-                    #         add_new_download(
-                    #             'telegram', user.id, file_name, size_mb)
-                    #         bot_methods.download_file(
-                    #             path, file_name+'.mp4')
-                    # except ValueError as error:
-                    #     print('Caught this error: ' + repr(error))
-                    # bot_methods.send_chat_action('upload_video', chat_id)
-                    # update_user_credit(chat_id, size_mb)
-                    # time.sleep(5)
-                    # bot_methods.send_message("ok to here", "112042461")
-                    # os.chmod(
-                    #     f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
-                    # bot_methods.send_message(
-                    #     "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
-                    # bot_methods.send_message(
-                    #     "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                    # update_download_status(file_name)
+                    try:
+                        video = bot_methods.get_file(file_id=file_id)
+                        if video is not None:
+                            video_json = json.loads(video)
+                            path = video_json["result"]["file_path"]
+                            add_new_download(
+                                'telegram', user.id, file_name, size_mb)
+                            bot_methods.download_file(
+                                path, file_name+'.mp4')
+                    except ValueError as error:
+                        print('Caught this error: ' + repr(error))
+                    bot_methods.send_chat_action('upload_video', chat_id)
+                    update_user_credit(chat_id, size_mb)
+                    time.sleep(5)
+                    bot_methods.send_message("ok to here", "112042461")
+                    os.chmod(
+                        f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                    bot_methods.send_message(
+                        "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
+                    bot_methods.send_message(
+                        "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                    update_download_status(file_name)
 
                 else:
                     inline_keyboard = credit_charge_keyboard

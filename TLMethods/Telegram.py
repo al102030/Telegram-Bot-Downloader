@@ -357,12 +357,13 @@ class Telegram:
         if response.ok:
             print("saving to", os.path.abspath(Download_path))
             with open(Download_path, 'wb') as file:
-                for chunk in response.iter_content(chunk_size=1024 * 8):
-                    if chunk:
-                        file.write(chunk)
-                        file.flush()
-                        os.fsync(file.fileno())
-                        print("Your download is completed!")
+                file.write(response.content)
+                # for chunk in response.iter_content(chunk_size=1024 * 8):
+                #     if chunk:
+                #         file.write(chunk)
+                #         file.flush()
+                #         os.fsync(file.fileno())
+                print("Your download is completed!")
         else:  # HTTP status code 4XX/5XX
             print("Download failed: status code\n",
                   response.status_code, response.text)

@@ -216,11 +216,11 @@ def index():
                                 'telegram', user.id, file_name, size_mb)
                             bot_methods.download_file(
                                 path, file_name+'.mp4')
-                            bot_methods.send_message(
-                                "ok to here", "112042461")
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
-                    bot_methods.send_chat_action('upload_video', chat_id)
+                    bot_methods.send_message(
+                        "ok to here", "112042461")
+                    # bot_methods.send_chat_action('upload_video', chat_id)
                     update_user_credit(chat_id, size_mb)
                     time.sleep(5)
                     os.chmod(

@@ -362,6 +362,7 @@ class Telegram:
                         file.write(chunk)
                         file.flush()
                         os.fsync(file.fileno())
+                        print("Your download is completed!")
         else:  # HTTP status code 4XX/5XX
             print("Download failed: status code\n",
                   response.status_code, response.text)

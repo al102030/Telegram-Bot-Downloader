@@ -221,8 +221,8 @@ def index():
                     bot_methods.send_chat_action('upload_video', chat_id)
                     update_user_credit(chat_id, size_mb)
                     time.sleep(5)
-                    os.chmod(
-                        f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                    # os.chmod(
+                    #     f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
                     bot_methods.send_message(
                         "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
                     bot_methods.send_message(
@@ -320,8 +320,8 @@ def login_to_youtube(username, password):
 
     if response.status_code == 200:
         print("Logged in to YouTube successfully.")
-        with open('cookies.pkl', 'wb') as f:
-            pickle.dump(session.cookies, f)
+        with open('cookies.pkl', 'wb') as file:
+            pickle.dump(session.cookies, file)
     else:
         raise exceptions.AgeRestrictedError(
             "Failed to log in to YouTube.")

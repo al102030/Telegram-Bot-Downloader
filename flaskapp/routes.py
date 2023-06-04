@@ -33,7 +33,7 @@ def index():
         try:
             is_document = msg['message']['document']
         except KeyError as error:
-            print("Video not found", error)
+            print("Document not found", error)
 
         if "callback_query" in msg:
             callback_id = msg['callback_query']['id']

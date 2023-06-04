@@ -252,6 +252,7 @@ def index():
                 size_mb = 1
             else:
                 size_mb = round(size_mb)
+            user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
                     bot_methods.tt_download_file(file_id=file_id)

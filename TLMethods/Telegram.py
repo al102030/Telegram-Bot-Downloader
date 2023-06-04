@@ -7,7 +7,7 @@ from config.secret import API_ID, API_HASH
 class Telegram:
     def __init__(self, token):
         self.token = token
-        self.client = TelegramClient('A_D_K', API_ID, API_HASH)
+        self.client = TelegramClient(None, API_ID, API_HASH)
 
     def get_me(self):
         url = f"https://api.telegram.org/bot{self.token}/getMe"

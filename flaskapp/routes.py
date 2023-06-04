@@ -245,6 +245,7 @@ def index():
         elif is_document:
             chat_id = msg['message']['chat']['id']
             file_id = msg['message']['document']['file_id']
+            file_name = msg['message']['document']['file_name']
             file_size = msg['message']['document']['file_size']
             size_mb = int(file_size)/1000000
             if size_mb < 0:

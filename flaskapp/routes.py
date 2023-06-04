@@ -19,6 +19,7 @@ def index():
         msg = request.get_json()
         is_text = None
         is_video = None
+        is_document = None
         try:
             is_text = msg['message']['text']
         except KeyError as error:
@@ -26,6 +27,11 @@ def index():
 
         try:
             is_video = msg['message']['video']
+        except KeyError as error:
+            print("Video not found", error)
+
+        try:
+            is_document = msg['message']['document']
         except KeyError as error:
             print("Video not found", error)
 
@@ -236,6 +242,43 @@ def index():
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
 
+        elif is_document:
+            chat_id = msg['message']['chat']['id']
+            file_id = msg['message']['document']['file_id']
+            file_size = msg['message']['document']['file_size']
+            size_mb = int(file_size)/1000000
+            if size_mb < 0:
+                size_mb = 1
+            else:
+                size_mb = round(size_mb)
+            if user.credit >= size_mb:
+                try:
+                    bot_methods.tt_download_file(file_id=file_id)
+                    # if document is not None:
+                    #     video_json = json.loads(video)
+                    #     path = video_json["result"]["file_path"]
+                    #     add_new_download(
+                    #         'telegram', user.id, file_name, size_mb)
+                    #     bot_methods.download_file(
+                    #         path, file_name+'.mp4')
+                except ValueError as error:
+                    print('Caught this error: ' + repr(error))
+                # bot_methods.send_chat_action('upload_video', chat_id)
+                # update_user_credit(chat_id, size_mb)
+                # time.sleep(5)
+                bot_methods.send_message("ok to here", "112042461")
+                # os.chmod(
+                #     f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                # bot_methods.send_message(
+                #     "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
+                # bot_methods.send_message(
+                #     "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                # update_download_status(file_name)
+            else:
+                inline_keyboard = credit_charge_keyboard
+                bot_methods.send_message_with_keyboard(
+                    "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
+                    chat_id, inline_keyboard)
         else:
             bot_methods.send_message(msg, "112042461")
 

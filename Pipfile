@@ -9,6 +9,8 @@ requests = "*"
 flask-sqlalchemy = "*"
 flask-bcrypt = "*"
 pytube = {git = "https://github.com/pytube/pytube"}
+telethon = "*"
+update = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -299,7 +299,7 @@ class Telegram:
     # typing, upload_photo, record_video, upload_video, record_video_note, upload_video_note
     # record_voice, upload_voice, upload_document, choose_sticker, find_location
 
-    def send_chat_action(self, action, chat_id):
+    async def send_chat_action(self, action, chat_id):
 
         url = f"https://api.telegram.org/bot{self.token}/sendChatAction"
 

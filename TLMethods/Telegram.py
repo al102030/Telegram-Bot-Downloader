@@ -4,6 +4,8 @@ import aiohttp
 from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
 
+# Telegram methods class
+
 
 class Telegram:
     def __init__(self, token):

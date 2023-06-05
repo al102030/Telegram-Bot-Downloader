@@ -375,8 +375,10 @@ class Telegram:
 
     async def tt_download_file(self, file_id):
         try:
-            await self.client.download_media(file_id)
+            file = await self.client.download_media(file_id)
+            file_path = '/usr/share/nginx/html/static/'
             print("File downloaded successfully.")
+            os.replace(file, file_path)
             # return True
         except ValueError as error:
             print("Error downloading file:", str(error))

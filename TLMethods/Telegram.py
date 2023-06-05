@@ -312,10 +312,10 @@ class Telegram:
             "content-type": "application/json"
         }
 
-        await requests.post(
+        response = requests.post(
             url, json=payload, headers=headers, timeout=20)
 
-        # print(response.text)
+        print(response.text)
 
     def get_user_profile_photos(self, user_id):
 

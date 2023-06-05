@@ -4,17 +4,19 @@ import time
 import pickle
 import requests
 import os
-import asyncio
+# import asyncio
+from telethon import TelegramClient
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
-from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
+from config.secret import GOOGLE_USER, GOOGLE_PASSWORD, API_ID, API_HASH
 from flaskapp.models import User, Download
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    client = TelegramClient(None, API_ID, API_HASH)
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
@@ -256,7 +258,8 @@ def index():
             user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
-                    asyncio.run(bot_methods.tt_download_file(chat_id))
+                    # asyncio.run(bot_methods.tt_download_file(chat_id))
+                    client.download_media(file_id)
                     # if document is not None:
                     #     video_json = json.loads(video)
                     #     path = video_json["result"]["file_path"]

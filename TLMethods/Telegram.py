@@ -1,13 +1,11 @@
 import requests
 import os
-from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
 
 
 class Telegram:
     def __init__(self, token):
         self.token = token
-        self.client = TelegramClient(None, API_ID, API_HASH)
 
     def get_me(self):
         url = f"https://api.telegram.org/bot{self.token}/getMe"
@@ -371,18 +369,17 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def tt_download_file(self, chat_id):
-        try:
-            # recipient = '@A_D_K'
-            self.client.start()
-            # entity = self.client.get_entity(recipient)
-            # await self.client.download_media(file_id)
-            await self.client.send_message(chat_id, "hooryaaa")
-            # self.client.disconnect()
-            print("File downloaded successfully.")
-            # return True
-        except ValueError as error:
-            print("Error downloading file:", str(error))
+    # async def tt_download_file(self, file_id):
+    #     try:
+    #         recipient = '@A_D_K'
+    #         self.client.start()
+    #         entity = self.client.get_entity(recipient)
+    #         await self.client.download_media(file_id)
+    #         self.client.disconnect()
+    #         print("File downloaded successfully.")
+    #         # return True
+    #     except ValueError as error:
+    #         print("Error downloading file:", str(error))
             # return False
 
     def get_chat_member(self, channel_id, chat_id):

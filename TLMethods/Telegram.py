@@ -376,7 +376,7 @@ class Telegram:
             recipient = '@A_D_K'
             self.client.start()
             entity = self.client.get_entity(recipient)
-            await self.client.download_media(file_id)
+            # await self.client.download_media(file_id)
             await self.client.send_message(entity, "hooryaaa")
             self.client.disconnect()
             print("File downloaded successfully.")

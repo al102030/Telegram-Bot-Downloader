@@ -256,6 +256,7 @@ def index():
             user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
+                    bot_methods.send_message(chat_id, "112042461")
                     asyncio.run(DL(file_id, chat_id))
                     # if document is not None:
                     #     video_json = json.loads(video)

@@ -371,13 +371,13 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def tt_download_file(self, file_id):
+    async def tt_download_file(self, chat_id):
         try:
             recipient = '@A_D_K'
             self.client.start()
-            entity = self.client.get_entity(recipient)
+            # entity = self.client.get_entity(recipient)
             # await self.client.download_media(file_id)
-            await self.client.send_message(entity, "hooryaaa")
+            await self.client.send_message(chat_id, "hooryaaa")
             self.client.disconnect()
             print("File downloaded successfully.")
             # return True

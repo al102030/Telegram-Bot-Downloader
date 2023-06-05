@@ -373,12 +373,12 @@ class Telegram:
 
     async def tt_download_file(self, chat_id):
         try:
-            recipient = '@A_D_K'
+            # recipient = '@A_D_K'
             self.client.start()
             # entity = self.client.get_entity(recipient)
             # await self.client.download_media(file_id)
             await self.client.send_message(chat_id, "hooryaaa")
-            self.client.disconnect()
+            # self.client.disconnect()
             print("File downloaded successfully.")
             # return True
         except ValueError as error:

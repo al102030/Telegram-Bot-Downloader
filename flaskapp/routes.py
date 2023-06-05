@@ -255,7 +255,7 @@ def index():
             user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
-                    bot_methods.tt_download_file(file_id=file_id)
+                    download_file(file_id=file_id)
                     # if document is not None:
                     #     video_json = json.loads(video)
                     #     path = video_json["result"]["file_path"]
@@ -371,3 +371,7 @@ def login_to_youtube(username, password):
     else:
         raise exceptions.AgeRestrictedError(
             "Failed to log in to YouTube.")
+
+
+async def download_file(file_id):
+    await bot_methods.tt_download_file(file_id)

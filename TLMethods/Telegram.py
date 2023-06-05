@@ -375,10 +375,10 @@ class Telegram:
         try:
             await self.client.download_media(file_id)
             print("File downloaded successfully.")
-            return True
+            # return True
         except ValueError as error:
             print("Error downloading file:", str(error))
-            return False
+            # return False
 
     def get_chat_member(self, channel_id, chat_id):
 

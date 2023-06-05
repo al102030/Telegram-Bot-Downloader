@@ -256,8 +256,7 @@ def index():
             user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
-                    asyncio.run(bot_methods.tt_download_file(
-                        file_id=file_id), bot_methods.send_chat_action('upload_video', chat_id))
+                    asyncio.run(bot_methods.tt_download_file(file_id))
                     # if document is not None:
                     #     video_json = json.loads(video)
                     #     path = video_json["result"]["file_path"]

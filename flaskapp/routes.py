@@ -256,7 +256,7 @@ def index():
             user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
-                    asyncio.run(bot_methods.tt_download_file(file_id))
+                    asyncio.run(DL(file_id, chat_id))
                     # if document is not None:
                     #     video_json = json.loads(video)
                     #     path = video_json["result"]["file_path"]
@@ -374,5 +374,8 @@ def login_to_youtube(username, password):
             "Failed to log in to YouTube.")
 
 
+async def DL(file_id, chat_id):
+    # Start all coroutines concurrently
+    await asyncio.gather(bot_methods.tt_download_file(file_id), bot_methods.send_chat_action('upload_video', chat_id))
 # async def download_file(file_id):
 #     await bot_methods.tt_download_file(file_id)

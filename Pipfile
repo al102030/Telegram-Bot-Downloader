@@ -11,6 +11,7 @@ flask-bcrypt = "*"
 pytube = {git = "https://github.com/pytube/pytube"}
 telethon = "*"
 update = "*"
+aiohttp = "*"
 
 [dev-packages]
 autopep8 = "*"

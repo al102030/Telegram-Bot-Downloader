@@ -1,5 +1,6 @@
 import requests
 import os
+import aiohttp
 from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
 
@@ -312,10 +313,9 @@ class Telegram:
             "content-type": "application/json"
         }
 
-        response = requests.post(
-            url, json=payload, headers=headers, timeout=20)
-
-        print(response.text)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers, timeout=20) as response:
+                print(await response.text())
 
     def get_user_profile_photos(self, user_id):
 

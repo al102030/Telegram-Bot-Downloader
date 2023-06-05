@@ -371,9 +371,9 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def tt_download_file(self, file_id):
+    def tt_download_file(self, file_id):
         try:
-            await self.client.download_media(file_id)
+            self.client.download_media(file_id)
             print("File downloaded successfully.")
             # return True
         except ValueError as error:

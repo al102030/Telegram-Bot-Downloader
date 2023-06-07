@@ -17,7 +17,7 @@ if __name__ == "__main__":
             for dialog in dialogs:
                 if dialog.title == 'Al102030':
                     dialog_id = dialog.id
-            print(dialog)
+            print(dialog_id)
             messages = await client.get_messages(entity=6235055313)
             message = await client.get_messages(
                 messages[0].peer_id.user_id, ids=messages[0].id)

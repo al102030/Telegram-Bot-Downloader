@@ -1,7 +1,7 @@
-from flaskapp import bot_methods, app
 from asyncio import run, gather
-from config.secret import API_ID, API_HASH  # ,LINK
 from telethon import TelegramClient
+from flaskapp import bot_methods  # , app
+from config.secret import API_ID, API_HASH  # ,LINK
 
 
 if __name__ == "__main__":
@@ -13,10 +13,11 @@ if __name__ == "__main__":
 
     async def channel_info(api_id, api_hash):
         async with TelegramClient('cli', api_id, api_hash) as client:
-            # dialogs = await client.get_dialogs()
-            # for dialog in dialogs:
-            #     if dialog.title == 'Al102030':
-            #         dialog_id = dialog.id
+            dialogs = await client.get_dialogs()
+            for dialog in dialogs:
+                if dialog.title == 'Al102030':
+                    dialog_id = dialog.id
+            print(dialog)
             messages = await client.get_messages(entity=6235055313)
             message = await client.get_messages(
                 messages[0].peer_id.user_id, ids=messages[0].id)

@@ -5,12 +5,15 @@ __pycache__/
 .gitignore
 Pipfile
 Pipfile.lock
+*.lock
 .vscode/
 .DS_Store
 *.mp4
 token.py
 instance/
 *.pkl
+*.session
+cli-session.session
 
 
 # C extensions

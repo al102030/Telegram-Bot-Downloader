@@ -10,7 +10,6 @@ from config.secret import API_ID, API_HASH
 class Telegram:
     def __init__(self, token):
         self.token = token
-        self.client = TelegramClient(None, API_ID, API_HASH)
 
     def get_me(self):
         url = f"https://api.telegram.org/bot{self.token}/getMe"
@@ -373,16 +372,15 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def tt_download_file(self, file_id):
+    async def tt_download_file(self, message_id):
+        client = TelegramClient("cli.session", API_ID, API_HASH)
         try:
-            file = await self.client.download_media(file_id)
-            file_path = '/usr/share/nginx/html/static/'
-            print("File downloaded successfully.")
-            os.replace(file, file_path)
-            # return True
+            with client:
+                message = await client.get_messages('A_D_K', ids=message_id)
+            # await client.download_media(file_id)
+            print(message)
         except ValueError as error:
             print("Error downloading file:", str(error))
-            # return False
 
     def get_chat_member(self, channel_id, chat_id):
 

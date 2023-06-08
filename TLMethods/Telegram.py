@@ -392,7 +392,7 @@ class Telegram:
             # message = await client.get_messages(
             #     messages[0].peer_id.user_id, ids=messages[0].id)
             if message:
-                print(message.document.mime_typ)
+                print(message.document.mime_type)
                 if "application/" in messages.document.mime_type:
                     print("it is a document or app!")
                     await client.download_media(message.media, file=f'{path}{messages.document.attributes.file_name}')

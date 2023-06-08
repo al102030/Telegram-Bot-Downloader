@@ -391,6 +391,7 @@ class Telegram:
                     break
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
+            print(message)
             print(message.document.attributes[0].file_name)
             if message:
                 if "application/" in message.document.mime_type:

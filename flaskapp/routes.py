@@ -191,11 +191,14 @@ def index():
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
 
-        elif is_video:
-            file_name = secrets.token_hex(8)
+        elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
-            file_id = msg['message']['video']['file_id']
-            file_size = msg['message']['video']['file_size']
+            if is_video:
+                file_name = secrets.token_hex(8)
+                file_size = msg['message']['video']['file_size']
+            elif is_document:
+                file_name = msg['message']['document']['file_name']
+                file_size = msg['message']['document']['file_size']
             size_mb = int(file_size)/1000000
             if size_mb < 0:
                 size_mb = 1
@@ -208,66 +211,32 @@ def index():
             if new_user:
                 bot_methods.send_message(
                     f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)
-                if stat == 'left':
-                    inline_keyboard = joining_channel_keyboard
-                    bot_methods.send_message_with_keyboard(
-                        "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
+            elif stat == 'left':
+                inline_keyboard = joining_channel_keyboard
+                bot_methods.send_message_with_keyboard(
+                    "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
             else:
                 if user.credit >= size_mb:
                     try:
-                        video = bot_methods.get_file(file_id=file_id)
-                        if video is not None:
-                            video_json = json.loads(video)
-                            path = video_json["result"]["file_path"]
-                            add_new_download(
-                                'telegram', user.id, file_name, size_mb)
-                            bot_methods.download_file(
-                                path, file_name+'.mp4')
+                        add_new_download('telegram', user.id,
+                                         file_name, size_mb)
+                        run(async_download(bot_methods.download_media(
+                            file_name), bot_methods.send_chat_action('upload_video', chat_id)))
+                        update_user_credit(chat_id, size_mb)
+                        os.chmod(
+                            f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                        bot_methods.send_message(
+                            "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
+                        bot_methods.send_message(
+                            "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                        update_download_status(file_name)
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
-                    bot_methods.send_chat_action('upload_video', chat_id)
-                    update_user_credit(chat_id, size_mb)
-                    time.sleep(5)
-                    bot_methods.send_message("ok to here", "112042461")
-                    os.chmod(
-                        f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
-                    bot_methods.send_message(
-                        "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
-                    bot_methods.send_message(
-                        "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                    update_download_status(file_name)
-
                 else:
                     inline_keyboard = credit_charge_keyboard
                     bot_methods.send_message_with_keyboard(
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
-
-        elif is_document:
-            chat_id = msg['message']['chat']['id']
-            # file_id = msg['message']['document']['file_id']
-            file_name = msg['message']['document']['file_name']
-            file_size = msg['message']['document']['file_size']
-            size_mb = int(file_size)/1000000
-            if size_mb < 0:
-                size_mb = 1
-            else:
-                size_mb = round(size_mb)
-            user, new_user = add_new_user(chat_id)
-            if user.credit >= size_mb:
-                try:
-                    hash_name = secrets.token_hex(8)
-                    run(async_download(bot_methods.download_media(
-                        hash_name), bot_methods.send_chat_action('upload_video', chat_id)))
-
-                except ValueError as error:
-                    print('Caught this error: ' + repr(error))
-
-            else:
-                inline_keyboard = credit_charge_keyboard
-                bot_methods.send_message_with_keyboard(
-                    "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
-                    chat_id, inline_keyboard)
         else:
             bot_methods.send_message(msg, "112042461")
 

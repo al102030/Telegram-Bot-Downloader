@@ -229,7 +229,7 @@ def index():
                         #     "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                        update_download_status(file_name)
+                        # update_download_status(file_name)
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
                 else:

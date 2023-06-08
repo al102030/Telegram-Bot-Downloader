@@ -1,8 +1,20 @@
 from flaskapp import bot_methods, app
-from config.secret import LINK
+# from telethon import TelegramClient
+from config.secret import LINK  # , API_ID, API_HASH
+# from asyncio import run
 
 
 if __name__ == "__main__":
+    # async def get_message():
+    #     async with TelegramClient('cli', API_ID, API_HASH) as client:
+    #         messages = await client.get_messages(entity=6235055313)
+    #         for item in messages:
+    #             if 'user_id=112042461' in str(item):
+    #                 message = item
+    #                 break
+    #         print(message)
+
+    # run(get_message())
 
     # =============================================================================
     # client = TelegramClient("cli-session", API_ID, API_HASH)

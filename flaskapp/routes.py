@@ -191,52 +191,52 @@ def index():
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
 
-        # elif is_video or is_document:
-        #     chat_id = msg['message']['chat']['id']
-        #     if is_video:
-        #         file_name = secrets.token_hex(8)
-        #         file_size = msg['message']['video']['file_size']
-        #     elif is_document:
-        #         file_name = msg['message']['document']['file_name']
-        #         file_size = msg['message']['document']['file_size']
-        #     size_mb = int(file_size)/1000000
-        #     if size_mb < 0:
-        #         size_mb = 1
-        #     else:
-        #         size_mb = round(size_mb)
-        #     user, new_user = add_new_user(chat_id)
-        #     ans = bot_methods.get_chat_member(channel_id, chat_id)
-        #     json_data = json.loads(ans)
-        #     stat = json_data['result']['status']
-        #     if new_user:
-        #         bot_methods.send_message(
-        #             f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)
-        #     elif stat == 'left':
-        #         inline_keyboard = joining_channel_keyboard
-        #         bot_methods.send_message_with_keyboard(
-        #             "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
-        #     else:
-        #         if user.credit >= size_mb:
-        #             try:
-        #                 add_new_download('telegram', user.id,
-        #                                  file_name, size_mb)
-        #                 run(async_download(bot_methods.download_media(
-        #                     file_name), bot_methods.send_chat_action('upload_video', chat_id)))
-        #                 update_user_credit(chat_id, size_mb)
-        #                 os.chmod(
-        #                     f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
-        #                 bot_methods.send_message(
-        #                     "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
-        #                 bot_methods.send_message(
-        #                     "You can use this direct link for 1 month. Please save your Link.", chat_id)
-        #                 update_download_status(file_name)
-        #             except ValueError as error:
-        #                 print('Caught this error: ' + repr(error))
-        #         else:
-        #             inline_keyboard = credit_charge_keyboard
-        #             bot_methods.send_message_with_keyboard(
-        #                 "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
-        #                 chat_id, inline_keyboard)
+        elif is_video or is_document:
+            chat_id = msg['message']['chat']['id']
+            if is_video:
+                file_name = secrets.token_hex(8)
+                file_size = msg['message']['video']['file_size']
+            elif is_document:
+                file_name = msg['message']['document']['file_name']
+                file_size = msg['message']['document']['file_size']
+            size_mb = int(file_size)/1000000
+            if size_mb < 0:
+                size_mb = 1
+            else:
+                size_mb = round(size_mb)
+            user, new_user = add_new_user(chat_id)
+            ans = bot_methods.get_chat_member(channel_id, chat_id)
+            json_data = json.loads(ans)
+            stat = json_data['result']['status']
+            if new_user:
+                bot_methods.send_message(
+                    f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)
+            elif stat == 'left':
+                inline_keyboard = joining_channel_keyboard
+                bot_methods.send_message_with_keyboard(
+                    "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
+            else:
+                if user.credit >= size_mb:
+                    try:
+                        add_new_download('telegram', user.id,
+                                         file_name, size_mb)
+                        run(async_download(bot_methods.download_media(
+                            file_name, chat_id), bot_methods.send_chat_action('upload_video', chat_id)))
+                        update_user_credit(chat_id, size_mb)
+                        os.chmod(
+                            f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                        bot_methods.send_message(
+                            "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
+                        bot_methods.send_message(
+                            "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                        update_download_status(file_name)
+                    except ValueError as error:
+                        print('Caught this error: ' + repr(error))
+                else:
+                    inline_keyboard = credit_charge_keyboard
+                    bot_methods.send_message_with_keyboard(
+                        "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
+                        chat_id, inline_keyboard)
         else:
             bot_methods.send_message(msg, "112042461")
 

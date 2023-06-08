@@ -372,7 +372,7 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def download_media(self, hash_name):
+    async def download_media(self, hash_name, chat_id):
         path = "/usr/share/nginx/html/static/"
         # path = "static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
@@ -385,8 +385,12 @@ class Telegram:
             # print(messages[0])
             # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
             # messages[0].document.id, messages[0].document.access_hash)
-            message = await client.get_messages(
-                messages[0].peer_id.user_id, ids=messages[0].id)
+            for item in messages:
+                if f'user_id={chat_id}' in str(item):
+                    message = item
+                    break
+            # message = await client.get_messages(
+            #     messages[0].peer_id.user_id, ids=messages[0].id)
             if message.media:
                 if "application/" in messages[0].document.mime_type:
                     await client.download_media(message.media, file=f'{path}{messages[0].document.attributes[0].file_name}')

@@ -389,10 +389,10 @@ class Telegram:
                 if str(chat_id) in str(item):
                     message = item
                     break
+            print(message.peer_id.user_id, message.id)
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             # print(message)
-            # print(message.message)
             if message:
                 if "application/" in mime_type:
                     print("it is a document or app!")

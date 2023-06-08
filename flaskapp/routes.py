@@ -196,9 +196,11 @@ def index():
             if is_video:
                 file_name = secrets.token_hex(8)+'.mp4'
                 file_size = msg['message']['video']['file_size']
+                mime_type = msg['message']['video']['mime_type']
             elif is_document:
                 file_name = msg['message']['document']['file_name']
                 file_size = msg['message']['document']['file_size']
+                mime_type = msg['message']['document']['mime_type']
             size_mb = int(file_size)/1000000
             if size_mb < 0:
                 size_mb = 1
@@ -218,15 +220,15 @@ def index():
             else:
                 if user.credit >= size_mb:
                     try:
-                        # add_new_download('telegram', user.id,
-                        #                  file_name, size_mb)
+                        add_new_download('telegram', user.id,
+                                         file_name, size_mb)
                         run(async_download(bot_methods.download_media(
-                            file_name, chat_id), bot_methods.send_chat_action('upload_video', chat_id)))
-                        # update_user_credit(chat_id, size_mb)
-                        # os.chmod(
-                        #     f'/usr/share/nginx/html/static/{file_name}', 0o755)
-                        # bot_methods.send_message(
-                        #     "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
+                            file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
+                        update_user_credit(chat_id, size_mb)
+                        os.chmod(
+                            f'/usr/share/nginx/html/static/{file_name}', 0o755)
+                        bot_methods.send_message(
+                            "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
                         # update_download_status(file_name)

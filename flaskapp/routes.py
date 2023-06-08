@@ -225,8 +225,8 @@ def index():
                         run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
                         update_user_credit(chat_id, size_mb)
-                        os.chmod(
-                            f'/usr/share/nginx/html/static/{file_name}', 0o755)
+                        # os.chmod(
+                        #     f'/usr/share/nginx/html/static/{file_name}', 0o755)
                         bot_methods.send_message(
                             "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
                         bot_methods.send_message(

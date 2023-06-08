@@ -403,7 +403,7 @@ class Telegram:
                     file_name = file_name+'.mp4'
                     await client.download_file(message.media, file=f'{path}{file_name}')
                     print("Video downloaded!")
-            elif message:
+            else:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.file, file=f'{path}{file_name}')
@@ -415,7 +415,7 @@ class Telegram:
                     print("Video downloaded!")
                 else:
                     print("File format not supported!")
-            else:
+            finally:
                 print("The message doesn't contain media.")
 
     def get_chat_member(self, channel_id, chat_id):

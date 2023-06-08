@@ -392,7 +392,7 @@ class Telegram:
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             print(message)
-            print(message.document.attributes[0].file_name)
+            print(message.message)
             # if message:
             #     if "application/" in message.document.mime_type:
             #         print("it is a document or app!")

@@ -392,9 +392,9 @@ class Telegram:
             # message = await client.get_messages(
             #     messages[0].peer_id.user_id, ids=messages[0].id)
             if message.media:
-                if "application/" in messages[0].document.mime_type:
-                    await client.download_media(message.media, file=f'{path}{messages[0].document.attributes[0].file_name}')
-                elif messages[0].document.mime_type == "video/mp4":
+                if "application/" in messages.document.mime_type:
+                    await client.download_media(message.media, file=f'{path}{messages.document.attributes.file_name}')
+                elif messages.document.mime_type == "video/mp4":
                     file_name = hash_name+'.mp4'
                     await client.download_media(message.media, file=f'{path}{file_name}')
                 else:

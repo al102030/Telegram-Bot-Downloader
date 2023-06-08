@@ -220,8 +220,8 @@ def index():
                     try:
                         # add_new_download('telegram', user.id,
                         #                  file_name, size_mb)
-                        # run(async_download(bot_methods.download_media(
-                        #     file_name, chat_id), bot_methods.send_chat_action('upload_video', chat_id)))
+                        run(async_download(bot_methods.download_media(
+                            file_name, chat_id), bot_methods.send_chat_action('upload_video', chat_id)))
                         # update_user_credit(chat_id, size_mb)
                         # os.chmod(
                         #     f'/usr/share/nginx/html/static/{file_name}', 0o755)

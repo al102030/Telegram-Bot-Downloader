@@ -194,7 +194,7 @@ def index():
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
             if is_video:
-                file_name = secrets.token_hex(8)
+                file_name = secrets.token_hex(8)+'.mp4'
                 file_size = msg['message']['video']['file_size']
             elif is_document:
                 file_name = msg['message']['document']['file_name']
@@ -224,9 +224,9 @@ def index():
                             file_name, chat_id), bot_methods.send_chat_action('upload_video', chat_id)))
                         update_user_credit(chat_id, size_mb)
                         os.chmod(
-                            f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                            f'/usr/share/nginx/html/static/{file_name}', 0o755)
                         bot_methods.send_message(
-                            "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
+                            "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
                         update_download_status(file_name)

@@ -4,7 +4,7 @@ import time
 import pickle
 import requests
 import os
-import asyncio
+from asyncio import run, gather
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
@@ -245,7 +245,7 @@ def index():
 
         elif is_document:
             chat_id = msg['message']['chat']['id']
-            file_id = msg['message']['document']['file_id']
+            # file_id = msg['message']['document']['file_id']
             file_name = msg['message']['document']['file_name']
             file_size = msg['message']['document']['file_size']
             size_mb = int(file_size)/1000000
@@ -256,28 +256,13 @@ def index():
             user, new_user = add_new_user(chat_id)
             if user.credit >= size_mb:
                 try:
-                    bot_methods.send_message(file_id, "112042461")
-                    asyncio.run(download_file(file_id, chat_id))
-                    # if document is not None:
-                    #     video_json = json.loads(video)
-                    #     path = video_json["result"]["file_path"]
-                    #     add_new_download(
-                    #         'telegram', user.id, file_name, size_mb)
-                    #     bot_methods.download_file(
-                    #         path, file_name+'.mp4')
+                    hash_name = secrets.token_hex(8)
+                    run(async_download(bot_methods.download_media(
+                        hash_name), bot_methods.send_chat_action('upload_video', chat_id)))
+
                 except ValueError as error:
                     print('Caught this error: ' + repr(error))
-                # bot_methods.send_chat_action('upload_video', chat_id)
-                # update_user_credit(chat_id, size_mb)
-                # time.sleep(5)
-                bot_methods.send_message("ok to here", "112042461")
-                # os.chmod(
-                #     f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
-                # bot_methods.send_message(
-                #     "https://telapi.digi-arya.ir/static/"+file_name+".mp4", chat_id)
-                # bot_methods.send_message(
-                #     "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                # update_download_status(file_name)
+
             else:
                 inline_keyboard = credit_charge_keyboard
                 bot_methods.send_message_with_keyboard(
@@ -375,8 +360,6 @@ def login_to_youtube(username, password):
             "Failed to log in to YouTube.")
 
 
-async def download_file(file_id, chat_id):
+async def async_download(func1, func2):
     # Start all coroutines concurrently
-    await asyncio.gather(bot_methods.tt_download_file(file_id), bot_methods.send_chat_action('upload_video', chat_id))
-# async def download_file(file_id):
-#     await bot_methods.tt_download_file(file_id)
+    await gather(func1, func2)

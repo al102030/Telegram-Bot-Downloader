@@ -372,15 +372,31 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def tt_download_file(self, message_id):
-        client = TelegramClient("cli.session", API_ID, API_HASH)
-        try:
-            with client:
-                message = await client.get_messages('A_D_K', ids=message_id)
-            # await client.download_media(file_id)
-            print(message)
-        except ValueError as error:
-            print("Error downloading file:", str(error))
+    async def download_media(self, hash_name):
+        path = "/usr/share/nginx/html/static/"
+        # path = "static/"
+        async with TelegramClient('cli', API_ID, API_HASH) as client:
+            # dialogs = await client.get_dialogs()
+            # for dialog in dialogs:
+            #     if dialog.title == 'Al102030':
+            #         dialog_id = dialog.id
+            # print(dialog_id)
+            messages = await client.get_messages(entity=6235055313)
+            # print(messages[0])
+            # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
+            # messages[0].document.id, messages[0].document.access_hash)
+            message = await client.get_messages(
+                messages[0].peer_id.user_id, ids=messages[0].id)
+            if message.media:
+                if "application/" in messages[0].document.mime_type:
+                    await client.download_media(message.media, file=f'{path}{messages[0].document.attributes[0].file_name}')
+                elif messages[0].document.mime_type == "video/mp4":
+                    file_name = hash_name+'.mp4'
+                    await client.download_media(message.media, file=f'{path}{file_name}')
+                else:
+                    print("File format not supported!")
+            else:
+                print("The message doesn't contain media.")
 
     def get_chat_member(self, channel_id, chat_id):
 

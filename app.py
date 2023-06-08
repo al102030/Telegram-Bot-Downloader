@@ -1,40 +1,8 @@
-from asyncio import run, gather
-from telethon import TelegramClient
-from flaskapp import bot_methods  # , app
-from config.secret import API_ID, API_HASH  # ,LINK
-import secrets
+from flaskapp import bot_methods, app
+from config.secret import LINK
 
 
 if __name__ == "__main__":
-    CHAT_ID = "112042461"
-
-    async def channel_info(api_id, api_hash):
-        async with TelegramClient('cli', api_id, api_hash) as client:
-            # dialogs = await client.get_dialogs()
-            # for dialog in dialogs:
-            #     if dialog.title == 'Al102030':
-            #         dialog_id = dialog.id
-            # print(dialog_id)
-            messages = await client.get_messages(entity=6235055313)
-            # print(messages[0])
-            message = await client.get_messages(
-                messages[0].peer_id.user_id, ids=messages[0].id)
-            if message.media:
-                if "application/" in messages[0].document.mime_type:
-                    await client.download_media(message.media, file=f'/usr/share/nginx/html/static/{messages[0].document.attributes[0].file_name}')
-                elif messages[0].document.mime_type == "video/mp4":
-                    file_name = secrets.token_hex(8)+'.mp4'
-                    await client.download_media(message.media, file=f'/usr/share/nginx/html/static/{file_name}')
-                else:
-                    print("File format not supported!")
-            else:
-                print("The message doesn't contain media.")
-
-    async def dl():
-        # Start all coroutines concurrently
-        await gather(channel_info(API_ID, API_HASH), bot_methods.send_chat_action('upload_video', CHAT_ID))
-
-    run(dl())
 
     # =============================================================================
     # client = TelegramClient("cli-session", API_ID, API_HASH)
@@ -73,6 +41,6 @@ if __name__ == "__main__":
 
     # print(out)
 
-    # bot_methods.remove_webhook()
-    # bot_methods.set_webhook(LINK)
-    # app.run(debug=True)
+    bot_methods.remove_webhook()
+    bot_methods.set_webhook(LINK)
+    app.run(debug=True)

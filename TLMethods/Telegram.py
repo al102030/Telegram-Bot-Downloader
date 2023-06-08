@@ -389,6 +389,7 @@ class Telegram:
                 if str(chat_id) in str(item):
                     message = item
                     break
+            print(message)
             # message = await client.get_messages(
             #     messages[0].peer_id.user_id, ids=messages[0].id)
             if message:

@@ -392,19 +392,19 @@ class Telegram:
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             print(message)
-            # if message:
-            #     print(message.document.mime_type)
-            #     if "application/" in messages.document.mime_type:
-            #         print("it is a document or app!")
-            #         await client.download_media(message.media, file=f'{path}{message.document.attributes.file_name}')
-            #     elif messages.document.mime_type == "video/mp4":
-            #         print("it is a video!")
-            #         file_name = hash_name+'.mp4'
-            #         await client.download_media(message.media, file=f'{path}{file_name}')
-            #     else:
-            #         print("File format not supported!")
-            # else:
-            #     print("The message doesn't contain media.")
+            if message:
+                print(message.document.mime_type)
+                if "application/" in messages.document.mime_type:
+                    print("it is a document or app!")
+                    await client.download_media(message.media, file=f'{path}{message.document.attributes.file_name}')
+                elif messages.document.mime_type == "video/mp4":
+                    print("it is a video!")
+                    file_name = hash_name+'.mp4'
+                    await client.download_media(message.media, file=f'{path}{file_name}')
+                else:
+                    print("File format not supported!")
+            else:
+                print("The message doesn't contain media.")
 
     def get_chat_member(self, channel_id, chat_id):
 

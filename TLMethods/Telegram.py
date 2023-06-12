@@ -389,7 +389,7 @@ class Telegram:
                 if str(chat_id) in str(item):
                     message = item
                     break
-            self.send_message(str(message), "112042461")
+            # self.send_message(str(message), "112042461")
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             # print(message.peer_id.user_id, message.id)

@@ -1,6 +1,6 @@
 import requests
 import os
-from datetime import datetime, timedelta
+import time
 import aiohttp
 from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
@@ -449,14 +449,14 @@ class Telegram:
     def restrict_chat_member(self, chat_id):
         url = f"https://api.telegram.org/bot{self.token}/restrictChatMember"
         payload = {
-            "chat_id": chat_id,
-            "user_id": 6235055313,
+            "chat_id": 6235055313,
+            "user_id": chat_id,
             "disable_notification": False,
             "can_send_messages": False,
             "can_send_media_messages": False,
             "can_send_other_messages": False,
             "can_add_web_page_previews": False,
-            "until_date": 10
+            "until_date": int(time.time()) + 15
         }
         headers = {
             "accept": "application/json",

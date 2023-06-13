@@ -386,21 +386,21 @@ class Telegram:
             # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
             # messages[0].document.id, messages[0].document.access_hash)
             for item in messages:
-                if str(chat_id) in str(item):
+                if str(file_name) in str(item):
                     message = item
                     break
             # self.send_message(str(message), "112042461")
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             # print(message.peer_id.user_id, message.id)
-            try:
-                self.send_message(str(message.media), "112042461")
-            except:
-                self.send_message("No media", "112042461")
-            try:
-                self.send_message(str(message.file), "112042461")
-            except:
-                self.send_message("No file", "112042461")
+            # try:
+            #     self.send_message(str(message.media), "112042461")
+            # except:
+            #     self.send_message("No media", "112042461")
+            # try:
+            #     self.send_message(str(message.file), "112042461")
+            # except:
+            #     self.send_message("No file", "112042461")
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")

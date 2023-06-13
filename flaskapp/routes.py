@@ -118,8 +118,8 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
-                        bot_methods.send_message(
-                            "<b>Alert:</b>\n<i>Please wait a second until your download link send to you.</i>", chat_id)
+                        bot_methods.send_alert_message(
+                            "Please wait a second until your download link send to you.", chat_id)
 
                 elif txt == "/c4":
                     options = simple_options

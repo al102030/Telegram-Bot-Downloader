@@ -51,6 +51,23 @@ class Telegram:
                                  headers=headers, timeout=20)
         return response
 
+    def send_alert_message(self, text, chat_id):
+        req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+        payload = {
+            "text": text,
+            "chat_id": chat_id,
+            "disable_web_page_preview": False,
+            "disable_notification": False,
+            "show_alert": True
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+        response = requests.post(req_url, json=payload,
+                                 headers=headers, timeout=20)
+        return response
+
     def send_message_with_keyboard(self, text, chat_id, keyboard):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
         payload = {

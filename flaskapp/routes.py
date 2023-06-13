@@ -222,7 +222,7 @@ def index():
                     try:
                         add_new_download('telegram', user.id,
                                          file_name, size_mb)
-                        bot_methods.restrict_chat_member(chat_id, 10)
+                        bot_methods.restrict_chat_member(chat_id)
                         run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
                         update_user_credit(chat_id, size_mb)

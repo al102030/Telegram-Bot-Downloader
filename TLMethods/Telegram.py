@@ -446,7 +446,7 @@ class Telegram:
 
         return response.text
 
-    def restrict_chat_member(self, chat_id, time):
+    def restrict_chat_member(self, chat_id):
         url = f"https://api.telegram.org/bot{self.token}/restrictChatMember"
         payload = {
             "chat_id": chat_id,
@@ -456,7 +456,7 @@ class Telegram:
             "can_send_media_messages": False,
             "can_send_other_messages": False,
             "can_add_web_page_previews": False,
-            "until_date": int(datetime.now() + timedelta(seconds=time))
+            "until_date": "10"
         }
         headers = {
             "accept": "application/json",

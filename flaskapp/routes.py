@@ -118,7 +118,8 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
-                        bot_methods.set_chat_permissions(chat_id)
+                        bot_methods.answer_callback_query(
+                            "Please wait a second until your download link send to you.", show_alert=True)
 
                 elif txt == "/c4":
                     options = simple_options

@@ -450,13 +450,13 @@ class Telegram:
         url = f"https://api.telegram.org/bot{self.token}/restrictChatMember"
         payload = {
             "chat_id": chat_id,
-            "user_id": "6235055313",
+            "user_id": 6235055313,
             "disable_notification": False,
             "can_send_messages": False,
             "can_send_media_messages": False,
             "can_send_other_messages": False,
             "can_add_web_page_previews": False,
-            "until_date": "10"
+            "until_date": 10
         }
         headers = {
             "accept": "application/json",

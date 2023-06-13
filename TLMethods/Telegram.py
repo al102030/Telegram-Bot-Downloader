@@ -54,11 +54,12 @@ class Telegram:
     def send_alert_message(self, text, chat_id):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
         payload = {
-            "text": text,
+            "text": f"<b>Alert:</b>\n<i>{text}</i>",
             "chat_id": chat_id,
             "disable_web_page_preview": False,
             "disable_notification": False,
-            "show_alert": True
+            "show_alert": True,
+            "parse_mode": 'HTML',
         }
         headers = {
             "accept": "application/json",

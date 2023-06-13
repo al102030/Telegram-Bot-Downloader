@@ -390,6 +390,10 @@ class Telegram:
                 if str(file_name) in str(item):
                     message = item
                     break
+                elif str(file_name) in str(item):
+                    message = item
+                    break
+
             # self.send_message(str(message), "112042461")
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)

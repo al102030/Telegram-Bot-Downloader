@@ -1,6 +1,6 @@
 import requests
 import os
-import time
+import json
 import aiohttp
 from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
@@ -446,17 +446,17 @@ class Telegram:
 
         return response.text
 
-    def restrict_chat_member(self, chat_id):
+    def restrict_chat_member(self, chat_id, user_id, time):
         url = f"https://api.telegram.org/bot{self.token}/restrictChatMember"
         payload = {
-            "chat_id": 6235055313,
-            "user_id": chat_id,
+            "chat_id": chat_id,
+            "user_id": user_id,
             "disable_notification": False,
             "can_send_messages": False,
             "can_send_media_messages": False,
             "can_send_other_messages": False,
             "can_add_web_page_previews": False,
-            "until_date": int(time.time()) + 15
+            "until_date": time
         }
         headers = {
             "accept": "application/json",
@@ -467,3 +467,30 @@ class Telegram:
             url, json=payload, headers=headers, timeout=20)
 
         return response.text
+
+    def set_chat_permissions(self, chat_id):
+        url = f"https://api.telegram.org/bot{self.token}/setChatPermissions"
+
+        permissions = {
+            "can_send_messages": False,
+            "can_send_media_messages": False,
+            "can_send_polls": False,
+        }
+        payload = {
+            "chat_id": chat_id,
+            "permissions": json.dumps(permissions),
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+
+        response = requests.post(
+            url, json=payload, headers=headers, timeout=20)
+
+        if response.status_code == 200:
+            print('Permissions updated successfully.')
+            return response.text
+        else:
+            print(
+                f'Error updating permissions: {response.status_code} - {response.text}')

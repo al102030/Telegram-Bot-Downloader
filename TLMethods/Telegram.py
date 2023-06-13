@@ -54,7 +54,7 @@ class Telegram:
     def send_alert_message(self, text, chat_id):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
         payload = {
-            "text": f"<b>Alert:</b>\n<i>{text}</i>",
+            "text": text,
             "chat_id": chat_id,
             "disable_web_page_preview": False,
             "disable_notification": False,
@@ -373,13 +373,13 @@ class Telegram:
         return response.text
 
     def download_file(self, file_path, file_name):
-        Download_path = os.path.join(
+        download_path = os.path.join(
             "/usr/share/nginx/html/static/", file_name)
         url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
         response = requests.get(url, stream=True, timeout=30)
         if response.ok:
-            print("saving to", os.path.abspath(Download_path))
-            with open(Download_path, 'wb') as file:
+            print("saving to", os.path.abspath(download_path))
+            with open(download_path, 'wb') as file:
                 file.write(response.content)
                 # for chunk in response.iter_content(chunk_size=1024 * 8):
                 #     if chunk:
@@ -393,6 +393,7 @@ class Telegram:
 
     async def download_media(self, file_name, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
+        stat = False
         # path = "static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             # dialogs = await client.get_dialogs()
@@ -408,7 +409,7 @@ class Telegram:
                 if str(file_name) in str(item):
                     message = item
                     break
-                elif str(file_name) in str(item):
+                elif str(chat_id) in str(item):
                     message = item
                     break
 
@@ -428,26 +429,31 @@ class Telegram:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
                     await client.download_file(message.media, file=f'{path}{file_name}')
+                    stat = True
                     print("Document downloaded!")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
                     await client.download_file(message.media, file=f'{path}{file_name}')
+                    stat = True
                     print("Video downloaded!")
             elif message.file:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.file, file=f'{path}{file_name}')
+                    stat = True
                     print("Document downloaded!")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
                     await client.download_file(message.file, file=f'{path}{file_name}')
+                    stat = True
                     print("Video downloaded!")
                 else:
                     print("File format not supported!")
             else:
                 print("The message doesn't contain media.")
+        return stat
 
     def get_chat_member(self, channel_id, chat_id):
 

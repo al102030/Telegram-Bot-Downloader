@@ -118,8 +118,6 @@ def index():
                     else:
                         bot_methods.send_message(
                             "Enter your YouTube Link to start your download: ", chat_id)
-                        bot_methods.send_alert_message(
-                            "Please wait a second until your download link send to you.", chat_id)
 
                 elif txt == "/c4":
                     options = simple_options
@@ -226,8 +224,9 @@ def index():
                         add_new_download('telegram', user.id,
                                          file_name, size_mb)
                         # bot_methods.restrict_chat_member(chat_id)
-                        run(async_download(bot_methods.download_media(
+                        x = run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
+                        print(f"Status is: {x}")
                         update_user_credit(chat_id, size_mb)
                         # os.chmod(
                         #     f'/usr/share/nginx/html/static/{file_name}', 0o755)

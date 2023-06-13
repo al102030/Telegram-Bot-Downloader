@@ -1,6 +1,6 @@
 import json
 import secrets
-import time
+# import time
 import pickle
 import requests
 import os
@@ -178,7 +178,7 @@ def index():
                                     bot_methods.send_chat_action(
                                         'upload_video', chat_id)
                                     update_user_credit(chat_id, size_mb)
-                                    time.sleep(5)
+                                    # time.sleep(5)
                                     os.chmod(
                                         f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
                                     bot_methods.send_message(
@@ -222,6 +222,7 @@ def index():
                     try:
                         add_new_download('telegram', user.id,
                                          file_name, size_mb)
+                        bot_methods.restrict_chat_member(chat_id, 10)
                         run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
                         update_user_credit(chat_id, size_mb)

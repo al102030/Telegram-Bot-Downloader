@@ -435,6 +435,10 @@ class Telegram:
                 print(message.file, "File part")
             except:
                 print("No file", "112042461")
+            try:
+                print(message.message, "Message part")
+            except:
+                print("No Message", "112042461")
 
             if message.media:
                 if "application/" in mime_type:

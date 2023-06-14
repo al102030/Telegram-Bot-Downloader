@@ -335,7 +335,8 @@ class Telegram:
 
         payload = {
             "action": action,
-            "chat_id": chat_id
+            "chat_id": chat_id,
+            "timout": 10,
         }
         headers = {
             "accept": "application/json",

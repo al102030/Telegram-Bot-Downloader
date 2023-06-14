@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import time
 import aiohttp
 from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
@@ -51,23 +52,31 @@ class Telegram:
                                  headers=headers, timeout=20)
         return response
 
-    def send_alert_message(self, text, chat_id):
+    async def send_async_message(self, text1, text2, chat_id):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
-        payload = {
-            "text": text,
+        payload1 = {
+            "text": text1,
             "chat_id": chat_id,
             "disable_web_page_preview": False,
             "disable_notification": False,
-            "show_alert": True,
-            "parse_mode": 'HTML',
+        }
+        payload2 = {
+            "text": text2,
+            "chat_id": chat_id,
+            "disable_web_page_preview": False,
+            "disable_notification": False,
         }
         headers = {
             "accept": "application/json",
             "content-type": "application/json"
         }
-        response = requests.post(req_url, json=payload,
-                                 headers=headers, timeout=20)
-        return response
+        async with aiohttp.ClientSession() as session:
+            async with session.post(req_url, json=payload1, headers=headers, timeout=20) as response1:
+                print(await response1.text())
+        time.sleep(3)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(req_url, json=payload2, headers=headers, timeout=20) as response2:
+                print(await response2.text())
 
     def send_message_with_keyboard(self, text, chat_id, keyboard):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
@@ -474,7 +483,7 @@ class Telegram:
 
         return response.text
 
-    def restrict_chat_member(self, chat_id, user_id, time):
+    def restrict_chat_member(self, chat_id, user_id):
         url = f"https://api.telegram.org/bot{self.token}/restrictChatMember"
         payload = {
             "chat_id": chat_id,
@@ -484,7 +493,7 @@ class Telegram:
             "can_send_media_messages": False,
             "can_send_other_messages": False,
             "can_add_web_page_previews": False,
-            "until_date": time
+            "until_date": 15
         }
         headers = {
             "accept": "application/json",

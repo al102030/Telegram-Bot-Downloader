@@ -426,43 +426,40 @@ class Telegram:
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             # print(message.peer_id.user_id, message.id)
-            # try:
-            #     print(message.media, "112042461")
-            # except:
-            #     print("No media", "112042461")
-            # try:
-            #     print(message.message, "112042461")
-            # except:
-            #     print("No file", "112042461")
+
+            try:
+                print(message.media, "Media part")
+            except:
+                print("No media", "112042461")
+            try:
+                print(message.file, "File part")
+            except:
+                print("No file", "112042461")
+
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
                     await client.download_media(message.media, file=f'{path}{file_name}')
-                    stat = True
                     print("Document downloaded!")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
                     await client.download_media(message.media, file=f'{path}{file_name}')
-                    stat = True
                     print("Video downloaded!")
-            elif False:
+            elif message.file:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.file, file=f'{path}{file_name}')
-                    stat = True
                     print("Document downloaded!")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
                     await client.download_file(message.file, file=f'{path}{file_name}')
-                    stat = True
                     print("Video downloaded!")
                 else:
                     print("File format not supported!")
             else:
                 print("The message doesn't contain media.")
-        return stat
 
     def get_chat_member(self, channel_id, chat_id):
 

@@ -426,14 +426,14 @@ class Telegram:
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             # print(message.peer_id.user_id, message.id)
-            try:
-                print(message.media, "112042461")
-            except:
-                print("No media", "112042461")
-            try:
-                print(message.message, "112042461")
-            except:
-                print("No file", "112042461")
+            # try:
+            #     print(message.media, "112042461")
+            # except:
+            #     print("No media", "112042461")
+            # try:
+            #     print(message.message, "112042461")
+            # except:
+            #     print("No file", "112042461")
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
@@ -446,7 +446,7 @@ class Telegram:
                     await client.download_file(message.media, file=f'{path}{file_name}')
                     stat = True
                     print("Video downloaded!")
-            elif message.file:
+            elif message.message:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.file, file=f'{path}{file_name}')

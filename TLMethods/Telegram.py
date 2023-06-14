@@ -458,7 +458,7 @@ class Telegram:
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
-                    await client.download_file(message, file=f'{path}{file_name}')
+                    await client.download_media(message.message, file=f'{path}{file_name}')
                     print("Video downloaded!")
                 else:
                     print("File format not supported!")

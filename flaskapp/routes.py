@@ -176,6 +176,7 @@ def index():
                                     download.file_name, size_mb)
                                 if user.credit >= size_mb:
                                     try:
+                                        print("OK up to here!")
                                         stream.download(
                                             output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
                                         bot_methods.send_chat_action(
@@ -198,7 +199,7 @@ def index():
                                         chat_id, inline_keyboard)
                             else:
                                 bot_methods.send_message(
-                                    "File dosen't Exist.\nPlease try another Resolution or link\nThanks.",
+                                    "File doesn't Exist.\nPlease try another Resolution or link\nThanks.",
                                     chat_id)
 
                 else:

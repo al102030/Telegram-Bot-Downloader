@@ -156,8 +156,8 @@ def index():
                                                                chat_id, resolution_select_keyboard)
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     if user.credit > 0:
-                        download = Download.query.filter_by(
-                            status=0, user_id=user.id).first()
+                        # download = Download.query.filter_by(
+                        #     status=0, user_id=user.id).first()
                         # if download:
                         #     user = User.query.filter_by(
                         #         telegram_id=chat_id).first()
@@ -186,8 +186,8 @@ def index():
                         #                 bot_methods.send_message(
                         #                     "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                         #                 update_user_credit(chat_id, size_mb)
-                                        update_download_status(
-                                            download.file_name)
+                                        # update_download_status(
+                                        #     download.file_name)
                         #             except ValueError as error:
                         #                 print(
                         #                     'Caught this error: ' + repr(error))

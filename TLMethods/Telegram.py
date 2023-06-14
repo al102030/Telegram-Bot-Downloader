@@ -425,15 +425,15 @@ class Telegram:
             # self.send_message(str(message), "112042461")
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
-            # print(message.peer_id.user_id, message.id)
-            # try:
-            #     self.send_message(str(message.media), "112042461")
-            # except:
-            #     self.send_message("No media", "112042461")
-            # try:
-            #     self.send_message(str(message.file), "112042461")
-            # except:
-            #     self.send_message("No file", "112042461")
+            print(message.peer_id.user_id, message.id)
+            try:
+                self.send_message(str(message.media), "112042461")
+            except:
+                self.send_message("No media", "112042461")
+            try:
+                self.send_message(str(message.file), "112042461")
+            except:
+                self.send_message("No file", "112042461")
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")

@@ -335,18 +335,13 @@ class Telegram:
 
         payload = {
             "action": action,
-            "chat_id": chat_id,
-            "duration": 10,
+            "chat_id": chat_id
         }
         headers = {
             "accept": "application/json",
             "content-type": "application/json"
         }
 
-        async with aiohttp.ClientSession() as session:
-            async with session.post(url, json=payload, headers=headers, timeout=20) as response:
-                print(await response.text())
-        time.sleep(10)
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=payload, headers=headers, timeout=20) as response:
                 print(await response.text())
@@ -451,7 +446,7 @@ class Telegram:
                     await client.download_file(message.media, file=f'{path}{file_name}')
                     stat = True
                     print("Video downloaded!")
-            elif message.file:
+            elif message:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.file, file=f'{path}{file_name}')

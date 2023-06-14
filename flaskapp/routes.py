@@ -140,10 +140,9 @@ def index():
                             login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
-
+                            print("OK up to here1")
                             yt = YouTube(txt)
                             yt.cookies = cookies
-                            print("OK up to here!")
                             file_name = secrets.token_hex(8)
                             add_new_download(txt, user.id, file_name, 0)
                             resolution_select_keyboard = []

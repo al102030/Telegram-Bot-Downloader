@@ -177,18 +177,18 @@ def index():
                                 if user.credit >= size_mb:
                                     try:
                                         print(size_mb)
-                                    #     stream.download(
-                                    #         output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
-                                    #     bot_methods.send_chat_action(
-                                    #         'upload_video', chat_id)
-                                    #     # time.sleep(5)
-                                    #     os.chmod(
-                                    #         f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
-                                    #     bot_methods.send_message(
-                                    #         "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
-                                    #     update_user_credit(chat_id, size_mb)
-                                    #     update_download_status(
-                                    #         download.file_name)
+                                        stream.download(
+                                            output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
+                                        bot_methods.send_chat_action(
+                                            'upload_video', chat_id)
+                                        # time.sleep(5)
+                                        # os.chmod(
+                                        #     f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
+                                        bot_methods.send_message(
+                                            "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
+                                        update_user_credit(chat_id, size_mb)
+                                        update_download_status(
+                                            download.file_name)
                                     except ValueError as error:
                                         print(
                                             'Caught this error: ' + repr(error))

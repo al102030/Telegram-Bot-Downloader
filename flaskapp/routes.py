@@ -2,10 +2,9 @@ import json
 import secrets
 import pickle
 from asyncio import run, gather
-import requests
-from bs4 import BeautifulSoup
-import os
 from pytube import YouTube, exceptions
+import os
+import requests
 from flask import request, Response
 from flaskapp import app, bot_methods, db
 from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
@@ -257,19 +256,20 @@ def index():
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
         elif "instagram.com/" in txt:
-            # The URL of the DownloadGram website
-            downloadgram_url = "http://www.downloadgram.com/"
-            # Make an HTTP GET request to the DownloadGram website with the video URL as a parameter
-            response = requests.get(downloadgram_url, params={
-                                    "url": txt}, timeout=20)
-            # Use BeautifulSoup to parse the HTML content of the response and extract the download link
-            soup = BeautifulSoup(response.content, "html.parser")
-            download_link = soup.find("a", string="Download video").get("href")
-            # Make another HTTP GET request to the download link to download the video file
-            response = requests.get(download_link, timeout=20)
-            # Save the video file to your local disk
-            with open("/usr/share/nginx/html/static/my_instagram_video.mp4", "wb") as file:
-                file.write(response.content)
+            pass
+            # # The URL of the DownloadGram website
+            # downloadgram_url = "http://www.downloadgram.com/"
+            # # Make an HTTP GET request to the DownloadGram website with the video URL as a parameter
+            # response = requests.get(downloadgram_url, params={
+            #                         "url": txt}, timeout=20)
+            # # Use BeautifulSoup to parse the HTML content of the response and extract the download link
+            # soup = BeautifulSoup(response.content, "html.parser")
+            # download_link = soup.find("a", string="Download video").get("href")
+            # # Make another HTTP GET request to the download link to download the video file
+            # response = requests.get(download_link, timeout=20)
+            # # Save the video file to your local disk
+            # with open("/usr/share/nginx/html/static/my_instagram_video.mp4", "wb") as file:
+            #     file.write(response.content)
         else:
             bot_methods.send_message(msg, "112042461")
 

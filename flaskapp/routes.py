@@ -140,8 +140,10 @@ def index():
                             login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
+
                             yt = YouTube(txt)
                             yt.cookies = cookies
+                            print("OK up to here!")
                             file_name = secrets.token_hex(8)
                             add_new_download(txt, user.id, file_name, 0)
                             resolution_select_keyboard = []
@@ -176,7 +178,6 @@ def index():
                                     download.file_name, size_mb)
                                 if user.credit >= size_mb:
                                     try:
-                                        print("OK up to here!")
                                         stream.download(
                                             output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
                                         bot_methods.send_chat_action(

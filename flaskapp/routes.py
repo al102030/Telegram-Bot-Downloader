@@ -166,27 +166,40 @@ def index():
                             yt = YouTube(download.link)
                             yt.cookies = cookies
                             stream = yt.streams.filter(res=txt).first()
-                            size_mb = stream.filesize / 1000000
-                            if size_mb < 0:
-                                size_mb = 1
+                            if stream:
+                                size_mb = stream.filesize / 1000000
+                                if size_mb < 0:
+                                    size_mb = 1
+                                else:
+                                    size_mb = round(size_mb)
+                                update_download_size(
+                                    download.file_name, size_mb)
+                                if user.credit >= size_mb:
+                                    try:
+                                        stream.download(
+                                            output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
+                                        bot_methods.send_chat_action(
+                                            'upload_video', chat_id)
+                                        # time.sleep(5)
+                                        os.chmod(
+                                            f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
+                                        bot_methods.send_message(
+                                            "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
+                                        update_user_credit(chat_id, size_mb)
+                                        update_download_status(
+                                            download.file_name)
+                                    except ValueError as error:
+                                        print(
+                                            'Caught this error: ' + repr(error))
+                                else:
+                                    inline_keyboard = credit_charge_keyboard
+                                    bot_methods.send_message_with_keyboard(
+                                        "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
+                                        chat_id, inline_keyboard)
                             else:
-                                size_mb = round(size_mb)
-                            update_download_size(download.file_name, size_mb)
-                            if user.credit >= size_mb:
-                                try:
-                                    stream.download(
-                                        output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
-                                    bot_methods.send_chat_action(
-                                        'upload_video', chat_id)
-                                    update_user_credit(chat_id, size_mb)
-                                    # time.sleep(5)
-                                    os.chmod(
-                                        f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
-                                    bot_methods.send_message(
-                                        "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
-                                    update_download_status(download.file_name)
-                                except ValueError as error:
-                                    print('Caught this error: ' + repr(error))
+                                bot_methods.send_message(
+                                    "File dosen't Exist.\nPlease try another Resolution or link\nThanks.",
+                                    chat_id)
 
                 else:
                     bot_methods.send_message(

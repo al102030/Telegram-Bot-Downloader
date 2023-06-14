@@ -14,6 +14,7 @@ update = "*"
 wheel = "*"
 aiohttp = "*"
 cryptg = "*"
+bs4 = "*"
 
 [dev-packages]
 autopep8 = "*"

@@ -1,10 +1,10 @@
 import json
 import secrets
-# import time
 import pickle
-import requests
-import os
 from asyncio import run, gather
+import requests
+from bs4 import BeautifulSoup
+import os
 from pytube import YouTube, exceptions
 from flask import request, Response
 from flaskapp import app, bot_methods, db
@@ -143,7 +143,7 @@ def index():
                             yt = YouTube(txt)
                             yt.cookies = cookies
                             file_name = str(yt.streams.first().default_filename).replace(
-                                " ", "-")[:-4]  # secrets.token_hex(8)
+                                " ", "-")[:-5]  # secrets.token_hex(8)
                             add_new_download(txt, user.id, file_name, 0)
                             resolution_select_keyboard = []
                             for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
@@ -183,8 +183,8 @@ def index():
                                         bot_methods.send_chat_action(
                                             'upload_video', chat_id)
                                         # time.sleep(5)
-                                        # os.chmod(
-                                        #     f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
+                                        os.chmod(
+                                            f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
                                         bot_methods.send_message(
                                             "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                                         update_user_credit(chat_id, size_mb)
@@ -256,6 +256,20 @@ def index():
                     bot_methods.send_message_with_keyboard(
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
+        elif "instagram.com/" in txt:
+            # The URL of the DownloadGram website
+            downloadgram_url = "http://www.downloadgram.com/"
+            # Make an HTTP GET request to the DownloadGram website with the video URL as a parameter
+            response = requests.get(downloadgram_url, params={
+                                    "url": txt}, timeout=20)
+            # Use BeautifulSoup to parse the HTML content of the response and extract the download link
+            soup = BeautifulSoup(response.content, "html.parser")
+            download_link = soup.find("a", string="Download video").get("href")
+            # Make another HTTP GET request to the download link to download the video file
+            response = requests.get(download_link, timeout=20)
+            # Save the video file to your local disk
+            with open("/usr/share/nginx/html/static/my_instagram_video.mp4", "wb") as file:
+                file.write(response.content)
         else:
             bot_methods.send_message(msg, "112042461")
 

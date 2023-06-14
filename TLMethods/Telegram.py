@@ -427,18 +427,18 @@ class Telegram:
                 message.peer_id.user_id, ids=message.id)
             # print(message.peer_id.user_id, message.id)
 
-            try:
-                print(message.media, "Media part")
-            except:
-                print("No media", "112042461")
-            try:
-                print(message.file, "File part")
-            except:
-                print("No file", "112042461")
-            try:
-                print(message.message, "Message part")
-            except:
-                print("No Message", "112042461")
+            # try:
+            #     print(message.media, "Media part")
+            # except:
+            #     print("No media", "112042461")
+            # try:
+            #     print(message.file, "File part")
+            # except:
+            #     print("No file", "112042461")
+            # try:
+            #     print(message.message, "Message part")
+            # except:
+            #     print("No Message", "112042461")
 
             if message.media:
                 if "application/" in mime_type:

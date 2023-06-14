@@ -431,7 +431,7 @@ class Telegram:
             except:
                 print("No media", "112042461")
             try:
-                print(message.file, "112042461")
+                print(message.message, "112042461")
             except:
                 print("No file", "112042461")
             if message.media:

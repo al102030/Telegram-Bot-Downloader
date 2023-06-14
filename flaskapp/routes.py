@@ -142,7 +142,8 @@ def index():
                                 cookies = pickle.load(file)
                             yt = YouTube(txt)
                             yt.cookies = cookies
-                            file_name = yt.streams.first().default_filename  # secrets.token_hex(8)
+                            file_name = str(yt.streams.first().default_filename).replace(
+                                " ", "-")  # secrets.token_hex(8)
                             add_new_download(txt, user.id, file_name, 0)
                             resolution_select_keyboard = []
                             for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):

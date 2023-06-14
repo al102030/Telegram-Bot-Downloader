@@ -346,6 +346,10 @@ class Telegram:
         async with aiohttp.ClientSession() as session:
             async with session.post(url, json=payload, headers=headers, timeout=20) as response:
                 print(await response.text())
+        time.sleep(10)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers, timeout=20) as response:
+                print(await response.text())
 
     def get_user_profile_photos(self, user_id):
 

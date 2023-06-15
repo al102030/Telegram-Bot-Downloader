@@ -117,10 +117,11 @@ class Methods:
 
     def update_server_link(self, download_id, link):
 
-        download = Download.query.filter_by(id=download_id).first()
+        download = Download.query.filter_by(
+            id=download_id, server_link=link).first()
         if download:
             download.server_link = link
             db.session.commit()
             return True
         else:
-            print("Something went wrong in updating download size!")
+            print("Something went wrong in updating server link!")

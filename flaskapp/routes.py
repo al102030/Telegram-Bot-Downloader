@@ -241,7 +241,7 @@ def index():
                         os.chmod(
                             f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
                         bot_methods.send_message(
-                            "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
+                            f"https://telapi.digi-arya.ir/static/{file_name}.mp4", chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
                         db_methods.update_download_status(file_name)

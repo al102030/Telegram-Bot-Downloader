@@ -44,12 +44,12 @@ class Methods:
         else:
             return user, False
 
-    def add_new_download(self, url, user_id, file_name, file_size):
+    def add_new_download(self, url, user_id, file_name, file_size, server_link=""):
 
         download = Download.query.filter_by(file_name=file_name).first()
         if not download:
             download = Download(link=url, file_name=file_name,
-                                file_wight=file_size, file_type="mp4", status=0, user_id=user_id)
+                                file_wight=file_size, file_type="mp4", status=0, user_id=user_id, server_link=server_link)
             db.session.add(download)
             db.session.commit()
             print("A new download was added!")

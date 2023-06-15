@@ -200,6 +200,9 @@ def index():
                                             chat_id, size_mb)
                                         db_methods.update_server_link(
                                             download.id, f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4")
+                                        bot_methods.send_message(
+                                            "You can use this direct link for 1 month. Please save your Link.", chat_id)
+
                                     except ValueError as error:
                                         print(
                                             'Caught this error: ' + repr(error))
@@ -247,18 +250,19 @@ def index():
             else:
                 if user.credit >= size_mb:
                     try:
+                        server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
                         db_methods.add_new_download('telegram', user.id,
-                                                    file_name, size_mb)
+                                                    file_name, size_mb, server_link)
                         run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
+                        db_methods.update_download_status(file_name)
                         db_methods.update_user_credit(chat_id, size_mb)
                         os.chmod(
                             f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
                         bot_methods.send_message(
-                            f"https://telapi.digi-arya.ir/static/{file_name}.mp4", chat_id)
+                            server_link, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                        db_methods.update_download_status(file_name)
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
                 else:

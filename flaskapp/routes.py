@@ -158,12 +158,13 @@ def index():
                     if user.credit > 0:
                         download = Download.query.filter_by(
                             status=0, user_id=user.id).first()
+                        print("New download added.")
                         if download:
                             user = User.query.filter_by(
                                 telegram_id=chat_id).first()
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
-                            yt = YouTube(str(download.link))
+                            yt = YouTube(download.link)
                             yt.cookies = cookies
                             stream = yt.streams.filter(res=txt).first()
                             if stream:

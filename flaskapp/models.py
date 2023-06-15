@@ -73,7 +73,7 @@ class Methods:
             db.session.commit()
             print("Download process completed!")
         else:
-            print("Something went wrong!")
+            print("Something went wrong in download status updating!")
 
     def update_download_size(self, file_name, file_size):
 
@@ -118,10 +118,10 @@ class Methods:
     def update_server_link(self, download_id, link):
 
         download = Download.query.filter_by(
-            id=download_id, server_link=link).first()
+            id=download_id).first()
         if download:
             download.server_link = link
             db.session.commit()
-            return True
+            print("Server link updated.")
         else:
             print("Something went wrong in updating server link!")

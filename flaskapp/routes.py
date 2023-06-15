@@ -197,7 +197,7 @@ def index():
                                         db_methods.update_user_credit(
                                             chat_id, size_mb)
                                         db_methods.update_server_link(
-                                            "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", download_id)
+                                            "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", download.id)
                                         db_methods.update_download_status(
                                             download.id)
                                     except ValueError as error:

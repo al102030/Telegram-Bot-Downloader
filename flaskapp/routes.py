@@ -158,8 +158,8 @@ def index():
                     if user.credit > 0:
                         download = Download.query.filter_by(
                             status=0, user_id=user.id).first()
-                        print("New download added.")
                         if download:
+                            print("An Un-tracked Download Record Founded.")
                             user = User.query.filter_by(
                                 telegram_id=chat_id).first()
                             with open('cookies.pkl', 'rb') as file:
@@ -202,6 +202,8 @@ def index():
                                 bot_methods.send_message(
                                     "File doesn't Exist.\nPlease try another Resolution or link\nThanks.",
                                     chat_id)
+                        else:
+                            print("The Untracked Download Record was not found.")
 
                 else:
                     bot_methods.send_message(

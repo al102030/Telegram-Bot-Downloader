@@ -123,7 +123,7 @@ def index():
                 elif "youtube.com/" in txt:
                     url = txt.strip()
                     user, new_user = db_methods.add_new_user(chat_id)
-                    print(f"User id is: {user.id}")
+                    # print(f"User id is: {user.id}")
                     ans = bot_methods.get_chat_member(channel_id, chat_id)
                     json_data = json.loads(ans)
                     stat = json_data['result']['status']
@@ -144,9 +144,13 @@ def index():
                             yt.cookies = cookies
                             file_name = str(yt.streams.first().default_filename).replace(
                                 " ", "-")[:-5]  # secrets.token_hex(8)
-
-                            db_methods.add_new_download(
-                                url, user.id, file_name, 0)
+                            check, download_id = db_methods.check_link_in_db(
+                                url, user.id, file_name)
+                            if not check:
+                                db_methods.add_new_download(
+                                    url, user.id, file_name, 0)
+                            else:
+                                db_methods.reorder_old_download(download_id)
                             resolution_select_keyboard = []
                             for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
                                 lst = []
@@ -157,6 +161,7 @@ def index():
                                 resolution_select_keyboard.append(lst)
                             bot_methods.send_message_with_menu("Please select the resolution that you want to download",
                                                                chat_id, resolution_select_keyboard)
+
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     if user.credit > 0:
                         download = Download.query.filter_by(
@@ -191,8 +196,10 @@ def index():
                                             "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                                         db_methods.update_user_credit(
                                             chat_id, size_mb)
+                                        db_methods.update_server_link(
+                                            "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", download_id)
                                         db_methods.update_download_status(
-                                            download.file_name)
+                                            download.id)
                                     except ValueError as error:
                                         print(
                                             'Caught this error: ' + repr(error))

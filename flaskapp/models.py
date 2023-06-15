@@ -26,6 +26,7 @@ class Download(db.Model):
     date_delete = db.Column(db.Integer, nullable=False,
                             default=time_stamp+2592000)
     status = db.Column(db.Integer, nullable=False, default=0)
+    server_link = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -63,10 +64,10 @@ class Methods:
         else:
             print("User not found!")
 
-    def update_download_status(self, file_name):
+    def update_download_status(self, download_id):
 
         download = Download.query.filter_by(
-            file_name=file_name, status=0).first()
+            id=download_id, status=0).first()
         if download:
             download.status = 1
             db.session.commit()
@@ -82,7 +83,16 @@ class Methods:
             db.session.commit()
             return True
         else:
-            print("Something went wrong!")
+            print("Something went wrong in updating download size!")
+
+    def check_link_in_db(self, url, user_id, file_name):
+
+        download = Download.query.filter_by(
+            link=url, user_id=user_id, file_name=file_name).first()
+        if not download:
+            return False, None
+        else:
+            return True, download.id
 
     def status(self, chat_id):
         user = User.query.filter_by(telegram_id=chat_id).first()
@@ -90,3 +100,27 @@ class Methods:
             return f"Your credit is: {user.credit} Mb.\nPlease charge your account to start your download."
         else:
             return f"Your credit is: {user.credit} Mb"
+
+    def reorder_old_download(self, download_id):
+        current_time = dt.datetime.now()
+        time_stamp = current_time.timestamp()
+        download = Download.query.filter_by(id=download_id).first()
+        if download:
+            download.date_downloaded = time_stamp
+            download.date_delete = time_stamp+2592000
+            download.server_link = ""
+            download.status = 0
+            db.session.commit()
+            print("Download record reordered.")
+        else:
+            print("Something went wrong in reordering a download record process!")
+
+    def update_server_link(self, download_id, link):
+
+        download = Download.query.filter_by(id=download_id).first()
+        if download:
+            download.server_link = link
+            db.session.commit()
+            return True
+        else:
+            print("Something went wrong in updating download size!")

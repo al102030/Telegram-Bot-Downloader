@@ -192,14 +192,14 @@ def index():
                                             'upload_video', chat_id)
                                         os.chmod(
                                             f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
+                                        db_methods.update_download_status(
+                                            download.id)
                                         bot_methods.send_message(
                                             "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
                                         db_methods.update_user_credit(
                                             chat_id, size_mb)
                                         db_methods.update_server_link(
                                             "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", download.id)
-                                        db_methods.update_download_status(
-                                            download.id)
                                     except ValueError as error:
                                         print(
                                             'Caught this error: ' + repr(error))

@@ -251,11 +251,11 @@ def index():
                 if user.credit >= size_mb:
                     try:
                         server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
-                        db_methods.add_new_download('telegram', user.id,
-                                                    file_name, size_mb, server_link)
+                        download_id = db_methods.add_new_download('telegram', user.id,
+                                                                  file_name, size_mb, server_link)
                         run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
-                        db_methods.update_download_status(file_name)
+                        db_methods.update_download_status(download_id)
                         db_methods.update_user_credit(chat_id, size_mb)
                         os.chmod(
                             f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)

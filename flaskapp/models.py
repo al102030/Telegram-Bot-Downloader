@@ -53,7 +53,7 @@ class Methods:
             db.session.add(download)
             db.session.commit()
             print("A new download was added!")
-            return True
+            return download.id
 
     def update_user_credit(self, user_id, usage):
         user = User.query.filter_by(telegram_id=user_id).first()

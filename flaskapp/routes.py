@@ -207,7 +207,7 @@ def index():
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
             if is_video:
-                file_name = secrets.token_hex(8)+'.mp4'
+                file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
                 mime_type = msg['message']['video']['mime_type']
             elif is_document:
@@ -244,7 +244,7 @@ def index():
                             "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                        # update_download_status(file_name)
+                        db_methods.update_download_status(file_name)
                     except ValueError as error:
                         print('Caught this error: ' + repr(error))
                 else:

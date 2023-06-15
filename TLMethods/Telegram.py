@@ -1,7 +1,7 @@
-import requests
+import time
 import os
 import json
-import time
+import requests
 import aiohttp
 from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
@@ -402,8 +402,6 @@ class Telegram:
 
     async def download_media(self, file_name, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
-        stat = False
-        # path = "static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:

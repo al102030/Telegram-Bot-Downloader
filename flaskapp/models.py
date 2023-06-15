@@ -30,3 +30,63 @@ class Download(db.Model):
 
     def __repr__(self):
         return f"Download('{self.link}', '{self.file_wight}', '{self.file_type}')"
+
+
+class Methods:
+    def add_new_user(self, user_id):
+        user = User.query.filter_by(telegram_id=user_id).first()
+        if not user:
+            user = User(telegram_id=user_id, credit=0)
+            db.session.add(user)
+            db.session.commit()
+            return user, True
+        else:
+            return user, False
+
+    def add_new_download(self, url, user_id, file_name, file_size):
+
+        download = Download.query.filter_by(file_name=file_name).first()
+        if not download:
+            download = Download(link=url, file_name=file_name,
+                                file_wight=file_size, file_type="mp4", status=0, user_id=user_id)
+            db.session.add(download)
+            db.session.commit()
+            print("A new download was added!")
+            return True
+
+    def update_user_credit(self, user_id, usage):
+        user = User.query.filter_by(telegram_id=user_id).first()
+        if user:
+            user.credit -= usage
+            db.session.commit()
+            print("User credit decreased!")
+        else:
+            print("User not found!")
+
+    def update_download_status(self, file_name):
+
+        download = Download.query.filter_by(
+            file_name=file_name, status=0).first()
+        if download:
+            download.status = 1
+            db.session.commit()
+            print("Download process completed!")
+        else:
+            print("Something went wrong!")
+
+    def update_download_size(self, file_name, file_size):
+
+        download = Download.query.filter_by(file_name=file_name).first()
+        if download:
+            download.file_wight = file_size
+            db.session.commit()
+            return True
+        else:
+            print("Something went wrong!")
+
+    def status(self, chat_id):
+        user = User.query.filter_by(telegram_id=chat_id).first()
+        if user.credit == 0:
+            return f"Your credit is: {user.credit} Mb.\nPlease charge your account to start your download."
+        else:
+            return f"Your credit is: {user.credit} Mb"

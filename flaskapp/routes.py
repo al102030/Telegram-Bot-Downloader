@@ -2,13 +2,13 @@ import json
 import secrets
 import pickle
 from asyncio import run, gather
-from pytube import YouTube, exceptions
 import os
+from pytube import YouTube, exceptions
 import requests
 from flask import request, Response
-from flaskapp import app, bot_methods, db
+from flaskapp import app, bot_methods
 from config.secret import GOOGLE_USER, GOOGLE_PASSWORD
-from flaskapp.models import User, Download
+from flaskapp.models import User, Download, Methods
 from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_options, start_again
 
 
@@ -17,6 +17,7 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
+        db_methods = Methods()
         is_text = None
         is_video = None
         is_document = None
@@ -29,7 +30,6 @@ def index():
             is_video = msg['message']['video']
         except KeyError as error:
             print("Video not found", error)
-
         try:
             is_document = msg['message']['document']
         except KeyError as error:
@@ -39,7 +39,7 @@ def index():
             callback_id = msg['callback_query']['id']
             callback_from_id = msg['callback_query']['from']['id']
             callback_data = msg['callback_query']['data']
-            user, new_user = add_new_user(callback_from_id)
+            user, new_user = db_methods.add_new_user(callback_from_id)
             ans = bot_methods.get_chat_member(channel_id, callback_from_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
@@ -68,13 +68,10 @@ def index():
             elif callback_data == "ad0eec6b4cf3c8ef":
                 bot_methods.send_message(
                     "30 Gigabyte add to your account.\ncongratulations!", callback_from_id)
-
         elif is_text:
             chat_id = msg['message']['chat']['id']
             txt = msg['message']['text']
-            user, new_user = add_new_user(chat_id)
-            # download = Download.query.filter_by(
-            #     user_id=User.id, status=2).first()
+            user, new_user = db_methods.add_new_user(chat_id)
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
@@ -95,7 +92,8 @@ def index():
                             "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
             else:
                 if txt == "/c1":
-                    status(chat_id=chat_id)
+                    credit = db_methods.status(chat_id=chat_id)
+                    bot_methods.send_message(credit, chat_id)
                 elif txt == "/c2":
                     bot_methods.send_message("""Hi there!
                                             I'm a smart Bot that can help you to download your file from a variety of Internet services like YouTube, Instagram, etc., faster and safer.
@@ -123,7 +121,7 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
-                    user, new_user = add_new_user(chat_id)
+                    user, new_user = db_methods.add_new_user(chat_id)
                     ans = bot_methods.get_chat_member(channel_id, chat_id)
                     json_data = json.loads(ans)
                     stat = json_data['result']['status']
@@ -143,7 +141,8 @@ def index():
                             yt.cookies = cookies
                             file_name = str(yt.streams.first().default_filename).replace(
                                 " ", "-")[:-5]  # secrets.token_hex(8)
-                            add_new_download(txt, user.id, file_name, 0)
+                            db_methods.add_new_download(
+                                txt, user.id, file_name, 0)
                             resolution_select_keyboard = []
                             for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
                                 lst = []
@@ -172,7 +171,7 @@ def index():
                                     size_mb = 1
                                 else:
                                     size_mb = round(size_mb)
-                                update_download_size(
+                                db_methods.update_download_size(
                                     download.file_name, size_mb)
                                 if user.credit >= size_mb:
                                     try:
@@ -181,13 +180,13 @@ def index():
                                             output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
                                         bot_methods.send_chat_action(
                                             'upload_video', chat_id)
-                                        # time.sleep(5)
                                         os.chmod(
                                             f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
                                         bot_methods.send_message(
                                             "https://telapi.digi-arya.ir/static/"+download.file_name+".mp4", chat_id)
-                                        update_user_credit(chat_id, size_mb)
-                                        update_download_status(
+                                        db_methods.update_user_credit(
+                                            chat_id, size_mb)
+                                        db_methods.update_download_status(
                                             download.file_name)
                                     except ValueError as error:
                                         print(
@@ -205,7 +204,6 @@ def index():
                 else:
                     bot_methods.send_message(
                         "I don't know what you're expecting of me?", chat_id)
-
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
             if is_video:
@@ -221,7 +219,7 @@ def index():
                 size_mb = 1
             else:
                 size_mb = round(size_mb)
-            user, new_user = add_new_user(chat_id)
+            user, new_user = db_methods.add_new_user(chat_id)
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
@@ -235,14 +233,13 @@ def index():
             else:
                 if user.credit >= size_mb:
                     try:
-                        add_new_download('telegram', user.id,
-                                         file_name, size_mb)
+                        db_methods.add_new_download('telegram', user.id,
+                                                    file_name, size_mb)
                         run(async_download(bot_methods.download_media(
                             file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_video', chat_id)))
-                        # print(f"Status is: {x}")
-                        update_user_credit(chat_id, size_mb)
-                        # os.chmod(
-                        #     f'/usr/share/nginx/html/static/{file_name}', 0o755)
+                        db_methods.update_user_credit(chat_id, size_mb)
+                        os.chmod(
+                            f'/usr/share/nginx/html/static/{file_name}', 0o755)
                         bot_methods.send_message(
                             "https://telapi.digi-arya.ir/static/"+file_name, chat_id)
                         bot_methods.send_message(
@@ -255,94 +252,12 @@ def index():
                     bot_methods.send_message_with_keyboard(
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
-        elif "instagram.com/" in txt:
-            pass
-            # # The URL of the DownloadGram website
-            # downloadgram_url = "http://www.downloadgram.com/"
-            # # Make an HTTP GET request to the DownloadGram website with the video URL as a parameter
-            # response = requests.get(downloadgram_url, params={
-            #                         "url": txt}, timeout=20)
-            # # Use BeautifulSoup to parse the HTML content of the response and extract the download link
-            # soup = BeautifulSoup(response.content, "html.parser")
-            # download_link = soup.find("a", string="Download video").get("href")
-            # # Make another HTTP GET request to the download link to download the video file
-            # response = requests.get(download_link, timeout=20)
-            # # Save the video file to your local disk
-            # with open("/usr/share/nginx/html/static/my_instagram_video.mp4", "wb") as file:
-            #     file.write(response.content)
         else:
             bot_methods.send_message(msg, "112042461")
 
         return Response('ok', status=200)
     else:
-        return '<h1>Not OK</h1>'
-
-
-def add_new_user(user_id):
-    user = User.query.filter_by(telegram_id=user_id).first()
-    if not user:
-        user = User(telegram_id=user_id, credit=0)
-        db.session.add(user)
-        db.session.commit()
-        return user, True
-    else:
-        return user, False
-
-
-def add_new_download(url, user_id, file_name, file_size):
-
-    download = Download.query.filter_by(file_name=file_name).first()
-    if not download:
-        download = Download(link=url, file_name=file_name,
-                            file_wight=file_size, file_type="mp4", status=0, user_id=user_id)
-        db.session.add(download)
-        db.session.commit()
-        print("A new download was added!")
-        return True
-
-
-def update_user_credit(user_id, usage):
-    user = User.query.filter_by(telegram_id=user_id).first()
-    if user:
-        user.credit -= usage
-        db.session.commit()
-        print("User credit decreased!")
-    else:
-        print("User not found!")
-
-
-def update_download_status(file_name):
-
-    download = Download.query.filter_by(file_name=file_name, status=0).first()
-    if download:
-        download.status = 1
-        db.session.commit()
-        print("Download process completed!")
-    else:
-        print("Something went wrong!")
-
-
-def update_download_size(file_name, file_size):
-
-    download = Download.query.filter_by(file_name=file_name).first()
-    if download:
-        download.file_wight = file_size
-        db.session.commit()
-        return True
-    else:
-        print("Something went wrong!")
-
-
-def status(chat_id):
-    user = User.query.filter_by(telegram_id=chat_id).first()
-    if user.credit == 0:
-        bot_methods.send_message(
-            f"Your credit is: {user.credit} Mb", chat_id)
-        bot_methods.send_message(
-            "Please charge your account to start your download.", chat_id)
-    else:
-        bot_methods.send_message(
-            f"Your credit is: {user.credit} Mb", chat_id)
+        return '<h1>Telegram Bot Downloader</h1>'
 
 
 def login_to_youtube(username, password):

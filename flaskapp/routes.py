@@ -121,7 +121,9 @@ def index():
                     bot_methods.send_message_with_menu(
                         "Are you Sure?", chat_id, options)
                 elif "youtube.com/" in txt:
+                    url = txt.strip()
                     user, new_user = db_methods.add_new_user(chat_id)
+                    print(f"User id is: {user.id}")
                     ans = bot_methods.get_chat_member(channel_id, chat_id)
                     json_data = json.loads(ans)
                     stat = json_data['result']['status']
@@ -137,13 +139,14 @@ def index():
                             login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
-                            yt = YouTube(txt)
+                            yt = YouTube(url)
                             print(yt.video_id)
                             yt.cookies = cookies
                             file_name = str(yt.streams.first().default_filename).replace(
                                 " ", "-")[:-5]  # secrets.token_hex(8)
+
                             db_methods.add_new_download(
-                                txt, user.id, file_name, 0)
+                                url, user.id, file_name, 0)
                             resolution_select_keyboard = []
                             for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
                                 lst = []

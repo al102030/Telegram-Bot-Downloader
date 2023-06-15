@@ -8,12 +8,13 @@ flask = "*"
 requests = "*"
 flask-sqlalchemy = "*"
 flask-bcrypt = "*"
-pytube = {git = "https://github.com/pytube/pytube"}
 telethon = "*"
 update = "*"
 wheel = "*"
 aiohttp = "*"
 cryptg = "*"
+youtube-dl = "*"
+pytube = {git = "https://github.com/pytube/pytube"}
 
 [dev-packages]
 autopep8 = "*"

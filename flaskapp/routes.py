@@ -128,16 +128,17 @@ def index():
                     if new_user:
                         bot_methods.send_message(
                             f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)
-                        if stat == 'left':
-                            inline_keyboard = joining_channel_keyboard
-                            bot_methods.send_message_with_keyboard(
-                                "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
+                    if stat == 'left':
+                        inline_keyboard = joining_channel_keyboard
+                        bot_methods.send_message_with_keyboard(
+                            "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                     else:
                         if user.credit > 0:
                             login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
                             yt = YouTube(txt)
+                            print(yt.video_id)
                             yt.cookies = cookies
                             file_name = str(yt.streams.first().default_filename).replace(
                                 " ", "-")[:-5]  # secrets.token_hex(8)

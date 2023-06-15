@@ -139,21 +139,21 @@ def index():
                                 cookies = pickle.load(file)
                             yt = YouTube(txt)
                             print(yt.video_id)
-                            # yt.cookies = cookies
-                            # file_name = str(yt.streams.first().default_filename).replace(
-                            #     " ", "-")[:-5]  # secrets.token_hex(8)
-                            # db_methods.add_new_download(
-                            #     txt, user.id, file_name, 0)
-                            # resolution_select_keyboard = []
-                            # for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
-                            #     lst = []
-                            #     dictionary = {}
-                            #     dictionary['text'] = stream.resolution
-                            #     dictionary['callback_data'] = stream.resolution
-                            #     lst.append(dictionary)
-                            #     resolution_select_keyboard.append(lst)
-                            # bot_methods.send_message_with_menu("Please select the resolution that you want to download",
-                            #                                    chat_id, resolution_select_keyboard)
+                            yt.cookies = cookies
+                            file_name = str(yt.streams.first().default_filename).replace(
+                                " ", "-")[:-5]  # secrets.token_hex(8)
+                            db_methods.add_new_download(
+                                txt, user.id, file_name, 0)
+                            resolution_select_keyboard = []
+                            for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
+                                lst = []
+                                dictionary = {}
+                                dictionary['text'] = stream.resolution
+                                dictionary['callback_data'] = stream.resolution
+                                lst.append(dictionary)
+                                resolution_select_keyboard.append(lst)
+                            bot_methods.send_message_with_menu("Please select the resolution that you want to download",
+                                                               chat_id, resolution_select_keyboard)
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     if user.credit > 0:
                         download = Download.query.filter_by(

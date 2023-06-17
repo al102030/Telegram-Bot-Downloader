@@ -448,7 +448,7 @@ class Telegram:
             elif message.message:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
-                    await client.download_media(message.message, file=file)
+                    await client.download_file(message.message, file=file)
                     print("Document downloaded!(message)")
                 elif mime_type == "video/mp4":
                     print("it is a video!")

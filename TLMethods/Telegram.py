@@ -3,7 +3,7 @@ import os
 import json
 import requests
 import aiohttp
-from telethon import TelegramClient
+from telethon import TelegramClient, InputFileRemote
 from config.secret import API_ID, API_HASH
 
 # Telegram methods class
@@ -448,7 +448,8 @@ class Telegram:
             elif message.message:
                 json_data = json.loads(message.message)
                 file_id = json_data['message']['document']['file_id']
-                print(file_id)
+                file_path = self.get_file(file_id)
+                print(file_path)
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.message, file=file)

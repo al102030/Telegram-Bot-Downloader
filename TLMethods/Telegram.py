@@ -437,17 +437,17 @@ class Telegram:
             elif message.document:
                 # json_data = json.loads(message.message)
                 # file_id = json_data['message']['document']['file_id']
-                if "application/" in mime_type:
-                    print("it is a document(file) or app!")
-                    await client.download_file(file_id, file=file)
-                    print("Document downloaded!(message)")
-                elif mime_type == "video/mp4":
-                    print("it is a video!")
-                    file += '.mp4'
-                    await client.download_file(file_id, file=file)
-                    print("Video downloaded!(message)")
-                else:
-                    print("File format not supported!")
+                # if "application/" in mime_type:
+                #     print("it is a document(file) or app!")
+                #     await client.download_file(file_id, file=file)
+                #     print("Document downloaded!(message)")
+                # elif mime_type == "video/mp4":
+                #     print("it is a video!")
+                #     file += '.mp4'
+                #     await client.download_file(file_id, file=file)
+                #     print("Video downloaded!(message)")
+                # else:
+                #     print("File format not supported!")
             else:
                 print("The message doesn't contain media.")
 

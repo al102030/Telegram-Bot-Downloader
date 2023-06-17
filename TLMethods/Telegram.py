@@ -417,9 +417,9 @@ class Telegram:
                 if str(mime_type) in str(item) and str(chat_id) in str(item):
                     message = item
                     break
-
-            message = await client.get_messages(
-                message.peer_id.user_id, ids=message.id)
+            if message:
+                message = await client.get_messages(
+                    message.peer_id.user_id, ids=message.id)
 
             file = path+file_name
             if message.media:

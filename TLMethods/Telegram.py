@@ -424,15 +424,10 @@ class Telegram:
                 #     break
 
             message = messages[0]
-            # self.send_message(str(message), "112042461")
+
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
-            print(message.peer_id.user_id)
-            print(message.id)
-            # print('================================================\n')
-            # print(message)
-            # print(message.peer_id.user_id, message.id)
-
+            print(message)
             # try:
             #     print(message.media, "Media part")
             # except:

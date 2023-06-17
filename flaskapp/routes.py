@@ -228,12 +228,12 @@ def index():
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
                 mime_type = msg['message']['video']['mime_type']
-                file_id = msg['message']['video']['file_id']
+                file_id = msg['message']['video']['file_unique_id']
             elif is_document:
                 file_name = msg['message']['document']['file_name']
                 file_size = msg['message']['document']['file_size']
                 mime_type = msg['message']['document']['mime_type']
-                file_id = msg['message']['document']['file_id']
+                file_id = msg['message']['document']['file_unique_id']
 
             size_mb = int(file_size)/1000000
             if size_mb < 0:

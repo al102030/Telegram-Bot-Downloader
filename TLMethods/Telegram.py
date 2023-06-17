@@ -451,7 +451,7 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.message:
-                ID_ = message.message["message"]
+                ID_ = message.message
                 print(ID_)
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")

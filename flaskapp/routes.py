@@ -242,8 +242,8 @@ def index():
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
-            print(chat_id, file_name, file_size, mime_type, size_mb, stat)
-            time.sleep(60)
+            # print(chat_id, file_name, file_size, mime_type, size_mb, stat)
+            # time.sleep(60)
             if new_user:
                 bot_methods.send_message(
                     f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)

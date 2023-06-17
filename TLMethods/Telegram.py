@@ -423,7 +423,7 @@ class Telegram:
             #         message.peer_id.user_id, ids=message.id)
             # else:
             #     message.medid = None
-
+            print(file_id)
             file = path+file_name
             # if message.media:
             #     if "application/" in mime_type:

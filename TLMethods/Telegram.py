@@ -446,6 +446,9 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.message:
+                json_data = json.loads(message.message)
+                file_id = json_data['message']['document']['file_id']
+                print(file_id)
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(message.message, file=file)

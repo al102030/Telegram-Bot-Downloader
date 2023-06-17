@@ -4,6 +4,7 @@ import json
 import requests
 import aiohttp
 from telethon import TelegramClient
+from telethon.tl.types import InputDocument, InputDocumentFileLocation
 from config.secret import API_ID, API_HASH
 
 # Telegram methods class
@@ -403,6 +404,15 @@ class Telegram:
     async def download_media(self, file_name, file_id, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
+            input_document = client.get_input_document(file_id)
+
+            input_file_location = InputDocumentFileLocation(
+                id=input_document.id,
+                access_hash=input_document.access_hash,
+                file_reference=input_document.file_reference,
+                thumb_size=None
+            )
+
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:
             #     if dialog.title == 'Al102030':
@@ -448,7 +458,7 @@ class Telegram:
                 print("it is a video!")
                 file += '.mp4'
                 print(file_id)
-                await client.download_file(file_id, file=file)
+                await client.download_file(input_file_location, file=file)
                 print("Video downloaded!(message)")
             else:
                 print("File format not supported!")

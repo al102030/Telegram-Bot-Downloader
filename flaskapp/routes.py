@@ -250,7 +250,10 @@ def index():
             else:
                 if user.credit >= size_mb:
                     try:
-                        server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                        if mime_type == "video/mp4":
+                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                        else:
+                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
                         download_id = db_methods.add_new_download('telegram', user.id,
                                                                   file_name, size_mb, server_link)
                         run(async_download(bot_methods.download_media(

@@ -252,8 +252,10 @@ def index():
                     try:
                         if mime_type == "video/mp4":
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                            direction = f'/usr/share/nginx/html/static/{file_name}.mp4'
                         else:
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
+                            direction = f'/usr/share/nginx/html/static/{file_name}'
                         download_id = db_methods.add_new_download('telegram', user.id,
                                                                   file_name, size_mb, server_link)
                         run(async_download(bot_methods.download_media(
@@ -262,10 +264,10 @@ def index():
                         db_methods.update_user_credit(chat_id, size_mb)
                         if mime_type == "video/mp4":
                             os.chmod(
-                                f'/usr/share/nginx/html/static/{file_name}.mp4', 0o755)
+                                direction, 0o755)
                         else:
                             os.chmod(
-                                f'/usr/share/nginx/html/static/{file_name}', 0o755)
+                                direction, 0o755)
                         bot_methods.send_message(
                             server_link, chat_id)
                         bot_methods.send_message(

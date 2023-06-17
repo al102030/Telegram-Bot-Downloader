@@ -3,6 +3,7 @@ import secrets
 import pickle
 from asyncio import run, gather
 import os
+import time
 from pytube import YouTube, exceptions
 import requests
 from flask import request, Response
@@ -223,7 +224,6 @@ def index():
                         "I don't know what you're expecting of me?", chat_id)
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
-            print(chat_id)
             if is_video:
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
@@ -232,6 +232,7 @@ def index():
                 file_name = msg['message']['document']['file_name']
                 file_size = msg['message']['document']['file_size']
                 mime_type = msg['message']['document']['mime_type']
+
             size_mb = int(file_size)/1000000
             if size_mb < 0:
                 size_mb = 1
@@ -241,6 +242,8 @@ def index():
             ans = bot_methods.get_chat_member(channel_id, chat_id)
             json_data = json.loads(ans)
             stat = json_data['result']['status']
+            print(chat_id, file_name, file_size, mime_type, size_mb, stat)
+            time.sleep(60)
             if new_user:
                 bot_methods.send_message(
                     f"You are not registered in my user's list,Welcome! (Your Telegram ID: {chat_id})", chat_id)

@@ -421,6 +421,8 @@ class Telegram:
             if message:
                 message = await client.get_messages(
                     message.peer_id.user_id, ids=message.id)
+            else:
+                message.medid = None
 
             file = path+file_name
             if message.media:

@@ -223,6 +223,7 @@ def index():
                         "I don't know what you're expecting of me?", chat_id)
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
+            print(chat_id)
             if is_video:
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']

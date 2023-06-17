@@ -424,6 +424,8 @@ class Telegram:
             # self.send_message(str(message), "112042461")
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
+            print('================================================\n')
+            print(message)
             # print(message.peer_id.user_id, message.id)
 
             # try:

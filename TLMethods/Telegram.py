@@ -416,16 +416,10 @@ class Telegram:
             for item in messages:
                 if str(mime_type) in str(item):
                     message = item
-                    print(message)
                     break
-                # elif str(chat_id) in str(item):
-                #     message = item
-                #     print(message)
-                #     break
 
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
-            print(message)
             # try:
             #     print(message.media, "Media part")
             # except:
@@ -452,7 +446,7 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.message:
-                pass
+                print("iiinjaaaaaaaaa")
                 # if "application/" in mime_type:
                 #     print("it is a document(file) or app!")
                 #     await client.download_media(message.message, file=file)

@@ -451,7 +451,6 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.message:
-                pass
                 ID_ = message.message
                 print(ID_)
                 print(mime_type)

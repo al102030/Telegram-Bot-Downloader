@@ -416,9 +416,11 @@ class Telegram:
             for item in messages:
                 if str(file_name) in str(item):
                     message = item
+                    print(message)
                     break
                 elif str(chat_id) in str(item):
                     message = item
+                    print(message)
                     break
 
             # self.send_message(str(message), "112042461")

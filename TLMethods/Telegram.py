@@ -3,7 +3,7 @@ import os
 import json
 import requests
 import aiohttp
-from telethon import TelegramClient, InputFileRemote
+from telethon import TelegramClient
 from config.secret import API_ID, API_HASH
 
 # Telegram methods class

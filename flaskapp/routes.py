@@ -228,10 +228,12 @@ def index():
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
                 mime_type = msg['message']['video']['mime_type']
+                file_id = msg['message']['video']['file_id']
             elif is_document:
                 file_name = msg['message']['document']['file_name']
                 file_size = msg['message']['document']['file_size']
                 mime_type = msg['message']['document']['mime_type']
+                file_id = msg['message']['video']['file_id']
 
             size_mb = int(file_size)/1000000
             if size_mb < 0:
@@ -263,7 +265,7 @@ def index():
                         download_id = db_methods.add_new_download('telegram', user.id,
                                                                   file_name, size_mb, server_link)
                         run(async_download(bot_methods.download_media(
-                            file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
+                            file_name, file_id, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
                         db_methods.update_download_status(download_id)
                         db_methods.update_user_credit(chat_id, size_mb)
                         # os.chmod(

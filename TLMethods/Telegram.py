@@ -400,7 +400,7 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def download_media(self, file_name, chat_id, mime_type):
+    async def download_media(self, file_name, file_id, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             # dialogs = await client.get_dialogs()
@@ -435,8 +435,8 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.document:
-                json_data = json.loads(message.message)
-                file_id = json_data['message']['document']['file_id']
+                # json_data = json.loads(message.message)
+                # file_id = json_data['message']['document']['file_id']
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(file_id, file=file)

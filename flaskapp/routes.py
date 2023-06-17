@@ -233,7 +233,7 @@ def index():
                 file_name = msg['message']['document']['file_name']
                 file_size = msg['message']['document']['file_size']
                 mime_type = msg['message']['document']['mime_type']
-                file_id = msg['message']['video']['file_id']
+                file_id = msg['message']['document']['file_id']
 
             size_mb = int(file_size)/1000000
             if size_mb < 0:

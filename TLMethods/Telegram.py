@@ -435,6 +435,7 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.document:
+                pass
                 # json_data = json.loads(message.message)
                 # file_id = json_data['message']['document']['file_id']
                 # if "application/" in mime_type:

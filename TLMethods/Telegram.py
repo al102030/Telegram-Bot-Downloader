@@ -413,6 +413,7 @@ class Telegram:
             # print(messages[0])
             # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
             # messages[0].document.id, messages[0].document.access_hash)
+            message = None
             for item in messages:
                 if str(mime_type) in str(item) and str(chat_id) in str(item):
                     message = item

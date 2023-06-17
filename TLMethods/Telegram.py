@@ -426,6 +426,8 @@ class Telegram:
             # self.send_message(str(message), "112042461")
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
+            print(message.peer_id.user_id)
+            print(message.id)
             # print('================================================\n')
             # print(message)
             # print(message.peer_id.user_id, message.id)
@@ -456,9 +458,7 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.message:
-                ID_ = message.message
-                print(ID_)
-                print(mime_type)
+                pass
                 # if "application/" in mime_type:
                 #     print("it is a document(file) or app!")
                 #     await client.download_media(message.message, file=file)

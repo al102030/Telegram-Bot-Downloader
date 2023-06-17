@@ -409,6 +409,7 @@ class Telegram:
             #         dialog_id = dialog.id
             # print(dialog_id)
             messages = await client.get_messages(entity=6235055313)
+            print(messages[0])
             # print(messages[0])
             # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
             # messages[0].document.id, messages[0].document.access_hash)

@@ -423,8 +423,6 @@ class Telegram:
                 #     print(message)
                 #     break
 
-            message = messages[0]
-
             message = await client.get_messages(
                 message.peer_id.user_id, ids=message.id)
             print(message)

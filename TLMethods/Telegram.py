@@ -406,12 +406,7 @@ class Telegram:
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             input_document = client.InputFileLocation(file_id)
 
-            input_file_location = InputDocumentFileLocation(
-                id=input_document.id,
-                access_hash=input_document.access_hash,
-                file_reference=input_document.file_reference,
-                thumb_size=None
-            )
+            input_file_location = InputFileLocation(file_unique_id=file_id)
 
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:

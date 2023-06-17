@@ -437,28 +437,28 @@ class Telegram:
             #     print(message.message, "Message part")
             # except:
             #     print("No Message", "112042461")
-
+            file = path+file_name
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
-                    await client.download_media(message.media, file=path+file_name)
+                    await client.download_media(message.media, file=file)
                     print("Document downloaded!(media)")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
-                    await client.download_media(message.media, file=path+file_name)
+                    await client.download_media(message.media, file=file)
                     print("Video downloaded!(media)")
                 else:
                     print("Media format not supported!")
             elif message.message:
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
-                    await client.download_media(message.message, file=path+file_name)
+                    await client.download_media(message.message, file=file)
                     print("Document downloaded!(message)")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file_name = file_name+'.mp4'
-                    await client.download_file(message.message, file=path+file_name)
+                    await client.download_file(message.message, file=file)
                     print("Video downloaded!(message)")
                 else:
                     print("File format not supported!")

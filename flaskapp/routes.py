@@ -23,7 +23,7 @@ def index():
         is_video = None
         is_document = None
         try:
-            is_channel = msg['channel_post']['sender_chat']['id']
+            is_channel = msg['sender_chat']['id']
             if is_channel == "-1001705745753":
                 download_message = True
             else:

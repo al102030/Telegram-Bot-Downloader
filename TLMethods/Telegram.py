@@ -417,18 +417,18 @@ class Telegram:
             #     if dialog.title == 'Bot-Data':
             #         dialog_id = dialog.id
             # print("Diaaaaaaaloooooog>>>>>>", dialog_id)
-            messages = await client.get_messages(entity=6235055313)
+            # messages = await client.get_messages(entity=6235055313)
             # print(messages)
             # print(messages[0])
             # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
             # messages[0].document.id, messages[0].document.access_hash)
-            for item in messages:
-                if str(mime_type) in str(item) and str(chat_id) in str(item):
-                    message = item
-                    break
+            # for item in messages:
+            #     if str(mime_type) in str(item) and str(chat_id) in str(item):
+            #         message = item
+            #         break
 
-            message = await client.get_messages(
-                message.peer_id.user_id, ids=message.id)
+            # message = await client.get_messages(
+            #     message.peer_id.user_id, ids=message.id)
 
             file = path+file_name
             if message.media:

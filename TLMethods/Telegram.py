@@ -402,8 +402,10 @@ class Telegram:
             async for message in client.iter_messages(-1001705745753):
                 if message.message:
                     print("Orginal>>>>>>>>>")
+                    break
                 else:
                     print("Forwarded<<<<<<<")
+                    break
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:
             #     if dialog.title == 'Bot-Data':

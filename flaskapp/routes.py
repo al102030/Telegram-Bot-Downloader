@@ -18,10 +18,18 @@ def index():
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()
-        from_id = msg['message']['from']['id']
+        is_channel = None
         is_text = None
         is_video = None
         is_document = None
+        try:
+            is_channel = msg['channel_post']['sender_chat']['id']
+            if is_channel == "-1001705745753":
+                download_message = True
+            else:
+                download_message = False
+        except KeyError as error:
+            print("Channel message(Not for download)", error)
         try:
             is_text = msg['message']['text']
         except KeyError as error:
@@ -278,8 +286,10 @@ def index():
                     bot_methods.send_message_with_keyboard(
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
-        elif from_id == "-1001705745753":
+        elif download_message:
             bot_methods.send_message("New Bot-Data message", "112042461")
+        elif not download_message:
+            pass
         else:
             bot_methods.send_message(msg, "112042461")
 

@@ -27,7 +27,6 @@ def index():
             if sender_id == -1001705745753:
                 is_channel = True
         except KeyError as error:
-            bot_methods.send_message(msg, "112042461")
             print("Channel message(Not for download)", error)
         try:
             is_text = msg['message']['text']

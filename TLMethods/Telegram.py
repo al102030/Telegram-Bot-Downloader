@@ -398,9 +398,9 @@ class Telegram:
     async def download_media(self, file_name, file_id, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
-            
-        async for message in client.iter_messages('Bot-Data'):
-            print(message.text)
+
+            async for message in client.iter_messages('Bot-Data'):
+                print(message.text)
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:
             #     if dialog.title == 'Bot-Data':

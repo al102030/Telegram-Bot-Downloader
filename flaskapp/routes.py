@@ -173,55 +173,55 @@ def index():
                             status=0, user_id=user.id).first()
                         if download:
                             print("An Un-tracked Download Record Founded.")
-                            user = User.query.filter_by(
-                                telegram_id=chat_id).first()
-                            with open('cookies.pkl', 'rb') as file:
-                                cookies = pickle.load(file)
-                            yt = YouTube(download.link)
-                            yt.cookies = cookies
-                            stream = yt.streams.filter(res=txt).first()
-                            if stream:
-                                size_mb = stream.filesize / 1000000
-                                if size_mb < 0:
-                                    size_mb = 1
-                                else:
-                                    size_mb = round(size_mb)
-                                db_methods.update_download_size(
-                                    download.file_name, size_mb)
-                                if user.credit >= size_mb:
-                                    try:
-                                        print(size_mb)
-                                        stream.download(
-                                            output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
-                                        bot_methods.send_chat_action(
-                                            'upload_video', chat_id)
-                                        os.chmod(
-                                            f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
-                                        db_methods.update_download_status(
-                                            download.id)
-                                        bot_methods.send_message(
-                                            f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4", chat_id)
-                                        db_methods.update_user_credit(
-                                            chat_id, size_mb)
-                                        db_methods.update_server_link(
-                                            download.id, f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4")
-                                        bot_methods.send_message(
-                                            "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                        #     user = User.query.filter_by(
+                        #         telegram_id=chat_id).first()
+                        #     with open('cookies.pkl', 'rb') as file:
+                        #         cookies = pickle.load(file)
+                        #     yt = YouTube(download.link)
+                        #     yt.cookies = cookies
+                        #     stream = yt.streams.filter(res=txt).first()
+                        #     if stream:
+                        #         size_mb = stream.filesize / 1000000
+                        #         if size_mb < 0:
+                        #             size_mb = 1
+                        #         else:
+                        #             size_mb = round(size_mb)
+                        #         db_methods.update_download_size(
+                        #             download.file_name, size_mb)
+                        #         if user.credit >= size_mb:
+                        #             try:
+                        #                 print(size_mb)
+                        #                 stream.download(
+                        #                     output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
+                        #                 bot_methods.send_chat_action(
+                        #                     'upload_video', chat_id)
+                        #                 os.chmod(
+                        #                     f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
+                        #                 db_methods.update_download_status(
+                        #                     download.id)
+                        #                 bot_methods.send_message(
+                        #                     f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4", chat_id)
+                        #                 db_methods.update_user_credit(
+                        #                     chat_id, size_mb)
+                        #                 db_methods.update_server_link(
+                        #                     download.id, f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4")
+                        #                 bot_methods.send_message(
+                        #                     "You can use this direct link for 1 month. Please save your Link.", chat_id)
 
-                                    except ValueError as error:
-                                        print(
-                                            'Caught this error: ' + repr(error))
-                                else:
-                                    inline_keyboard = credit_charge_keyboard
-                                    bot_methods.send_message_with_keyboard(
-                                        "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
-                                        chat_id, inline_keyboard)
-                            else:
-                                bot_methods.send_message(
-                                    "File doesn't Exist.\nPlease try another Resolution or link\nThanks.",
-                                    chat_id)
-                        else:
-                            print("The Untracked Download Record was not found.")
+                        #             except ValueError as error:
+                        #                 print(
+                        #                     'Caught this error: ' + repr(error))
+                        #         else:
+                        #             inline_keyboard = credit_charge_keyboard
+                        #             bot_methods.send_message_with_keyboard(
+                        #                 "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
+                        #                 chat_id, inline_keyboard)
+                        #     else:
+                        #         bot_methods.send_message(
+                        #             "File doesn't Exist.\nPlease try another Resolution or link\nThanks.",
+                        #             chat_id)
+                        # else:
+                        #     print("The Untracked Download Record was not found.")
 
                 else:
                     bot_methods.send_message(

@@ -4,7 +4,6 @@ import json
 import requests
 import aiohttp
 from telethon import TelegramClient
-from telethon.tl.types import InputDocumentFileLocation
 from config.secret import API_ID, API_HASH
 
 # Telegram methods class
@@ -396,7 +395,7 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def download_media(self, file_name, file_id, chat_id, mime_type):
+    async def download_media(self, file_name, file_id, mime_type):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             async for item in client.iter_messages(-1001705745753):

@@ -229,8 +229,6 @@ def index():
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
             message_id = msg['message']['message_id']
-            print(msg)
-            print("==================================================")
             if is_video:
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
@@ -272,7 +270,7 @@ def index():
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         run(async_download(bot_methods.download_media(
-                            file_name, file_id, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
+                            file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
                         db_methods.update_download_status(download_id)
                         db_methods.update_user_credit(chat_id, size_mb)
                         # os.chmod(

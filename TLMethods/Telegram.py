@@ -3,7 +3,8 @@ import os
 import json
 import requests
 import aiohttp
-from telethon import TelegramClient, types
+from telethon import TelegramClient
+from telethon.tl.types import InputDocumentFileLocation
 from config.secret import API_ID, API_HASH
 
 # Telegram methods class
@@ -400,8 +401,8 @@ class Telegram:
         async with TelegramClient('cli', API_ID, API_HASH) as client:
 
             async for message in client.iter_messages(-1001705745753):
-                input_doc = await client.get_input_document(types.InputDocumentFileLocation(file_reference=message.document.file_reference))
-                print(input_doc)
+                doc_loc = await InputDocumentFileLocation(file_reference=message.document.file_reference)
+                print(doc_loc)
                 break
                 # if message.message:
                 #     print(message)

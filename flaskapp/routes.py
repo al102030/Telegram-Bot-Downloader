@@ -18,6 +18,7 @@ def index():
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()
+        from_id = msg['message']['from']['id']
         is_text = None
         is_video = None
         is_document = None
@@ -278,6 +279,8 @@ def index():
                     bot_methods.send_message_with_keyboard(
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
+        elif from_id == "-1001705745753":
+            bot_methods.send_message("New Bot-Data message", "112042461")
         else:
             bot_methods.send_message(msg, "112042461")
 

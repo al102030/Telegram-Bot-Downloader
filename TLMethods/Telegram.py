@@ -399,7 +399,7 @@ class Telegram:
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
 
-            async for message in client.iter_messages('Bot-Data'):
+            async for message in client.iter_messages(-1001705745753):
                 print(message.text)
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:

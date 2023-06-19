@@ -513,3 +513,16 @@ class Telegram:
         else:
             print(
                 f'Error updating permissions: {response.status_code} - {response.text}')
+
+    def get_history(self, channel_id):
+        url = f"https://api.telegram.org/bot{self.token}/getHistory"
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+        payload = {
+            "chat_id": channel_id,
+        }
+        response = requests.post(
+            url, json=payload, headers=headers, timeout=20)
+        return response

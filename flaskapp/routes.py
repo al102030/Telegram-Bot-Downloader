@@ -229,6 +229,7 @@ def index():
                         "I don't know what you're expecting of me?", chat_id)
         elif is_video or is_document:
             chat_id = msg['message']['chat']['id']
+            message_id = msg['message']['message_id']
             if is_video:
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
@@ -266,7 +267,9 @@ def index():
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
                             direction = f'/usr/share/nginx/html/static/{file_name}'
                         download_id = db_methods.add_new_download('telegram', user.id,
-                                                                  file_name, size_mb, server_link)
+                                                                  file_name, file_id, size_mb, server_link)
+                        bot_methods.forward_message(
+                            message_id, -1001705745753, chat_id)
                         run(async_download(bot_methods.download_media(
                             file_name, file_id, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
                         db_methods.update_download_status(download_id)
@@ -286,6 +289,7 @@ def index():
                         chat_id, inline_keyboard)
         elif download_message:
             bot_methods.send_message("New Bot-Data message", "112042461")
+            bot_methods.send_message(msg, "112042461")
         elif not download_message:
             pass
         else:

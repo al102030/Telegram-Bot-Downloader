@@ -400,15 +400,17 @@ class Telegram:
         async with TelegramClient('cli', API_ID, API_HASH) as client:
 
             async for message in client.iter_messages(-1001705745753):
-                if message.message:
-                    print(message)
-                    json_data = json.loads(message.message)
-                    print(json_data['message']['document']['file_id'])
-                    break
-                else:
-                    print("Original<<<<<<<")
-                    print(message)
-                    break
+                print(message)
+                # if message.message:
+                #     print(message)
+                #     json_data = json.loads(message.message)
+                #     print(json_data['message']['document']['file_id'])
+                #     break
+                # else:
+                #     print("Original<<<<<<<")
+                #     print(message)
+                #     break
+
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:
             #     if dialog.title == 'Bot-Data':

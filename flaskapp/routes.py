@@ -273,8 +273,8 @@ def index():
                             file_name, file_id, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
                         db_methods.update_download_status(download_id)
                         db_methods.update_user_credit(chat_id, size_mb)
-                        os.chmod(
-                            direction, 0o755)
+                        # os.chmod(
+                        #     direction, 0o755)
                         bot_methods.send_message(
                             server_link, chat_id)
                         bot_methods.send_message(

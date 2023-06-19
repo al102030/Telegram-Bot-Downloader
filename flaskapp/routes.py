@@ -26,7 +26,6 @@ def index():
             is_text = msg['message']['text']
         except KeyError as error:
             print("Text not found", error)
-
         try:
             is_video = msg['message']['video']
         except KeyError as error:

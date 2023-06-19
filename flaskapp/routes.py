@@ -22,12 +22,11 @@ def index():
         is_text = None
         is_video = None
         is_document = None
+        download_message = False
         try:
-            is_channel = msg['sender_chat']['id']
-            if is_channel == "-1001705745753":
+            is_channel = msg['channel_post']['sender_chat']['id']
+            if is_channel == -1001705745753:
                 download_message = True
-            else:
-                download_message = False
         except KeyError as error:
             print("Channel message(Not for download)", error)
         try:

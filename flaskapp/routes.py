@@ -177,9 +177,9 @@ def index():
                                 telegram_id=chat_id).first()
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
-                            yt = YouTube(download.link)
-                            yt.cookies = cookies
-                            stream = yt.streams.filter(res=txt).first()
+                            # yt = YouTube(download.link)
+                            # yt.cookies = cookies
+                            # stream = yt.streams.filter(res=txt).first()
                             if stream:
                                 size_mb = stream.filesize / 1000000
                                 if size_mb < 0:

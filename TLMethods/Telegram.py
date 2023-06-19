@@ -399,40 +399,10 @@ class Telegram:
     async def download_media(self, file_name, file_id, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
-
             async for item in client.iter_messages(-1001705745753):
                 message = item
-                # print(message.document.file_reference)
+                message_id = message.id
                 break
-                # message = client.iter_messages(-1001705745753)[0]
-                # if message.message:
-                #     print(message)
-                #     json_data = json.loads(message.message)
-                #     print(json_data['message']['document']['file_id'])
-                #     break
-                # else:
-                #     print("Original<<<<<<<")
-                #     print(message)
-                #     break
-
-            # dialogs = await client.get_dialogs()
-            # for dialog in dialogs:
-            #     if dialog.title == 'Bot-Data':
-            #         dialog_id = dialog.id
-            # print("Diaaaaaaaloooooog>>>>>>", dialog_id)
-            # messages = await client.get_messages(entity=6235055313)
-            # print(messages)
-            # print(messages[0])
-            # print(messages[0].document.attributes[0].file_name, messages[0].document.size,
-            # messages[0].document.id, messages[0].document.access_hash)
-            # for item in messages:
-            #     if str(mime_type) in str(item) and str(chat_id) in str(item):
-            #         message = item
-            #         break
-
-            # message = await client.get_messages(
-            #     message.peer_id.user_id, ids=message.id)
-
             file = path+file_name
             if message.media:
                 if "application/" in mime_type:
@@ -447,8 +417,6 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.document:
-                # json_data = json.loads(message.message)
-                # file_id = json_data['message']['document']['file_id']
                 if "application/" in mime_type:
                     print("it is a document(file) or app!")
                     await client.download_file(file_id, file=file)
@@ -462,6 +430,7 @@ class Telegram:
                     print("File format not supported!")
             else:
                 print("The message doesn't contain media.")
+            await client.delete_messages(-1001705745753, message_id)
 
     def get_chat_member(self, channel_id, chat_id):
 

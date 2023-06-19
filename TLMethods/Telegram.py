@@ -400,19 +400,20 @@ class Telegram:
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
 
-            # async for message in client.iter_messages(-1001705745753):
-            #     print(message.document.file_reference)
-            #     break
-            message = client.iter_messages(-1001705745753)[0]
-            # if message.message:
-            #     print(message)
-            #     json_data = json.loads(message.message)
-            #     print(json_data['message']['document']['file_id'])
-            #     break
-            # else:
-            #     print("Original<<<<<<<")
-            #     print(message)
-            #     break
+            async for item in client.iter_messages(-1001705745753):
+                message = item
+                # print(message.document.file_reference)
+                break
+                # message = client.iter_messages(-1001705745753)[0]
+                # if message.message:
+                #     print(message)
+                #     json_data = json.loads(message.message)
+                #     print(json_data['message']['document']['file_id'])
+                #     break
+                # else:
+                #     print("Original<<<<<<<")
+                #     print(message)
+                #     break
 
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:

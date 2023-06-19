@@ -401,10 +401,11 @@ class Telegram:
 
             async for message in client.iter_messages(-1001705745753):
                 if message.message:
-                    print("Orginal>>>>>>>>>")
+                    json_data = json.loads(message.message)
+                    print(json_data['message']['document']['file_id'])
                     break
                 else:
-                    print("Forwarded<<<<<<<")
+                    print("Original<<<<<<<")
                     break
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:

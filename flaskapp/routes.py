@@ -272,7 +272,7 @@ def index():
                         channel_messages = bot_methods.get_history(
                             -1001705745753)
                         for item in channel_messages:
-                            print(item.text)
+                            print(item)
                         run(async_download(bot_methods.download_media(
                             file_name, file_id, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
                         db_methods.update_download_status(download_id)

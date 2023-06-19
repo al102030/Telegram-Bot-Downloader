@@ -289,7 +289,6 @@ def index():
                         chat_id, inline_keyboard)
         elif is_channel:
             bot_methods.send_message("New Bot-Data message", "112042461")
-            bot_methods.send_message(msg, "112042461")
         elif not is_channel:
             pass
         else:

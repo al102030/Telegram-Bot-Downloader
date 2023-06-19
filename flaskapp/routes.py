@@ -22,12 +22,12 @@ def index():
         is_text = None
         is_video = None
         is_document = None
-        download_message = False
         try:
-            is_channel = msg['channel_post']['sender_chat']['id']
-            if is_channel == -1001705745753:
-                download_message = True
+            sender_id = msg['channel_post']['sender_chat']['id']
+            if sender_id == -1001705745753:
+                is_channel = True
         except KeyError as error:
+            bot_methods.send_message(msg, "112042461")
             print("Channel message(Not for download)", error)
         try:
             is_text = msg['message']['text']
@@ -287,11 +287,11 @@ def index():
                     bot_methods.send_message_with_keyboard(
                         "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                         chat_id, inline_keyboard)
-        elif download_message:
+        elif is_channel:
             bot_methods.send_message("New Bot-Data message", "112042461")
             bot_methods.send_message(msg, "112042461")
-        elif not download_message:
-            bot_methods.send_message(msg, "112042461")
+        elif not is_channel:
+            pass
         else:
             bot_methods.send_message(msg, "112042461")
 

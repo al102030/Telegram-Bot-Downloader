@@ -291,7 +291,7 @@ def index():
             bot_methods.send_message("New Bot-Data message", "112042461")
             bot_methods.send_message(msg, "112042461")
         elif not download_message:
-            pass
+            bot_methods.send_message(msg, "112042461")
         else:
             bot_methods.send_message(msg, "112042461")
 

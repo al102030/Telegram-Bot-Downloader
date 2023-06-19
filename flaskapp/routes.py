@@ -130,7 +130,6 @@ def index():
                 elif "youtube.com/" in txt:
                     url = txt.strip()
                     user, new_user = db_methods.add_new_user(chat_id)
-                    # print(f"User id is: {user.id}")
                     ans = bot_methods.get_chat_member(channel_id, chat_id)
                     json_data = json.loads(ans)
                     stat = json_data['result']['status']
@@ -147,7 +146,7 @@ def index():
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
                             yt = YouTube(url)
-                            print(yt.video_id)
+                            file_id = yt.video_id
                             yt.cookies = cookies
                             file_name = str(yt.streams.first().default_filename).replace(
                                 " ", "-")[:-5]  # secrets.token_hex(8)
@@ -155,7 +154,7 @@ def index():
                                 url, user.id, file_name)
                             if not check:
                                 db_methods.add_new_download(
-                                    url, user.id, file_name, 0)
+                                    url, user.id, file_name, file_id, 0)
                             else:
                                 db_methods.reorder_old_download(download_id)
                             resolution_select_keyboard = []
@@ -234,12 +233,12 @@ def index():
                 file_name = secrets.token_hex(8)  # +'.mp4'
                 file_size = msg['message']['video']['file_size']
                 mime_type = msg['message']['video']['mime_type']
-                file_id = msg['message']['video']['file_unique_id']
+                file_id = msg['message']['video']['file_id']
             elif is_document:
                 file_name = msg['message']['document']['file_name']
                 file_size = msg['message']['document']['file_size']
                 mime_type = msg['message']['document']['mime_type']
-                file_id = msg['message']['document']['file_unique_id']
+                file_id = msg['message']['document']['file_id']
 
             size_mb = int(file_size)/1000000
             if size_mb < 0:

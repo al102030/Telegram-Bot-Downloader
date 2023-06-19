@@ -400,19 +400,19 @@ class Telegram:
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
 
-            async for message in client.iter_messages(-1001705745753):
-                doc_loc = await InputDocumentFileLocation(file_reference=message.document.file_reference)
-                print(doc_loc)
-                break
-                # if message.message:
-                #     print(message)
-                #     json_data = json.loads(message.message)
-                #     print(json_data['message']['document']['file_id'])
-                #     break
-                # else:
-                #     print("Original<<<<<<<")
-                #     print(message)
-                #     break
+            # async for message in client.iter_messages(-1001705745753):
+            #     print(message.document.file_reference)
+            #     break
+            message = client.iter_messages(-1001705745753)[0]
+            # if message.message:
+            #     print(message)
+            #     json_data = json.loads(message.message)
+            #     print(json_data['message']['document']['file_id'])
+            #     break
+            # else:
+            #     print("Original<<<<<<<")
+            #     print(message)
+            #     break
 
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:
@@ -529,16 +529,3 @@ class Telegram:
         else:
             print(
                 f'Error updating permissions: {response.status_code} - {response.text}')
-
-    def get_history(self, channel_id):
-        url = f"https://api.telegram.org/bot{self.token}/getHistory"
-        headers = {
-            "accept": "application/json",
-            "content-type": "application/json"
-        }
-        payload = {
-            "chat_id": channel_id,
-        }
-        response = requests.post(
-            url, json=payload, headers=headers, timeout=20)
-        return response

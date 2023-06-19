@@ -390,11 +390,6 @@ class Telegram:
             print("saving to", os.path.abspath(download_path))
             with open(download_path, 'wb') as file:
                 file.write(response.content)
-                # for chunk in response.iter_content(chunk_size=1024 * 8):
-                #     if chunk:
-                #         file.write(chunk)
-                #         file.flush()
-                #         os.fsync(file.fileno())
                 print("Your download is completed!")
         else:
             print("Download failed: status code\n",
@@ -403,11 +398,11 @@ class Telegram:
     async def download_media(self, file_name, file_id, chat_id, mime_type):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
-            # dialogs = await client.get_dialogs()
-            # for dialog in dialogs:
-            #     if dialog.title == 'Al102030':
-            #         dialog_id = dialog.id
-            # print(dialog_id)
+            dialogs = await client.get_dialogs()
+            for dialog in dialogs:
+                if dialog.title == 'Bot-Data':
+                    dialog_id = dialog.id
+            print("Diaaaaaaaloooooog>>>>>>", dialog_id)
             messages = await client.get_messages(entity=6235055313)
             # print(messages)
             # print(messages[0])
@@ -435,20 +430,19 @@ class Telegram:
                 else:
                     print("Media format not supported!")
             elif message.document:
-                pass
                 # json_data = json.loads(message.message)
                 # file_id = json_data['message']['document']['file_id']
-                # if "application/" in mime_type:
-                #     print("it is a document(file) or app!")
-                #     await client.download_file(file_id, file=file)
-                #     print("Document downloaded!(message)")
-                # elif mime_type == "video/mp4":
-                #     print("it is a video!")
-                #     file += '.mp4'
-                #     await client.download_file(file_id, file=file)
-                #     print("Video downloaded!(message)")
-                # else:
-                #     print("File format not supported!")
+                if "application/" in mime_type:
+                    print("it is a document(file) or app!")
+                    await client.download_file(file_id, file=file)
+                    print("Document downloaded!(message)")
+                elif mime_type == "video/mp4":
+                    print("it is a video!")
+                    file += '.mp4'
+                    await client.download_file(file_id, file=file)
+                    print("Video downloaded!(message)")
+                else:
+                    print("File format not supported!")
             else:
                 print("The message doesn't contain media.")
 

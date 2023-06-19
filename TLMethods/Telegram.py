@@ -401,7 +401,7 @@ class Telegram:
 
             async for message in client.iter_messages(-1001705745753):
                 if message.message:
-                    print(message.message)
+                    print(message)
                     json_data = json.loads(message.message)
                     print(json_data['message']['document']['file_id'])
                     break

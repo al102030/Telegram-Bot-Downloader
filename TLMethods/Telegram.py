@@ -407,6 +407,7 @@ class Telegram:
                     break
                 else:
                     print("Original<<<<<<<")
+                    print(message)
                     break
             # dialogs = await client.get_dialogs()
             # for dialog in dialogs:

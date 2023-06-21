@@ -70,7 +70,14 @@ class Methods:
         if user:
             user.credit += extra
             db.session.commit()
-            print("User credit decreased!")
+            print("Your credit increased!")
+        else:
+            print("User not found!")
+
+    def user_credit(self, user_id):
+        user = User.query.filter_by(telegram_id=user_id).first()
+        if user:
+            return user.credit
         else:
             print("User not found!")
 

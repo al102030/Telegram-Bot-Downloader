@@ -157,7 +157,8 @@ def index():
                             else:
                                 db_methods.reorder_old_download(download_id)
                             resolution_select_keyboard = []
-                            for stream in (yt.streams.order_by('resolution').desc().filter(adaptive=True, file_extension='mp4')):
+                            # adaptive=True
+                            for stream in (yt.streams.order_by('resolution').desc().filter(progressive=True, file_extension='mp4')):
                                 lst = []
                                 dictionary = {}
                                 dictionary['text'] = stream.resolution

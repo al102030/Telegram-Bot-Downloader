@@ -65,6 +65,15 @@ class Methods:
         else:
             print("User not found!")
 
+    def add_user_credit(self, user_id, extra):
+        user = User.query.filter_by(telegram_id=user_id).first()
+        if user:
+            user.credit += extra
+            db.session.commit()
+            print("User credit decreased!")
+        else:
+            print("User not found!")
+
     def update_download_status(self, download_id):
 
         download = Download.query.filter_by(

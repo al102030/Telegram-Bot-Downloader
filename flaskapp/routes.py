@@ -63,7 +63,7 @@ def index():
                         "Sorry! You're still not in our channel list.\nPlease join us:\nChannel: https://t.me/al102030_D",
                         callback_id, True)
             elif callback_data == "e01fdd230aeaa411":
-                db_methods.add_user_credit(channel_id, 5000)
+                db_methods.add_user_credit(chat_id, 5000)
                 bot_methods.send_message(
                     "5 Gigabyte add to your account.\ncongratulations!", callback_from_id)
             elif callback_data == "1a710b5dc955e113":

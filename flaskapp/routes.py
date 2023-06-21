@@ -177,7 +177,7 @@ def index():
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
                     if user.credit > 0:
                         download = Download.query.filter_by(
-                            status=0, user_id=user.id).order_by(Download.id.desc()).first()
+                            status=0, server_link=None, user_id=user.id).order_by(Download.id.desc()).first()
                         if download:
                             print("An Un-tracked Download Record Founded.")
                             user = User.query.filter_by(

@@ -203,8 +203,8 @@ def index():
                                             output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
                                         bot_methods.send_chat_action(
                                             'upload_video', chat_id)
-                                        os.chmod(
-                                            f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
+                                        # os.chmod(
+                                        #     f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
                                         db_methods.update_download_status(
                                             download.id)
                                         bot_methods.send_message(

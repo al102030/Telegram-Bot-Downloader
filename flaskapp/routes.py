@@ -153,29 +153,29 @@ def index():
                             print(url)
                             try:
                                 yt = YouTube(url)
-                                file_id = yt.video_id
+                                # file_id = yt.video_id
                                 # yt.cookies = cookies
-                                file_name = str(yt.streams.first().default_filename).replace(
-                                    " ", "-")[:-5]  # secrets.token_hex(8)
-                                check, download_id = db_methods.check_link_in_db(
-                                    url, user.id, file_name)
-                                if not check:
-                                    db_methods.add_new_download(
-                                        url, user.id, file_name, file_id, 0)
-                                else:
-                                    db_methods.reorder_old_download(
-                                        download_id)
-                                resolution_select_keyboard = []
+                                # file_name = str(yt.streams.first().default_filename).replace(
+                                #     " ", "-")[:-5]  # secrets.token_hex(8)
+                                # check, download_id = db_methods.check_link_in_db(
+                                #     url, user.id, file_name)
+                                # if not check:
+                                #     db_methods.add_new_download(
+                                #         url, user.id, file_name, file_id, 0)
+                                # else:
+                                #     db_methods.reorder_old_download(
+                                #         download_id)
+                                # resolution_select_keyboard = []
                                 # adaptive=True
-                                for stream in (yt.streams.order_by('resolution').desc().filter(progressive=True, file_extension='mp4')):
-                                    lst = []
-                                    dictionary = {}
-                                    dictionary['text'] = stream.resolution
-                                    dictionary['callback_data'] = stream.resolution
-                                    lst.append(dictionary)
-                                    resolution_select_keyboard.append(lst)
-                                bot_methods.send_message_with_menu("Please select the resolution that you want to download",
-                                                                   chat_id, resolution_select_keyboard)
+                                # for stream in (yt.streams.order_by('resolution').desc().filter(progressive=True, file_extension='mp4')):
+                                #     lst = []
+                                #     dictionary = {}
+                                #     dictionary['text'] = stream.resolution
+                                #     dictionary['callback_data'] = stream.resolution
+                                #     lst.append(dictionary)
+                                #     resolution_select_keyboard.append(lst)
+                                # bot_methods.send_message_with_menu("Please select the resolution that you want to download",
+                                #                                    chat_id, resolution_select_keyboard)
                             except NameError as error:
                                 print("Pytube have problem.")
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':

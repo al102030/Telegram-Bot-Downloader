@@ -160,9 +160,9 @@ def index():
                                 file_name = str(yt.title).replace(
                                     " ", "-")  # secrets.token_hex(8)
                                 print(file_name)
-                                check, download_id = db_methods.check_link_in_db(
-                                    url, user.id, file_name)
-                                print(yt.streams.all)
+                                # check, download_id = db_methods.check_link_in_db(
+                                #     url, user.id, file_name)
+                                print(yt.streams.first())
                                 # if not check:
                                 #     db_methods.add_new_download(
                                 #         url, user.id, file_name, file_id, 0)

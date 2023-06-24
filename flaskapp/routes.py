@@ -147,16 +147,16 @@ def index():
                             "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                     else:
                         if user.credit > 0:
-                            login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
-                            with open('cookies.pkl', 'rb') as file:
-                                cookies = pickle.load(file)
+                            # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                            # with open('cookies.pkl', 'rb') as file:
+                            #     cookies = pickle.load(file)
                             print(url)
                             try:
                                 yt = YouTube(url)
                                 file_id = yt.video_id
                                 file_name = yt.title
                                 print(file_id)
-                                yt.cookies = cookies
+                                # yt.cookies = cookies
                                 file_name = str(yt.title).replace(
                                     " ", "-")  # secrets.token_hex(8)
                                 print(file_name)

@@ -150,6 +150,7 @@ def index():
                             login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
                             with open('cookies.pkl', 'rb') as file:
                                 cookies = pickle.load(file)
+                            print(url)
                             yt = YouTube(url)
                             file_id = yt.video_id
                             yt.cookies = cookies

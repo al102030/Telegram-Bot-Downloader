@@ -157,8 +157,8 @@ def index():
                                 file_name = yt.title
                                 print(file_id)
                                 yt.cookies = cookies
-                                # file_name = str(yt.streams.first().default_filename).replace(
-                                #     " ", "-")[:-5]  # secrets.token_hex(8)
+                                file_name = str(yt.title).replace(
+                                    " ", "-")  # secrets.token_hex(8)
                                 print(file_name)
                                 # check, download_id = db_methods.check_link_in_db(
                                 #     url, user.id, file_name)

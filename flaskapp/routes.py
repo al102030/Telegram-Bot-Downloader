@@ -154,7 +154,7 @@ def index():
                             try:
                                 yt = YouTube(url)
                                 file_id = yt.video_id
-                                file_name = "ok"
+                                file_name = yt.title
                                 print(file_id)
                                 # yt.cookies = cookies
                                 # file_name = str(yt.streams.first().default_filename).replace(

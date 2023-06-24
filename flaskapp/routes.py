@@ -156,7 +156,7 @@ def index():
                                 file_id = yt.video_id
                                 file_name = yt.title
                                 print(file_id)
-                                # yt.cookies = cookies
+                                yt.cookies = cookies
                                 # file_name = str(yt.streams.first().default_filename).replace(
                                 #     " ", "-")[:-5]  # secrets.token_hex(8)
                                 print(file_name)

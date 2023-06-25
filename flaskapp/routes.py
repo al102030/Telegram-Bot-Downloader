@@ -288,10 +288,9 @@ def index():
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         try:
-                            # run(async_download(
-                            async_download(bot_methods.download_media(
-                                file_name, chat_id, mime_type))
-                            # , bot_methods.send_chat_action('upload_document', chat_id)))
+                            run(async_download(bot_methods.download_media(
+                                file_name, chat_id, mime_type), async_dl_started()))
+                            # bot_methods.send_chat_action('upload_document', chat_id)
                         except CancelledError:
                             print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)
@@ -338,6 +337,10 @@ def login_to_youtube(username, password):
             "Failed to log in to YouTube.")
 
 
-async def async_download(func1):
+async def async_download(func1, func2):
     # Start all coroutines concurrently
-    await func1
+    await gather(func1, func2)
+
+
+async def async_dl_started():
+    await print("Your download has started!")

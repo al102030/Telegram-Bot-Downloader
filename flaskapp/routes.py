@@ -288,8 +288,10 @@ def index():
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         try:
-                            run(async_download(bot_methods.download_media(
-                                file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
+                            # run(async_download(
+                            bot_methods.download_media(
+                                file_name, chat_id, mime_type)
+                            # , bot_methods.send_chat_action('upload_document', chat_id)))
                         except CancelledError:
                             print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)

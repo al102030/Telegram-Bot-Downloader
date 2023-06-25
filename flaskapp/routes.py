@@ -1,7 +1,7 @@
 import json
 import secrets
 import pickle
-from asyncio import run, gather
+from asyncio import run, gather, CancelledError
 # import os
 from pytube import YouTube, exceptions
 import requests
@@ -15,6 +15,7 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
+        # return Response('ok', status=200)
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()
@@ -286,8 +287,11 @@ def index():
                                                                   file_name, file_id, size_mb, server_link)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
-                        run(async_download(bot_methods.download_media(
-                            file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
+                        try:
+                            run(async_download(bot_methods.download_media(
+                                file_name, chat_id, mime_type), bot_methods.send_chat_action('upload_document', chat_id)))
+                        except CancelledError:
+                            print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)
                         db_methods.update_user_credit(chat_id, size_mb)
                         # os.chmod(

@@ -396,7 +396,7 @@ class Telegram:
             if message.media:
                 if "application/" in mime_type:
                     result = client.download_media(
-                        await client.get_messages(entity=message_id),
+                        await client.get_messages(message),
                         file=file,
                         progress_callback=lambda current, total: print(
                             f'{current}/{total}'),

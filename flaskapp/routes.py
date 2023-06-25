@@ -17,6 +17,8 @@ def index():
     if request.method == 'POST':
         channel_id = "-1001904767094"
         msg = request.get_json()
+        if msg:
+            return Response('ok', status=200)
         db_methods = Methods()
         is_channel = None
         is_text = None
@@ -147,38 +149,38 @@ def index():
                             "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                     else:
                         if user.credit > 0:
-                            # login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
-                            # with open('cookies.pkl', 'rb') as file:
-                            #     cookies = pickle.load(file)
+                            login_to_youtube(GOOGLE_USER, GOOGLE_PASSWORD)
+                            with open('cookies.pkl', 'rb') as file:
+                                cookies = pickle.load(file)
                             print(url)
                             try:
                                 yt = YouTube(url)
                                 file_id = yt.video_id
                                 file_name = yt.title
                                 print(file_id)
-                                # yt.cookies = cookies
+                                yt.cookies = cookies
                                 file_name = str(yt.title).replace(
                                     " ", "-")  # secrets.token_hex(8)
                                 print(file_name)
-                                # check, download_id = db_methods.check_link_in_db(
-                                #     url, user.id, file_name)
+                                check, download_id = db_methods.check_link_in_db(
+                                    url, user.id, file_name)
                                 print(yt.streams.first())
-                                # if not check:
-                                #     db_methods.add_new_download(
-                                #         url, user.id, file_name, file_id, 0)
-                                # else:
-                                #     db_methods.reorder_old_download(
-                                #         download_id)
-                                # resolution_select_keyboard = []
-                                # for stream in (yt.streams.order_by('resolution').desc().filter(progressive=True, file_extension='mp4')):
-                                #     lst = []
-                                #     dictionary = {}
-                                #     dictionary['text'] = stream.resolution
-                                #     dictionary['callback_data'] = stream.resolution
-                                #     lst.append(dictionary)
-                                #     resolution_select_keyboard.append(lst)
-                                # bot_methods.send_message_with_menu("Please select the resolution that you want to download",
-                                #                                    chat_id, resolution_select_keyboard)
+                                if not check:
+                                    db_methods.add_new_download(
+                                        url, user.id, file_name, file_id, 0)
+                                else:
+                                    db_methods.reorder_old_download(
+                                        download_id)
+                                resolution_select_keyboard = []
+                                for stream in (yt.streams.order_by('resolution').desc().filter(progressive=True, file_extension='mp4')):
+                                    lst = []
+                                    dictionary = {}
+                                    dictionary['text'] = stream.resolution
+                                    dictionary['callback_data'] = stream.resolution
+                                    lst.append(dictionary)
+                                    resolution_select_keyboard.append(lst)
+                                bot_methods.send_message_with_menu("Please select the resolution that you want to download",
+                                                                   chat_id, resolution_select_keyboard)
                             except NameError as error:
                                 print("Pytube have problem.")
                 elif txt == '1080p' or txt == '720p' or txt == '480p' or txt == '360p' or txt == '240p' or txt == '144p':
@@ -307,8 +309,6 @@ def index():
             pass
         else:
             bot_methods.send_message(msg, "112042461")
-
-        return Response('ok', status=200)
     else:
         return '<h1>Telegram Bot Downloader</h1>'
 

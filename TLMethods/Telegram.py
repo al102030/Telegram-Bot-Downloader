@@ -400,7 +400,7 @@ class Telegram:
                         file=file,
                         progress_callback=lambda current, total: print(
                             f'{current}/{total}'),
-                        part_size=chunk_size,
+                        # part_size=chunk_size,
                         iter_chunk_size=chunk_size,
                         skip_big_files=True,
                         wait_time=5,

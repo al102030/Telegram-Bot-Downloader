@@ -344,4 +344,6 @@ async def async_download(func1, func2):
 
 
 async def async_dl_started():
-    await time.sleep(2)
+    variable = 5
+    x = await variable
+    return True

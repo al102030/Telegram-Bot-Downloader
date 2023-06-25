@@ -393,10 +393,9 @@ class Telegram:
                 break
             file = path+file_name
             if message.media:
-                chunk_size = 10 * 1024 * 1024
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
-                    await client.download_media(message.media, file=file, part_size_kb=chunk_size/1024)
+                    await client.loop.run_until_complete(client.download_media(message.media, file=file))
                     print("Document downloaded!(media)")
                 elif mime_type == "video/mp4":
                     print("it is a video!")

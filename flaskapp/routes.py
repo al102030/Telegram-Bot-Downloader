@@ -3,7 +3,7 @@ import secrets
 import pickle
 from asyncio import run, gather, CancelledError
 # import os
-import time
+# import time
 from pytube import YouTube, exceptions
 import requests
 from flask import request, Response
@@ -290,7 +290,7 @@ def index():
                             message_id, -1001705745753, chat_id)
                         try:
                             run(async_download(bot_methods.download_media(
-                                file_name, chat_id, mime_type), async_dl_started()))
+                                file_name, chat_id, mime_type), bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id)))
                             # bot_methods.send_chat_action('upload_document', chat_id)
                         except CancelledError:
                             print("Coroutine has been cancelled")
@@ -341,9 +341,3 @@ def login_to_youtube(username, password):
 async def async_download(func1, func2):
     # Start all coroutines concurrently
     await gather(func1, func2)
-
-
-async def async_dl_started():
-    variable = 5
-    x = await variable
-    return True

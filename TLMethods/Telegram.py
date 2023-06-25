@@ -1,4 +1,3 @@
-import time
 import os
 import json
 import requests
@@ -52,16 +51,10 @@ class Telegram:
                                  headers=headers, timeout=20)
         return response
 
-    async def send_async_message(self, text1, text2, chat_id):
+    async def send_async_message(self, text1, chat_id):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
-        payload1 = {
+        payload = {
             "text": text1,
-            "chat_id": chat_id,
-            "disable_web_page_preview": False,
-            "disable_notification": False,
-        }
-        payload2 = {
-            "text": text2,
             "chat_id": chat_id,
             "disable_web_page_preview": False,
             "disable_notification": False,
@@ -71,12 +64,8 @@ class Telegram:
             "content-type": "application/json"
         }
         async with aiohttp.ClientSession() as session:
-            async with session.post(req_url, json=payload1, headers=headers, timeout=20) as response1:
-                print(await response1.text())
-        time.sleep(3)
-        async with aiohttp.ClientSession() as session:
-            async with session.post(req_url, json=payload2, headers=headers, timeout=20) as response2:
-                print(await response2.text())
+            async with session.post(req_url, json=payload, headers=headers, timeout=20) as response:
+                print(await response.text())
 
     def send_message_with_keyboard(self, text, chat_id, keyboard):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"

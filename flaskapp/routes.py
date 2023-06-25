@@ -3,6 +3,7 @@ import secrets
 import pickle
 from asyncio import run, gather, CancelledError
 # import os
+import time
 from pytube import YouTube, exceptions
 import requests
 from flask import request, Response
@@ -343,4 +344,4 @@ async def async_download(func1, func2):
 
 
 async def async_dl_started():
-    await print("Your download has started!")
+    await time.sleep(2)

@@ -16,8 +16,8 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
-        # print("Got it!")
-        # return Response('ok', status=200)
+        print("Got it!")
+        return Response('ok', status=200)
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()

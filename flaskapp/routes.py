@@ -1,7 +1,7 @@
 import json
 import secrets
 import pickle
-from asyncio import run, gather, CancelledError
+from asyncio import run, CancelledError  # , gather
 # import os
 # import time
 from pytube import YouTube, exceptions

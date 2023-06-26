@@ -54,6 +54,7 @@ class Methods:
             db.session.add(download)
             db.session.commit()
             print("A new download was added!")
+            download = Download.query.filter_by(file_name=file_name).first()
             return download.id
 
     def update_user_credit(self, user_id, usage):

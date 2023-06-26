@@ -295,8 +295,8 @@ def index():
                         # else:
                         #     download_id = db_methods.reorder_old_download(
                         #         file_id)
-                        # print(
-                        #     f"##################{download_id}##################")
+                        print(
+                            f"##################{download_id}##################")
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         # try:

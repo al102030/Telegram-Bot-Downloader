@@ -393,15 +393,17 @@ class Telegram:
                 break
             await client.delete_messages(-1001705745753, message_id)
             file = path+file_name
+            print(message.media)
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
-                    await client.download_media(message.media, file=file, progress_callback=lambda current, total: print(f'\r{current}/{total}', end=''))
+                    # , progress_callback=lambda current, total: print(f'\r{current}/{total}', end='')
+                    await client.download_media(message.media, file=file)
                     print("Document downloaded!(media)")
                 elif mime_type == "video/mp4":
                     print("it is a video!")
                     file += '.mp4'
-                    await client.download_media(message.media, file=file, progress_callback=lambda current, total: print(f'\r{current}/{total}', end=''))
+                    await client.download_media(message.media, file=file)
                     print("Video downloaded!(media)")
                 else:
                     print("Media format not supported!")

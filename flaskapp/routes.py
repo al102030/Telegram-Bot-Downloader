@@ -16,7 +16,7 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
-        return Response('ok', status=200)
+        # return Response('ok', status=200)
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()
@@ -307,7 +307,8 @@ def index():
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
                         return Response('ok', status=200)
                     except ValueError as error:
-                        print('Caught this error: ' + repr(error))
+                        print(
+                            f'<<<<<<<<<<<<<Caught this error:{repr(error)}>>>>>>>>>>>>>>')
                 else:
                     inline_keyboard = credit_charge_keyboard
                     bot_methods.send_message_with_keyboard(

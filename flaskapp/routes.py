@@ -1,7 +1,7 @@
 import json
 import secrets
 import pickle
-from asyncio import run, gather
+from asyncio import run, CancelledError, gather
 # import os
 import time
 from pytube import YouTube, exceptions
@@ -16,10 +16,10 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
-        print("Got it!")
-        return Response('ok', status=200)
-        channel_id = "-1001904767094"
+        # print("Got it!")
+        # return Response('ok', status=200)
         msg = request.get_json()
+        channel_id = "-1001904767094"
         db_methods = Methods()
         is_channel = None
         is_text = None

@@ -16,7 +16,7 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
-        # return Response('ok', status=200)
+        return Response('ok', status=200)
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()
@@ -212,8 +212,6 @@ def index():
                                         print(size_mb)
                                         stream.download(
                                             output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
-                                        bot_methods.send_chat_action(
-                                            'upload_video', chat_id)
                                         # os.chmod(
                                         #     f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
                                         db_methods.update_download_status(

@@ -171,7 +171,7 @@ def index():
                             print(yt.streams.first())
                             if not check:
                                 db_methods.add_new_download(
-                                    url, user.id, file_name, file_id, 0)
+                                    url, user.id, file_name, file_id, "Video", 0)
                             else:
                                 db_methods.reorder_old_download(
                                     file_id)
@@ -285,7 +285,7 @@ def index():
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
                             # direction = f'/usr/share/nginx/html/static/{file_name}'
                         download_id = db_methods.add_new_download('telegram', user.id,
-                                                                  file_name, file_id, size_mb, server_link)
+                                                                  file_name, file_id, size_mb, mime_type, server_link)
                         # print(file_id)
                         # check, download_id = db_methods.check_link_in_db(
                         #     user.id, file_id)
@@ -299,14 +299,14 @@ def index():
                             f"##################{download_id}##################")
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
-                        # try:
-                        run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                            file_name, chat_id, mime_type)))
+                        try:
+                            run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
+                                file_name, chat_id, mime_type)))
                         # bot_methods.send_chat_action(
                         #     'upload_document', chat_id)
                         # time.sleep(3)
-                        # except CancelledError:
-                        #     print("Coroutine has been cancelled")
+                        except CancelledError:
+                            print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)
                         time.sleep(2)
                         db_methods.update_user_credit(chat_id, size_mb)

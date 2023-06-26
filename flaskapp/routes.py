@@ -1,7 +1,7 @@
 import json
 import secrets
 import pickle
-from asyncio import run, CancelledError  # , gather
+from asyncio import run, gather
 # import os
 import time
 from pytube import YouTube, exceptions
@@ -225,7 +225,6 @@ def index():
                                             download.id, f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4")
                                         bot_methods.send_message(
                                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                                        return Response('ok', status=200)
                                     except ValueError as error:
                                         print(
                                             'Caught this error: ' + repr(error))
@@ -287,11 +286,8 @@ def index():
                                                                   file_id, size_mb, mime_type, 0, server_link, user.id)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
-                        try:
-                            run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                                file_name, chat_id, mime_type)))
-                        except CancelledError:
-                            print("Coroutine has been cancelled")
+                        run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
+                            file_name, chat_id, mime_type)))
                         db_methods.update_download_status(download_id)
                         time.sleep(2)
                         db_methods.update_user_credit(chat_id, size_mb)
@@ -301,7 +297,6 @@ def index():
                             server_link, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                        return Response('ok', status=200)
                     except ValueError as error:
                         print(
                             f'<<<<<<<<<<<<<Caught this error:{repr(error)}>>>>>>>>>>>>>>')
@@ -340,5 +335,5 @@ def login_to_youtube(username, password):
 
 
 async def async_download(func1, func2):
-    await func1
-    await func2
+
+    await gather(func1, func2)

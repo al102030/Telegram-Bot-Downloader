@@ -171,7 +171,7 @@ def index():
                             print(yt.streams.first())
                             if not check:
                                 db_methods.add_new_download(
-                                    url, file_name, file_id, 0, "Video", 0, "", user.id)
+                                    url, file_name, file_id, 0, "video/mp4", 0, "", user.id)
                             else:
                                 db_methods.reorder_old_download(
                                     file_id)
@@ -284,8 +284,8 @@ def index():
                         else:
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
                             # direction = f'/usr/share/nginx/html/static/{file_name}'
-                        download_id = db_methods.add_new_download('telegram', user.id,
-                                                                  file_name, file_id, size_mb, mime_type, server_link)
+                        download_id = db_methods.add_new_download('telegram', file_name,
+                                                                  file_id, size_mb, mime_type, 0, server_link, user.id)
                         # print(file_id)
                         # check, download_id = db_methods.check_link_in_db(
                         #     user.id, file_id)

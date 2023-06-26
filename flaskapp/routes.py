@@ -290,8 +290,8 @@ def index():
                             message_id, -1001705745753, chat_id)
                         try:
                             # run(async_download(
-                            async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                                file_name, chat_id, mime_type))  # , bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id)))
+                            run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
+                                file_name, chat_id, mime_type)))  # , bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id)))
                             # bot_methods.send_chat_action('upload_document', chat_id)
                         except CancelledError:
                             print("Coroutine has been cancelled")

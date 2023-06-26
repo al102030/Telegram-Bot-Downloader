@@ -16,7 +16,7 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == 'POST':
-        return Response('ok', status=200)
+        # return Response('ok', status=200)
         channel_id = "-1001904767094"
         msg = request.get_json()
         db_methods = Methods()
@@ -288,14 +288,14 @@ def index():
                                                                   file_name, file_id, size_mb, server_link)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
-                        try:
-                            run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                                file_name, chat_id, mime_type)))
-                            # bot_methods.send_chat_action(
-                            #     'upload_document', chat_id)
-                            # time.sleep(3)
-                        except CancelledError:
-                            print("Coroutine has been cancelled")
+                        # try:
+                        run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
+                            file_name, chat_id, mime_type)))
+                        # bot_methods.send_chat_action(
+                        #     'upload_document', chat_id)
+                        # time.sleep(3)
+                        # except CancelledError:
+                        #     print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)
                         time.sleep(2)
                         db_methods.update_user_credit(chat_id, size_mb)

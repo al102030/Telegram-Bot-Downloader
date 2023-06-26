@@ -129,6 +129,7 @@ class Methods:
             download.status = 0
             db.session.commit()
             print("Download record reordered.")
+            return download.id
         else:
             print("Something went wrong in reordering a download record process!")
 

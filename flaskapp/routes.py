@@ -286,6 +286,8 @@ def index():
                             # direction = f'/usr/share/nginx/html/static/{file_name}'
                         download_id = db_methods.add_new_download('telegram', user.id,
                                                                   file_name, file_id, size_mb, server_link)
+                        print(
+                            f"##################{download_id}##################")
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         # try:

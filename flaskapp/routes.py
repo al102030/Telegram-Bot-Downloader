@@ -284,19 +284,19 @@ def index():
                         else:
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
                             # direction = f'/usr/share/nginx/html/static/{file_name}'
-                        # download_id = db_methods.add_new_download('telegram', user.id,
-                        #                                           file_name, file_id, size_mb, server_link)
-                        print(file_id)
-                        check, download_id = db_methods.check_link_in_db(
-                            user.id, file_id)
-                        if not check:
-                            download_id = db_methods.add_new_download(
-                                'telegram', user.id, file_name, file_id, size_mb, server_link)
-                        else:
-                            download_id = db_methods.reorder_old_download(
-                                file_id)
-                        print(
-                            f"##################{download_id}##################")
+                        download_id = db_methods.add_new_download('telegram', user.id,
+                                                                  file_name, file_id, size_mb, server_link)
+                        # print(file_id)
+                        # check, download_id = db_methods.check_link_in_db(
+                        #     user.id, file_id)
+                        # if not check:
+                        #     download_id = db_methods.add_new_download(
+                        #         'telegram', user.id, file_name, file_id, size_mb, server_link)
+                        # else:
+                        #     download_id = db_methods.reorder_old_download(
+                        #         file_id)
+                        # print(
+                        #     f"##################{download_id}##################")
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         # try:

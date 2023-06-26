@@ -3,7 +3,7 @@ import secrets
 import pickle
 from asyncio import run, CancelledError  # , gather
 # import os
-# import time
+import time
 from pytube import YouTube, exceptions
 import requests
 from flask import request, Response
@@ -289,10 +289,11 @@ def index():
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         try:
-                            # run(async_download(
                             run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                                file_name, chat_id, mime_type)))  # , bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id)))
-                            # bot_methods.send_chat_action('upload_document', chat_id)
+                                file_name, chat_id, mime_type)))
+                            bot_methods.send_chat_action(
+                                'upload_document', chat_id)
+                            time.sleep(3)
                         except CancelledError:
                             print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)

@@ -164,7 +164,7 @@ def index():
                                     "<<<<<<<<<<<<Py-tube has problem.>>>>>>>>>>>>")
                                 return Response('ok', status=200)
                             file_name = str(yt.title).replace(
-                                " ", "-")  # secrets.token_hex(8)
+                                " ", "-")
                             print(file_name)
                             check, download_id = db_methods.check_link_in_db(
                                 user.id, file_id)
@@ -249,7 +249,7 @@ def index():
             chat_id = msg['message']['chat']['id']
             message_id = msg['message']['message_id']
             if is_video:
-                file_name = secrets.token_hex(8)  # +'.mp4'
+                file_name = secrets.token_hex(8)
                 file_size = msg['message']['video']['file_size']
                 mime_type = msg['message']['video']['mime_type']
                 file_id = msg['message']['video']['file_id']
@@ -286,25 +286,11 @@ def index():
                             # direction = f'/usr/share/nginx/html/static/{file_name}'
                         download_id = db_methods.add_new_download('telegram', file_name,
                                                                   file_id, size_mb, mime_type, 0, server_link, user.id)
-                        # print(file_id)
-                        # check, download_id = db_methods.check_link_in_db(
-                        #     user.id, file_id)
-                        # if not check:
-                        #     download_id = db_methods.add_new_download(
-                        #         'telegram', user.id, file_name, file_id, size_mb, server_link)
-                        # else:
-                        #     download_id = db_methods.reorder_old_download(
-                        #         file_id)
-                        print(
-                            f"##################{download_id}##################")
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         try:
                             run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
                                 file_name, chat_id, mime_type)))
-                        # bot_methods.send_chat_action(
-                        #     'upload_document', chat_id)
-                        # time.sleep(3)
                         except CancelledError:
                             print("Coroutine has been cancelled")
                         db_methods.update_download_status(download_id)
@@ -355,6 +341,5 @@ def login_to_youtube(username, password):
 
 
 async def async_download(func1, func2):
-    # Start all coroutines concurrently
     await func1
     await func2

@@ -171,7 +171,7 @@ def index():
                             print(yt.streams.first())
                             if not check:
                                 db_methods.add_new_download(
-                                    url, user.id, file_name, file_id, "Video", 0, "")
+                                    url, file_name, file_id, 0, "Video", 0, "", user.id)
                             else:
                                 db_methods.reorder_old_download(
                                     file_id)

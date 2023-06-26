@@ -45,9 +45,9 @@ class Methods:
         else:
             return user, False
 
-    def add_new_download(self, url, user_id, file_name, file_id, file_size, file_type, server_link):
+    def add_new_download(self, url, file_name, file_id, file_size, file_type, status, server_link, user_id):
         download = Download(link=url, file_name=file_name, file_id=file_id,
-                            file_wight=file_size, file_type=file_type, status=0, user_id=user_id, server_link=server_link)
+                            file_wight=file_size, file_type=file_type, status=status, server_link=server_link, user_id=user_id)
         db.session.add(download)
         db.session.commit()
         print("A new download was added!")

@@ -392,6 +392,8 @@ class Telegram:
                 message_id = message.id
                 break
             file = path+file_name
+            await client.delete_messages(-1001705745753, message_id)
+
             if message.media:
                 if "application/" in mime_type:
                     print("it is a document(media) or app!")
@@ -418,7 +420,6 @@ class Telegram:
                     print("File format not supported!")
             else:
                 print("The message doesn't contain media.")
-            await client.delete_messages(-1001705745753, message_id)
 
     def get_chat_member(self, channel_id, chat_id):
 

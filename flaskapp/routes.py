@@ -277,49 +277,49 @@ def index():
                     "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
             else:
                 if user.credit >= size_mb:
-                    # try:
-                    if mime_type == "video/mp4":
-                        server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
-                        # direction = f'/usr/share/nginx/html/static/{file_name}.mp4'
-                    else:
-                        server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
-                        # direction = f'/usr/share/nginx/html/static/{file_name}'
-                    download_id = db_methods.add_new_download('telegram', file_name,
-                                                              file_id, size_mb, mime_type, 0, server_link, user.id)
-                    # print(file_id)
-                    # check, download_id = db_methods.check_link_in_db(
-                    #     user.id, file_id)
-                    # if not check:
-                    #     download_id = db_methods.add_new_download(
-                    #         'telegram', user.id, file_name, file_id, size_mb, server_link)
-                    # else:
-                    #     download_id = db_methods.reorder_old_download(
-                    #         file_id)
-                    print(
-                        f"##################{download_id}##################")
-                    bot_methods.forward_message(
-                        message_id, -1001705745753, chat_id)
-                    # try:
-                    run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                        file_name, chat_id, mime_type)))
-                    # bot_methods.send_chat_action(
-                    #     'upload_document', chat_id)
-                    # time.sleep(3)
-                    # except CancelledError:
-                    #     print("Coroutine has been cancelled")
-                    db_methods.update_download_status(download_id)
-                    time.sleep(2)
-                    db_methods.update_user_credit(chat_id, size_mb)
-                    # os.chmod(
-                    #     direction, 0o755)
-                    bot_methods.send_message(
-                        server_link, chat_id)
-                    bot_methods.send_message(
-                        "You can use this direct link for 1 month. Please save your Link.", chat_id)
-                    return Response('ok', status=200)
-                    # except ValueError as error:
-                    #     print(
-                    #         f'<<<<<<<<<<<<<Caught this error:{repr(error)}>>>>>>>>>>>>>>')
+                    try:
+                        if mime_type == "video/mp4":
+                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                            # direction = f'/usr/share/nginx/html/static/{file_name}.mp4'
+                        else:
+                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
+                            # direction = f'/usr/share/nginx/html/static/{file_name}'
+                        download_id = db_methods.add_new_download('telegram', file_name,
+                                                                  file_id, size_mb, mime_type, 0, server_link, user.id)
+                        # print(file_id)
+                        # check, download_id = db_methods.check_link_in_db(
+                        #     user.id, file_id)
+                        # if not check:
+                        #     download_id = db_methods.add_new_download(
+                        #         'telegram', user.id, file_name, file_id, size_mb, server_link)
+                        # else:
+                        #     download_id = db_methods.reorder_old_download(
+                        #         file_id)
+                        print(
+                            f"##################{download_id}##################")
+                        bot_methods.forward_message(
+                            message_id, -1001705745753, chat_id)
+                        try:
+                            run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
+                                file_name, chat_id, mime_type)))
+                        # bot_methods.send_chat_action(
+                        #     'upload_document', chat_id)
+                        # time.sleep(3)
+                        except CancelledError:
+                            print("Coroutine has been cancelled")
+                        db_methods.update_download_status(download_id)
+                        time.sleep(2)
+                        db_methods.update_user_credit(chat_id, size_mb)
+                        # os.chmod(
+                        #     direction, 0o755)
+                        bot_methods.send_message(
+                            server_link, chat_id)
+                        bot_methods.send_message(
+                            "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                        return Response('ok', status=200)
+                    except ValueError as error:
+                        print(
+                            f'<<<<<<<<<<<<<Caught this error:{repr(error)}>>>>>>>>>>>>>>')
                 else:
                     inline_keyboard = credit_charge_keyboard
                     bot_methods.send_message_with_keyboard(

@@ -167,14 +167,14 @@ def index():
                                 " ", "-")  # secrets.token_hex(8)
                             print(file_name)
                             check, download_id = db_methods.check_link_in_db(
-                                url, user.id, file_name)
+                                user.id, file_id)
                             print(yt.streams.first())
                             if not check:
                                 db_methods.add_new_download(
                                     url, user.id, file_name, file_id, 0)
                             else:
                                 db_methods.reorder_old_download(
-                                    download_id)
+                                    file_id)
                             resolution_select_keyboard = []
                             for stream in (yt.streams.order_by('resolution').desc().filter(progressive=True, file_extension='mp4')):
                                 lst = []
@@ -286,6 +286,14 @@ def index():
                             # direction = f'/usr/share/nginx/html/static/{file_name}'
                         download_id = db_methods.add_new_download('telegram', user.id,
                                                                   file_name, file_id, size_mb, server_link)
+                        check, download_id = db_methods.check_link_in_db(
+                            user.id, file_id)
+                        if not check:
+                            db_methods.add_new_download(
+                                'telegram', user.id, file_name, file_id, size_mb, server_link)
+                        else:
+                            db_methods.reorder_old_download(
+                                file_id)
                         print(
                             f"##################{download_id}##################")
                         bot_methods.forward_message(

@@ -102,10 +102,10 @@ class Methods:
         else:
             print("Something went wrong in updating download size!")
 
-    def check_link_in_db(self, url, user_id, file_name):
+    def check_link_in_db(self, user_id, file_id):
 
         download = Download.query.filter_by(
-            link=url, user_id=user_id, file_name=file_name).first()
+            user_id=user_id, file_id=file_id).first()
         if not download:
             return False, None
         else:
@@ -118,10 +118,10 @@ class Methods:
         else:
             return f"Your credit is: {user.credit} Mb"
 
-    def reorder_old_download(self, download_id):
+    def reorder_old_download(self, file_id):
         current_time = dt.datetime.now()
         time_stamp = current_time.timestamp()
-        download = Download.query.filter_by(id=download_id).first()
+        download = Download.query.filter_by(file_id=file_id).first()
         if download:
             download.date_downloaded = time_stamp
             download.date_delete = time_stamp+2592000

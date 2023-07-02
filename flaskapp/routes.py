@@ -216,7 +216,8 @@ def index():
                                                 stream.download(
                                                     output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
                                             except exceptions.VideoUnavailable as error:
-                                                print(error)
+                                                print(
+                                                    "|||||||||||||||||||", error)
                                             # os.chmod(
                                             #     f'/usr/share/nginx/html/static/{download.file_name}.mp4', 0o755)
                                             db_methods.update_download_status(

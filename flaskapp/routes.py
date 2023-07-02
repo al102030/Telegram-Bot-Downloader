@@ -222,11 +222,11 @@ def index():
                                             db_methods.update_download_status(
                                                 download.id)
                                             bot_methods.send_message(
-                                                f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4", chat_id)
+                                                f"https://telapi.digi-arya.ir/static/{download.file_id}.mp4", chat_id)
                                             db_methods.update_user_credit(
                                                 chat_id, size_mb)
                                             db_methods.update_server_link(
-                                                download.id, f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4")
+                                                download.id, f"https://telapi.digi-arya.ir/static/{download.file_id}.mp4")
                                             bot_methods.send_message(
                                                 "You can use this direct link for the onr(1) month. Please save your Link.", chat_id)
                                         except ValueError as error:

@@ -165,8 +165,8 @@ def index():
                                     print(
                                         "<<<<<<<<<<<<Py-tube has problem.>>>>>>>>>>>>")
                                     return Response('ok', status=200)
-                                file_name = str(yt.title).replace(
-                                    " ", "-")
+                                # str(yt.title).replace(" ", "-")
+                                file_name = file_id
                                 print(file_name)
                                 check, download_id = db_methods.check_link_in_db(
                                     user.id, file_id)

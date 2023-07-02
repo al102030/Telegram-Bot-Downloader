@@ -17,8 +17,8 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 def index():
     if request.method == 'POST':
         try:
-            print("Got it!")
-            return Response('ok', status=200)
+            # print("Got it!")
+            # return Response('ok', status=200)
             msg = request.get_json()
             channel_id = "-1001904767094"
             db_methods = Methods()
@@ -290,21 +290,11 @@ def index():
                                                                   file_id, size_mb, mime_type, 0, server_link, user.id)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
-                        print(
-                            "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
                             file_name, chat_id, mime_type)))
-                        print(
-                            "***********************************************************")
                         db_methods.update_download_status(download_id)
-                        print(
-                            "###########################################################")
                         time.sleep(2)
-                        print(
-                            "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                         db_methods.update_user_credit(chat_id, size_mb)
-                        print(
-                            "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                         # os.chmod(
                         #     direction, 0o755)
                         bot_methods.send_message(

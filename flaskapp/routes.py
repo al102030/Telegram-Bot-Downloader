@@ -290,11 +290,21 @@ def index():
                                                                   file_id, size_mb, mime_type, 0, server_link, user.id)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
+                        print(
+                            "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
                             file_name, chat_id, mime_type)))
+                        print(
+                            "***********************************************************")
                         db_methods.update_download_status(download_id)
+                        print(
+                            "###########################################################")
                         time.sleep(2)
+                        print(
+                            "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
                         db_methods.update_user_credit(chat_id, size_mb)
+                        print(
+                            "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                         # os.chmod(
                         #     direction, 0o755)
                         bot_methods.send_message(
@@ -313,10 +323,10 @@ def index():
             else:
                 bot_methods.send_message(msg, "112042461")
             print("Code completely Executed!")
-            return Response('ok', status=200)
         except TimedOutError as error:
             print("TIMEOUT:", error)
             return Response('ok', status=200)
+        return Response('ok', status=200)
     else:
         return '<h1>Telegram Bot Downloader</h1>'
 

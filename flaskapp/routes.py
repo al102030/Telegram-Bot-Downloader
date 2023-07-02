@@ -279,50 +279,42 @@ def index():
                         "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                 else:
                     if user.credit >= size_mb:
-                        try:
-                            if mime_type == "video/mp4":
-                                server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
-                                # direction = f'/usr/share/nginx/html/static/{file_name}.mp4'
-                            else:
-                                server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
-                                # direction = f'/usr/share/nginx/html/static/{file_name}'
-                            download_id = db_methods.add_new_download('telegram', file_name,
-                                                                      file_id, size_mb, mime_type, 0, server_link, user.id)
-                            bot_methods.forward_message(
-                                message_id, -1001705745753, chat_id)
-                            run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                                file_name, chat_id, mime_type)))
-                            db_methods.update_download_status(download_id)
-                            time.sleep(2)
-                            db_methods.update_user_credit(chat_id, size_mb)
-                            # os.chmod(
-                            #     direction, 0o755)
-                            bot_methods.send_message(
-                                server_link, chat_id)
-                            bot_methods.send_message(
-                                "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
-                        except ValueError as error:
-                            print(
-                                f'<<<<<<<<<<<<<Caught this error:{repr(error)}>>>>>>>>>>>>>>')
+                        if mime_type == "video/mp4":
+                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                            # direction = f'/usr/share/nginx/html/static/{file_name}.mp4'
+                        else:
+                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
+                            # direction = f'/usr/share/nginx/html/static/{file_name}'
+                        download_id = db_methods.add_new_download('telegram', file_name,
+                                                                  file_id, size_mb, mime_type, 0, server_link, user.id)
+                        bot_methods.forward_message(
+                            message_id, -1001705745753, chat_id)
+                        run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
+                            file_name, chat_id, mime_type)))
+                        db_methods.update_download_status(download_id)
+                        time.sleep(2)
+                        db_methods.update_user_credit(chat_id, size_mb)
+                        # os.chmod(
+                        #     direction, 0o755)
+                        bot_methods.send_message(
+                            server_link, chat_id)
+                        bot_methods.send_message(
+                            "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
                     else:
                         inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
                             "You don't have enough credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                             chat_id, inline_keyboard)
-                        return Response('ok', status=200)
             elif is_channel:
                 bot_methods.send_message("New Bot-Data message", "112042461")
             elif not is_channel:
                 pass
             else:
                 bot_methods.send_message(msg, "112042461")
+            print("Code completely Executed!")
             return Response('ok', status=200)
         except TimedOutError as error:
             print("TIMEOUT:", error)
-            return Response('ok', status=200)
-        except ConnectionError as error:
-            print(error)
-            logging.exception(error)
             return Response('ok', status=200)
     else:
         return '<h1>Telegram Bot Downloader</h1>'

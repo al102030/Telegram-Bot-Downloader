@@ -300,15 +300,16 @@ def index():
                             bot_methods.send_message(
                                 server_link, chat_id)
                             bot_methods.send_message(
-                                "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                                "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
                         except ValueError as error:
                             print(
                                 f'<<<<<<<<<<<<<Caught this error:{repr(error)}>>>>>>>>>>>>>>')
                     else:
                         inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
-                            "You don't have enough account credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
+                            "You don't have enough credit to begin the download.\nPlease select one of the options below to debit your account.\nThank you",
                             chat_id, inline_keyboard)
+                        return Response('ok', status=200)
             elif is_channel:
                 bot_methods.send_message("New Bot-Data message", "112042461")
             elif not is_channel:

@@ -165,8 +165,7 @@ def index():
                                     print(
                                         "<<<<<<<<<<<<Py-tube has problem.>>>>>>>>>>>>")
                                     return Response('ok', status=200)
-                                # str(yt.title).replace(" ", "-")
-                                file_name = file_id
+                                file_name = str(yt.title).replace(" ", "-")
                                 print(file_name)
                                 check, download_id = db_methods.check_link_in_db(
                                     user.id, file_id)
@@ -214,7 +213,7 @@ def index():
                                             print(size_mb)
                                             try:
                                                 stream.download(
-                                                    output_path='/usr/share/nginx/html/static/', filename=download.file_name+'.mp4')
+                                                    output_path='/usr/share/nginx/html/static/', filename=download.file_id+'.mp4')
                                             except exceptions.VideoUnavailable as error:
                                                 print(
                                                     "|||||||||||||||||||", error)

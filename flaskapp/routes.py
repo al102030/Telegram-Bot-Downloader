@@ -17,8 +17,8 @@ from view.Menus import joining_channel_keyboard, credit_charge_keyboard, simple_
 def index():
     if request.method == 'POST':
         try:
-            # print("Got it!")
-            # return Response('ok', status=200)
+            print("Got it!")
+            return Response('ok', status=200)
             msg = request.get_json()
             channel_id = "-1001904767094"
             db_methods = Methods()
@@ -225,7 +225,7 @@ def index():
                                             db_methods.update_server_link(
                                                 download.id, f"https://telapi.digi-arya.ir/static/{download.file_name}.mp4")
                                             bot_methods.send_message(
-                                                "You can use this direct link for 1 month. Please save your Link.", chat_id)
+                                                "You can use this direct link for the onr(1) month. Please save your Link.", chat_id)
                                         except ValueError as error:
                                             print(
                                                 'Caught this error: ' + repr(error))

@@ -313,7 +313,7 @@ def index():
         except ExceptionGroup as error:
             print("TIMEOUT:", error)
             return Response('ok', status=200)
-        print("Sending Response to Server...")
+        print("The response has sent to the server.")
         return Response('ok', status=200)
     else:
         return '<h1>Telegram Bot Downloader</h1>'

@@ -398,25 +398,30 @@ class Telegram:
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
-                # Check if the file already exists
-                if os.path.exists(file):
-                    # Get the size of the existing file
-                    downloaded_bytes = os.path.getsize(file)
-                else:
-                    # If the file doesn't exist, start from the beginning
-                    downloaded_bytes = 0
-                # Set the range header to resume the download from the appropriate position
-                headers = {'Range': f'bytes={downloaded_bytes}-'}
-                # Start the download and save the parts
-                async with client.iter_download(message.media, headers=headers) as stream:
-                    async for part in stream.iter_any():
-                        with open(file, 'ab') as file_obj:
-                            file_obj.write(part)
+                downloaded_bytes = 0
+                range_header = f'bytes={downloaded_bytes}-'
+                client.session.headers['Range'] = range_header
+                with open(file, 'ab') as file_obj:
+                    for part in client.iter_download(message.media):
+                        file_obj.write(part)
 
+                # ================================================================================
+                # if os.path.exists(file):
+                #     downloaded_bytes = os.path.getsize(file)
+                # else:
+                #     downloaded_bytes = 0
+                # headers = {'Range': f'bytes={downloaded_bytes}-'}
+                # async with client.iter_download(message.media, headers=headers) as stream:
+                #     async for part in stream.iter_any():
+                #         with open(file, 'ab') as file_obj:
+                #             file_obj.write(part)
+
+                # ================================================================================
                 # async for part in client.iter_download(message.media):
                 #     with open(file, 'ab') as file_obj:
                 #         file_obj.write(part)
 
+                # ================================================================================
                 # await client.download_media(message.media, file=file)
             elif message.document:
                 print("Downloading ((((Document)))) has Started...")

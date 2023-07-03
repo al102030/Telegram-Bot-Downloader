@@ -398,8 +398,7 @@ class Telegram:
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
-                # await client.download_media(message.media, file=file)
-                await client.download_file(file_id, file=file)
+                await client.download_media(message.media, file=file)
             elif message.document:
                 print("Downloading ((((Document)))) has Started...")
                 await client.download_file(file_id, file=file)

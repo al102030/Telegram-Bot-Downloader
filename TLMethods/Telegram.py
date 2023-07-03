@@ -419,7 +419,7 @@ class Telegram:
                 #             file_obj.write(part)
 
                 # ================================================================================
-                async for part in client.iter_download(message.media, chunk_size=2048):
+                async for part in client.iter_download(message.media, chunk_size=5120):
                     with open(file, 'ab') as file_obj:
                         file_obj.write(part)
                 # stream = client.iter_download(message.media, request_size=32)

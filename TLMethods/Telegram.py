@@ -65,7 +65,7 @@ class Telegram:
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(req_url, json=payload, headers=headers, timeout=20) as response:
-                print(await response.text())
+                return await response.text()
 
     def send_message_with_keyboard(self, text, chat_id, keyboard):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"

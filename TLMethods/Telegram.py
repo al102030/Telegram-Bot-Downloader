@@ -398,7 +398,11 @@ class Telegram:
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
-                await client.download_media(message.media, file=file)
+                async for part in client.iter_download(message.media):
+                    # Save each downloaded part to the file
+                    with open(file, 'ab') as file:
+                        file.write(part)
+                # await client.download_media(message.media, file=file)
             elif message.document:
                 print("Downloading ((((Document)))) has Started...")
                 await client.download_file(file_id, file=file)

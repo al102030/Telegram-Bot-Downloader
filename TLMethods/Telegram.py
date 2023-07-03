@@ -402,6 +402,7 @@ class Telegram:
                     # Save each downloaded part to the file
                     with open(file, 'wb') as file:
                         file.write(part)
+                    file.flush()
                 # await client.download_media(message.media, file=file)
             elif message.document:
                 print("Downloading ((((Document)))) has Started...")

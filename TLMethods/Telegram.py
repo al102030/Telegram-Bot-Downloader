@@ -394,6 +394,10 @@ class Telegram:
             file = path+file_name
             if mime_type == "video/mp4":
                 file += '.mp4'
+                try:
+                    offset = os.path.getsize(file)
+                except OSError:
+                    offset = 0
             await client.delete_messages(-1001705745753, message_id)
 
             if message.media:
@@ -419,7 +423,7 @@ class Telegram:
                 #             file_obj.write(part)
 
                 # ================================================================================
-                async for part in client.iter_download(message.media, chunk_size=5120):
+                async for part in client.iter_download(message.media, chunk_size=5120, offset=offset):
                     with open(file, 'ab') as file_obj:
                         file_obj.write(part)
                 # stream = client.iter_download(message.media, request_size=32)

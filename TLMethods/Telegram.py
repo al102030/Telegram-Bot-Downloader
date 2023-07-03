@@ -395,9 +395,11 @@ class Telegram:
             if mime_type == "video/mp4":
                 file += '.mp4'
             await client.delete_messages(-1001705745753, message_id)
+
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
-                await client.download_media(message.media, file=file)
+                # await client.download_media(message.media, file=file)
+                await client.download_file(file_id, file=file)
             elif message.document:
                 print("Downloading ((((Document)))) has Started...")
                 await client.download_file(file_id, file=file)

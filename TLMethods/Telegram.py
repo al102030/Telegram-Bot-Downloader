@@ -419,9 +419,13 @@ class Telegram:
                 #             file_obj.write(part)
 
                 # ================================================================================
-                # async for part in client.iter_download(message.media):
-                #     with open(file, 'ab') as file_obj:
-                #         file_obj.write(part)
+                async for part in client.iter_download(message.media):
+                    with open(file, 'ab') as file_obj:
+                        file_obj.write(part)
+                stream = client.iter_download(message.media, request_size=32)
+                header = await stream.__anext__()  # "manual" version of `async for`
+                await stream.close()
+                assert len(header) == 32
 
                 # ================================================================================
                 # await client.download_media(message.media, file=file)

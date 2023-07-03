@@ -392,34 +392,15 @@ class Telegram:
                 message_id = message.id
                 break
             file = path+file_name
+            if mime_type == "video/mp4":
+                file += '.mp4'
             await client.delete_messages(-1001705745753, message_id)
-
             if message.media:
-                if "application/" in mime_type:
-                    print("it is a document(media) or app!")
-                    # , progress_callback=lambda current, total: print(f'\r{current}/{total}', end=''))
-                    await client.download_media(message.media, file=file)
-                    print("Document downloaded!(media)")
-                elif mime_type == "video/mp4":
-                    print("it is a video!")
-                    file += '.mp4'
-                    # , progress_callback=lambda current, total: print(f'\r{current}/{total}', end=''))
-                    await client.download_media(message.media, file=file)
-                    print("Video downloaded!(media)")
-                else:
-                    print("Media format not supported!")
+                print("Downloading [[[[Media]]]] has Started...")
+                await client.download_media(message.media, file=file)
             elif message.document:
-                if "application/" in mime_type:
-                    print("it is a document(file) or app!")
-                    await client.download_file(file_id, file=file)
-                    print("Document downloaded!(message)")
-                elif mime_type == "video/mp4":
-                    print("it is a video!")
-                    file += '.mp4'
-                    await client.download_file(file_id, file=file)
-                    print("Video downloaded!(message)")
-                else:
-                    print("File format not supported!")
+                print("Downloading ((((Document)))) has Started...")
+                await client.download_file(file_id, file=file)
             else:
                 print("The message doesn't contain media.")
 
@@ -490,3 +471,7 @@ class Telegram:
         else:
             print(
                 f'Error updating permissions: {response.status_code} - {response.text}')
+
+
+# =======================================codes===================================================
+            # , progress_callback=lambda current, total: print(f'\r{current}/{total}', end=''))

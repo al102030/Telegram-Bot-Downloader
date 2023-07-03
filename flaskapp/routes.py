@@ -4,7 +4,6 @@ import pickle
 from asyncio import run, gather
 import time
 from pytube import YouTube, exceptions
-from telethon.errors import TimedOutError
 import requests
 from flask import request, Response
 from flaskapp import app, bot_methods
@@ -282,10 +281,9 @@ def index():
                     if user.credit >= size_mb:
                         if mime_type == "video/mp4":
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
-                            # direction = f'/usr/share/nginx/html/static/{file_name}.mp4'
                         else:
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
-                            # direction = f'/usr/share/nginx/html/static/{file_name}'
+
                         download_id = db_methods.add_new_download('telegram', file_name,
                                                                   file_id, size_mb, mime_type, 0, server_link, user.id)
                         bot_methods.forward_message(
@@ -293,14 +291,13 @@ def index():
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
                             file_name, chat_id, mime_type)))
                         db_methods.update_download_status(download_id)
-                        time.sleep(2)
+                        time.sleep(1)
                         db_methods.update_user_credit(chat_id, size_mb)
-                        # os.chmod(
-                        #     direction, 0o755)
                         bot_methods.send_message(
                             server_link, chat_id)
                         bot_methods.send_message(
                             "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
+
                     else:
                         inline_keyboard = credit_charge_keyboard
                         bot_methods.send_message_with_keyboard(
@@ -313,7 +310,7 @@ def index():
             else:
                 bot_methods.send_message(msg, "112042461")
             print("Code completely Executed!")
-        except TimedOutError as error:
+        except ExceptionGroup as error:
             print("TIMEOUT:", error)
             return Response('ok', status=200)
         return Response('ok', status=200)

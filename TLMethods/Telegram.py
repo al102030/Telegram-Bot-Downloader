@@ -398,12 +398,14 @@ class Telegram:
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
-                downloaded_bytes = 0
-                range_header = f'bytes={downloaded_bytes}-'
-                client.session.headers['Range'] = range_header
-                with open(file, 'ab') as file_obj:
-                    for part in client.iter_download(message.media):
-                        file_obj.write(part)
+
+                # ================================================================================
+                # downloaded_bytes = 0
+                # range_header = f'bytes={downloaded_bytes}-'
+                # client.session.headers['Range'] = range_header
+                # with open(file, 'ab') as file_obj:
+                #     for part in client.iter_download(message.media):
+                #         file_obj.write(part)
 
                 # ================================================================================
                 # if os.path.exists(file):

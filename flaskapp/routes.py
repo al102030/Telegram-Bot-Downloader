@@ -3,6 +3,7 @@ import secrets
 import pickle
 from asyncio import run, gather
 import time
+import os
 from pytube import YouTube, exceptions
 import requests
 from flask import request, Response
@@ -281,22 +282,32 @@ def index():
                     if user.credit >= size_mb:
                         if mime_type == "video/mp4":
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                            server_file = f"/usr/share/nginx/html/static/{file_name}.mp4"
                         else:
                             server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
+                            server_file = f"/usr/share/nginx/html/static/{file_name}"
 
                         download_id = db_methods.add_new_download('telegram', file_name,
                                                                   file_id, size_mb, mime_type, 0, server_link, user.id)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                            file_name, chat_id, mime_type, file_size)))
-                        db_methods.update_download_status(download_id)
-                        time.sleep(1)
-                        db_methods.update_user_credit(chat_id, size_mb)
-                        bot_methods.send_message(
-                            server_link, chat_id)
-                        bot_methods.send_message(
-                            "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
+                            file_name, chat_id, mime_type)))
+                        try:
+                            offset = os.path.getsize(server_file)
+                        except OSError as error:
+                            print(error)
+                            offset = 0
+                        if offset == file_size:
+                            db_methods.update_download_status(download_id)
+                            time.sleep(1)
+                            db_methods.update_user_credit(chat_id, size_mb)
+                            bot_methods.send_message(
+                                server_link, chat_id)
+                            bot_methods.send_message(
+                                "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
+                        else:
+                            print("Download aborted!")
 
                     else:
                         inline_keyboard = credit_charge_keyboard

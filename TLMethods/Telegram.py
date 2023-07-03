@@ -394,15 +394,15 @@ class Telegram:
             file = path+file_name
             if mime_type == "video/mp4":
                 file += '.mp4'
-                try:
-                    offset = os.path.getsize(file)
-                except OSError:
-                    offset = 0
             await client.delete_messages(-1001705745753, message_id)
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
-
+                try:
+                    offset = os.path.getsize(file)
+                except OSError:
+                    offset = 0
+                print(">>>>>>>>>>>>>>>>", offset)
                 # ================================================================================
                 # downloaded_bytes = 0
                 # range_header = f'bytes={downloaded_bytes}-'

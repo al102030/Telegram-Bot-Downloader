@@ -439,7 +439,7 @@ class Telegram:
                 await client.download_file(file_id, file=file)
             else:
                 print("The message doesn't contain media.")
-            print("Downloading [[[[Media]]]] Finished.")
+            print("The Download has Finished.")
 
     def get_chat_member(self, channel_id, chat_id):
 

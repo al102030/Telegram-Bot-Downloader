@@ -298,8 +298,8 @@ def index():
                         except OSError as error:
                             print(error)
                             offset = 0
+                        db_methods.update_download_status(download_id)
                         if offset == file_size:
-                            db_methods.update_download_status(download_id)
                             time.sleep(1)
                             db_methods.update_user_credit(chat_id, size_mb)
                             bot_methods.send_message(
@@ -307,6 +307,13 @@ def index():
                             bot_methods.send_message(
                                 "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
                         else:
+                            if os.path.exists(server_file):
+                                os.remove(server_file)
+                                print(
+                                    f"The file '{server_file}' has been deleted.")
+                            else:
+                                print(
+                                    f"The file '{server_file}' does not exist.")
                             print("Download aborted!")
 
                     else:

@@ -17,8 +17,8 @@ def index():
     if request.method == 'POST':
         try:
             print("Got it!")
-            return Response('ok', status=200)
-            msg = request.get_json()
+            # return Response('ok', status=200)
+            # msg = request.get_json()
             channel_id = "-1001904767094"
             db_methods = Methods()
             is_channel = None

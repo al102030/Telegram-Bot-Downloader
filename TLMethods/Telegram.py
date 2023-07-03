@@ -400,7 +400,8 @@ class Telegram:
                 print("Downloading [[[[Media]]]] has Started...")
                 try:
                     offset = os.path.getsize(file)
-                except OSError:
+                except ValueError as error:
+                    print(error)
                     offset = 0
                 print(">>>>>>>>>>>>>>>>", offset)
                 # ================================================================================

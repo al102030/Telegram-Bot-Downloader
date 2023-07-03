@@ -384,7 +384,7 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def download_media(self, file_name, file_id, mime_type):
+    async def download_media(self, file_name, file_id, mime_type, file_size):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             async for item in client.iter_messages(-1001705745753):
@@ -424,9 +424,10 @@ class Telegram:
                 #             file_obj.write(part)
 
                 # ================================================================================
-                async for part in client.iter_download(message.media, chunk_size=5120, offset=offset):
-                    with open(file, 'ab') as file_obj:
-                        file_obj.write(part)
+                if offset < file_size:
+                    async for part in client.iter_download(message.media, chunk_size=5120, offset=offset):
+                        with open(file, 'ab') as file_obj:
+                            file_obj.write(part)
                 # stream = client.iter_download(message.media, request_size=32)
                 # header = await stream.__anext__()  # "manual" version of `async for`
                 # await stream.close()

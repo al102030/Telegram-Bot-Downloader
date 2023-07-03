@@ -289,7 +289,7 @@ def index():
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
-                            file_name, chat_id, mime_type)))
+                            file_name, chat_id, mime_type, file_size)))
                         db_methods.update_download_status(download_id)
                         time.sleep(1)
                         db_methods.update_user_credit(chat_id, size_mb)

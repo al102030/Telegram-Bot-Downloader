@@ -384,18 +384,19 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    # , file_id, mime_type, file_size):
-    async def download_media(self, file_name):
+    # , file_name, file_id, mime_type, file_size):
+    async def download_media(self):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             async for item in client.iter_messages(-1001705745753):
                 message = item
-                # message_id = message.id
+                message_id = message.id
+                file_name = message.file.name
                 break
             file = path+file_name
             # if mime_type == "video/mp4":
             #     file += '.mp4'
-            # await client.delete_messages(-1001705745753, message_id)
+            await client.delete_messages(-1001705745753, message_id)
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")

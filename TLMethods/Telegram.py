@@ -393,6 +393,8 @@ class Telegram:
                 message_id = message.id
                 file_name = message.file.name
                 break
+            if not file_name:
+                file_name = "Video"
             file = path+file_name
             # if mime_type == "video/mp4":
             #     file += '.mp4'

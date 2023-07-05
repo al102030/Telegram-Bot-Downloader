@@ -394,7 +394,6 @@ class Telegram:
             file = path+file_name
             if mime_type == "video/mp4":
                 file += '.mp4'
-            await client.delete_messages(-1001705745753, message_id)
 
             if message.media:
                 print("Downloading [[[[Media]]]] has Started...")
@@ -439,6 +438,7 @@ class Telegram:
                 await client.download_file(file_id, file=file)
             else:
                 print("The message doesn't contain media.")
+            await client.delete_messages(-1001705745753, message_id)
             print("The Download has Finished.")
 
     def get_chat_member(self, channel_id, chat_id):

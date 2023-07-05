@@ -280,41 +280,41 @@ def index():
                         "You're not joined in our channel!\nPlease join to access our service.", chat_id, inline_keyboard)
                 else:
                     if user.credit >= size_mb:
-                        if mime_type == "video/mp4":
-                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
-                            server_file = f"/usr/share/nginx/html/static/{file_name}.mp4"
-                        else:
-                            server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
-                            server_file = f"/usr/share/nginx/html/static/{file_name}"
+                        # if mime_type == "video/mp4":
+                        #     server_link = f"https://telapi.digi-arya.ir/static/{file_name}.mp4"
+                        #     server_file = f"/usr/share/nginx/html/static/{file_name}.mp4"
+                        # else:
+                        #     server_link = f"https://telapi.digi-arya.ir/static/{file_name}"
+                        #     server_file = f"/usr/share/nginx/html/static/{file_name}"
 
-                        download_id = db_methods.add_new_download('telegram', file_name,
-                                                                  file_id, size_mb, mime_type, 0, server_link, user.id)
+                        # download_id = db_methods.add_new_download('telegram', file_name,
+                        #                                           file_id, size_mb, mime_type, 0, server_link, user.id)
                         bot_methods.forward_message(
                             message_id, -1001705745753, chat_id)
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
                             file_name, chat_id, mime_type, file_size)))
-                        try:
-                            offset = os.path.getsize(server_file)
-                        except OSError as error:
-                            print(error)
-                            offset = 0
-                        db_methods.update_download_status(download_id)
-                        if offset == file_size:
-                            time.sleep(1)
-                            db_methods.update_user_credit(chat_id, size_mb)
-                            bot_methods.send_message(
-                                server_link, chat_id)
-                            bot_methods.send_message(
-                                "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
-                        else:
-                            if os.path.exists(server_file):
-                                os.remove(server_file)
-                                print(
-                                    f"The file '{server_file}' has been deleted.")
-                            else:
-                                print(
-                                    f"The file '{server_file}' does not exist.")
-                            print("Download aborted!")
+                        # try:
+                        #     offset = os.path.getsize(server_file)
+                        # except OSError as error:
+                        #     print(error)
+                        #     offset = 0
+                        # db_methods.update_download_status(download_id)
+                        # if offset == file_size:
+                        # time.sleep(1)
+                        # db_methods.update_user_credit(chat_id, size_mb)
+                        # bot_methods.send_message(
+                        #     server_link, chat_id)
+                        bot_methods.send_message(
+                            "You can use this direct link for the one(1) month. Please save your Link.", chat_id)
+                        # else:
+                        #     if os.path.exists(server_file):
+                        #         os.remove(server_file)
+                        #         print(
+                        #             f"The file '{server_file}' has been deleted.")
+                        #     else:
+                        #         print(
+                        #             f"The file '{server_file}' does not exist.")
+                        #     print("Download aborted!")
 
                     else:
                         inline_keyboard = credit_charge_keyboard

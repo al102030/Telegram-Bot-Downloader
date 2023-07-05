@@ -386,7 +386,7 @@ class Telegram:
 
     # , file_name, file_id, mime_type, file_size):
     async def download_media(self):
-        path = "/usr/share/nginx/html/static/1.rar"
+        path = "/usr/share/nginx/html/static/2.zip"
         async with TelegramClient('cli', API_ID, API_HASH) as client:
             async for item in client.iter_messages(-1001705745753):
                 message = item

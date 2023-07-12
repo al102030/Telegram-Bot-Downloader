@@ -10,7 +10,7 @@ async def async_download(func1, func2):
 
 if __name__ == "__main__":
     run(async_download(bot_methods.send_async_message(
-        "Your download has started!\nPlease wait.", "112042461"), bot_methods.download_media("okok")))
+        "Your download has started!\nPlease wait.", "112042461"), bot_methods.download_media("okokok")))
 
     # bot_methods.remove_webhook()
     # bot_methods.set_webhook(LINK)

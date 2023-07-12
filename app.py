@@ -16,7 +16,8 @@ def f():
 
 if __name__ == "__main__":
     t = Thread(target=f)
-    t.start
+    t.start()
+    print("Thread worked!")
 
     # bot_methods.remove_webhook()
     # bot_methods.set_webhook(LINK)

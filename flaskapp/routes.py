@@ -293,6 +293,7 @@ def index():
                             message_id, -1001705745753, chat_id)
                         run(async_download(bot_methods.send_async_message("Your download has started!\nPlease wait.", chat_id), bot_methods.download_media(
                             file_name, chat_id, mime_type, file_size)))
+                        print("---------------------------------run complete")
                         try:
                             offset = os.path.getsize(server_file)
                         except OSError as error:

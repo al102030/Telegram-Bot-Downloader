@@ -384,7 +384,8 @@ class Telegram:
             print("Download failed: status code\n",
                   response.status_code, response.text)
 
-    async def download_media(self, file_name, file_id, mime_type, file_size):
+    # , file_id, mime_type, file_size):
+    async def download_media(self, file_name):
         path = "/usr/share/nginx/html/static/"
         async with TelegramClient('cli', API_ID, API_HASH, timeout=60000) as client:
             async for item in client.iter_messages(-1001705745753):
@@ -392,8 +393,8 @@ class Telegram:
                 message_id = message.id
                 break
             file = path+file_name
-            if mime_type == "video/mp4":
-                file += '.mp4'
+            # if mime_type == "video/mp4":
+            #     file += '.mp4'
             await client.delete_messages(-1001705745753, message_id)
 
             if message.media:
@@ -424,7 +425,8 @@ class Telegram:
                 #             file_obj.write(part)
 
                 # ================================================================================
-                async for part in client.iter_download(message.media, chunk_size=5120, offset=offset, file_size=file_size):
+                # , file_size=file_size):
+                async for part in client.iter_download(message.media, chunk_size=5120, offset=offset):
                     with open(file, 'ab') as file_obj:
                         file_obj.write(part)
                 # stream = client.iter_download(message.media, request_size=32)
@@ -436,7 +438,7 @@ class Telegram:
                 # await client.download_media(message.media, file=file)
             elif message.document:
                 print("Downloading ((((Document)))) has Started...")
-                await client.download_file(file_id, file=file)
+                # await client.download_file(file_id, file=file)
             else:
                 print("The message doesn't contain media.")
             print("The Download has Finished.")

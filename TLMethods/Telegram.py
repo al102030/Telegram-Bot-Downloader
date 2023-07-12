@@ -1,4 +1,11 @@
+import os
+import json
 import requests
+import aiohttp
+from telethon import TelegramClient
+from config.secret import API_ID, API_HASH
+
+# Telegram methods class
 
 
 class Telegram:
@@ -43,6 +50,22 @@ class Telegram:
         response = requests.post(req_url, json=payload,
                                  headers=headers, timeout=20)
         return response
+
+    async def send_async_message(self, text1, chat_id):
+        req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+        payload = {
+            "text": text1,
+            "chat_id": chat_id,
+            "disable_web_page_preview": False,
+            "disable_notification": False,
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(req_url, json=payload, headers=headers, timeout=20) as response:
+                return await response.text()
 
     def send_message_with_keyboard(self, text, chat_id, keyboard):
         req_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
@@ -295,7 +318,7 @@ class Telegram:
     # typing, upload_photo, record_video, upload_video, record_video_note, upload_video_note
     # record_voice, upload_voice, upload_document, choose_sticker, find_location
 
-    def send_chat_action(self, action, chat_id):
+    async def send_chat_action(self, action, chat_id):
 
         url = f"https://api.telegram.org/bot{self.token}/sendChatAction"
 
@@ -308,10 +331,9 @@ class Telegram:
             "content-type": "application/json"
         }
 
-        response = requests.post(
-            url, json=payload, headers=headers, timeout=20)
-
-        print(response.text)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload, headers=headers, timeout=20) as response:
+                print(await response.text())
 
     def get_user_profile_photos(self, user_id):
 
@@ -348,18 +370,78 @@ class Telegram:
 
         return response.text
 
-    def download_file(self, file_path):
+    def download_file(self, file_path, file_name):
+        download_path = os.path.join(
+            "/usr/share/nginx/html/static/", file_name)
         url = f"https://api.telegram.org/file/bot{self.token}/{file_path}"
+        response = requests.get(url, stream=True, timeout=30)
+        if response.ok:
+            print("saving to", os.path.abspath(download_path))
+            with open(download_path, 'wb') as file:
+                file.write(response.content)
+                print("Your download is completed!")
+        else:
+            print("Download failed: status code\n",
+                  response.status_code, response.text)
 
-        headers = {
-            "accept": "application/json",
-            "content-type": "application/json"
-        }
+    # , file_id, mime_type, file_size):
+    async def download_media(self, file_name):
+        path = "/usr/share/nginx/html/static/"
+        async with TelegramClient('cli', API_ID, API_HASH, timeout=60000) as client:
+            async for item in client.iter_messages(-1001705745753):
+                message = item
+                message_id = message.id
+                break
+            file = path+file_name
+            # if mime_type == "video/mp4":
+            #     file += '.mp4'
+            await client.delete_messages(-1001705745753, message_id)
 
-        response = requests.post(
-            url, headers=headers, timeout=20)
+            if message.media:
+                print("Downloading [[[[Media]]]] has Started...")
+                try:
+                    offset = os.path.getsize(file)
+                except OSError as error:
+                    print(error)
+                    offset = 0
+                print(">>>>>>>>>>>>>>>>", offset)
+                # ================================================================================
+                # downloaded_bytes = 0
+                # range_header = f'bytes={downloaded_bytes}-'
+                # client.session.headers['Range'] = range_header
+                # with open(file, 'ab') as file_obj:
+                #     for part in client.iter_download(message.media):
+                #         file_obj.write(part)
 
-        return response.text
+                # ================================================================================
+                # if os.path.exists(file):
+                #     downloaded_bytes = os.path.getsize(file)
+                # else:
+                #     downloaded_bytes = 0
+                # headers = {'Range': f'bytes={downloaded_bytes}-'}
+                # async with client.iter_download(message.media, headers=headers) as stream:
+                #     async for part in stream.iter_any():
+                #         with open(file, 'ab') as file_obj:
+                #             file_obj.write(part)
+
+                # ================================================================================
+                # , file_size=file_size):
+                async for part in client.iter_download(message.media, chunk_size=5120, offset=offset):
+                    with open(file, 'ab') as file_obj:
+                        file_obj.write(part)
+                # stream = client.iter_download(message.media, request_size=32)
+                # header = await stream.__anext__()  # "manual" version of `async for`
+                # await stream.close()
+                # assert len(header) == 32
+
+                # ================================================================================
+                # await client.download_media(message.media, file=file)
+            elif message.document:
+                print("Downloading ((((Document)))) has Started...")
+                # await client.download_file(file_id, file=file)
+            else:
+                print("The message doesn't contain media.")
+            print("The Download has Finished.")
 
     def get_chat_member(self, channel_id, chat_id):
 
@@ -379,3 +461,56 @@ class Telegram:
             url, json=payload, headers=headers, timeout=20)
 
         return response.text
+
+    def restrict_chat_member(self, chat_id, user_id):
+        url = f"https://api.telegram.org/bot{self.token}/restrictChatMember"
+        payload = {
+            "chat_id": chat_id,
+            "user_id": user_id,
+            "disable_notification": False,
+            "can_send_messages": False,
+            "can_send_media_messages": False,
+            "can_send_other_messages": False,
+            "can_add_web_page_previews": False,
+            "until_date": 15
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+
+        response = requests.post(
+            url, json=payload, headers=headers, timeout=20)
+
+        return response.text
+
+    def set_chat_permissions(self, chat_id):
+        url = f"https://api.telegram.org/bot{self.token}/setChatPermissions"
+
+        permissions = {
+            "can_send_messages": False,
+            "can_send_media_messages": False,
+            "can_send_polls": False,
+        }
+        payload = {
+            "chat_id": chat_id,
+            "permissions": json.dumps(permissions),
+        }
+        headers = {
+            "accept": "application/json",
+            "content-type": "application/json"
+        }
+
+        response = requests.post(
+            url, json=payload, headers=headers, timeout=20)
+
+        if response.status_code == 200:
+            print('Permissions updated successfully.')
+            return response.text
+        else:
+            print(
+                f'Error updating permissions: {response.status_code} - {response.text}')
+
+
+# =======================================codes===================================================
+            # , progress_callback=lambda current, total: print(f'\r{current}/{total}', end=''))

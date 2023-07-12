@@ -334,6 +334,8 @@ def index():
         print("The response has sent to the server.")
         return Response('ok', status=200)
     else:
+        time.sleep(120)
+        print("hoooooriaaaaaa")
         return '<h1>Telegram Bot Downloader</h1>'
 
 

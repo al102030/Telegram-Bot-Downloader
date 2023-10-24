@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 urllib3 = "*"
+certifi = "*"
 
 [dev-packages]
 
